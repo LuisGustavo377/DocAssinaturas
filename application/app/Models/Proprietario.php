@@ -8,17 +8,20 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+
+class Proprietario extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'users';
+    protected $table = 'proprietarios';
 
     //Inicio Configuração UUID
     protected $primaryKey = 'id'; // Nome da coluna UUID
     public $incrementing = false; // Desativar autoincremento
     protected $keyType = 'string'; // Tipo da chave primária
    //Fim Configuração UUID
+
+    protected $guard = 'proprietarios';
 
     /**
      * The attributes that are mass assignable.

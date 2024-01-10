@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\AdminAuth;
+namespace App\Http\Controllers\ProprietarioAuth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
+use App\Models\Proprietario;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -21,7 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('proprietario.auth.register');
     }
 
     /**
@@ -33,20 +33,20 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Admin::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Proprietario::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = new Admin;
+        $proprietario = new Proprietario;
 
-        $user->id = Str::uuid();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->save();
+        $proprietario->id = Str::uuid();
+        $proprietario->name = $request->name;
+        $proprietario->email = $request->email;
+        $proprietario->password = $request->password;
+        $proprietario->save();
 
-        Auth::login($user);
+        Auth::login($proprietario);
 
-        return redirect(RouteServiceProvider::ADMIN_DASHBOARD);
+        return redirect(RouteServiceProvider::PROPRIETARIO_DASHBOARD);
     }
 }

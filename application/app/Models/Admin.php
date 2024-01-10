@@ -8,9 +8,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $table = 'admins';
+
+    //Inicio Configuração UUID
+    protected $primaryKey = 'id'; // Nome da coluna UUID
+    public $incrementing = false; // Desativar autoincremento
+    protected $keyType = 'string'; // Tipo da chave primária
+   //Fim Configuração UUID
 
     protected $guard = 'admin';
 
