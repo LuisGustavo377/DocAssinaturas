@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
@@ -50,20 +50,10 @@
                                         </div>
                                         @enderror
                                     </div>
-                                    <div class="d-flex align-items-center justify-content-between mb-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input success" type="checkbox" value=""
-                                                id="flexCheckChecked" checked>
-                                            <label class="form-check-label text-dark" for="flexCheckChecked">
-                                                Lembrar minha senha
-                                            </label>
-                                        </div>
-                                        <a class="text-success fw-bold" href="{{ route('password.request') }}">Esqueceu
-                                            a senha ?</a>
+                                    <div class="d-flex justify-content-center mb-4">
+                                        <a class="text-success fw-bold" href="{{ route('password.request') }}">Esqueceu a senha ?</a>
                                     </div>
-                                    <button type="submit"
-                                        class="btn btn-success w-100 py-8 fs-4 mb-4 rounded-2">Entrar</button>
-
+                                    <button type="submit" class="btn btn-success w-100 py-8 fs-4 mb-4 rounded-2">Entrar</button>
                                 </form>
                             </div>
                         </div>
