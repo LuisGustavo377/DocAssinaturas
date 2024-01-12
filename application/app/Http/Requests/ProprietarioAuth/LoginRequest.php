@@ -32,6 +32,17 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'email.required' => 'O campo de e-mail é obrigatório.',
+            'email.email' => 'Por favor, insira um endereço de e-mail válido.',
+            'password.required' => 'O campo de senha é obrigatório.',
+            'password.string' => 'O campo de senha deve ser uma string.',
+            'failed'=> 'As credenciais informadas não correspondem aos nossos registros.',
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *
@@ -45,7 +56,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => trans('As credenciais informadas não correspondem aos nossos registros.'),
             ]);
         }
 
