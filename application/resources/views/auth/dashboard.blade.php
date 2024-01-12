@@ -3,11 +3,11 @@
 @section('title', 'Connect - Dashboard Administrador')
 
 @section('sidebar')
-<x-sidebar-admin></x-sidebar-admin>
+<x-sidebar-user></x-sidebar-user>
 @endsection
 
 @section('navbar')
-<x-navbar-admin></x-navbar-admin>
+<x-navbar-user></x-navbar-user>
 @endsection
 
 @section('content')
