@@ -30,16 +30,8 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// ROTAS ACESSO ADMINISTRADORES DO SISTEMA
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
 
-// ROTAS ACESSO PROPRIETARIOS
-Route::get('/proprietario/dashboard', function () {
-    return view('proprietario.dashboard');
-})->middleware(['auth:proprietario', 'verified'])->name('proprietario.dashboard');
 
 
 require __DIR__.'/auth.php';
