@@ -56,3 +56,10 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('admin.logout');
 });
+
+
+// ROTAS ACESSO ADMINISTRADORES DO SISTEMA
+
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard');
+})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');

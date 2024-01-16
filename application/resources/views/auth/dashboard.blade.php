@@ -1,13 +1,13 @@
 @extends ('layouts.dashboard')
 
-@section('title', 'Connect - Dashboard Proprietário')
+@section('title', 'Connect - Dashboard Administrador')
 
 @section('sidebar')
-<x-sidebar-proprietario></x-sidebar-proprietario>
+<x-sidebar-user></x-sidebar-user>
 @endsection
 
 @section('navbar')
-<x-navbar-proprietario></x-navbar-proprietario>
+<x-navbar-user></x-navbar-user>
 @endsection
 
 @section('content')

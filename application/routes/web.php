@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,27 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+//ROTAS COMUNS PARA TODOS OS PERFIS
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-
-// ROTAS ACESSO ADMINISTRADORES DO SISTEMA
-
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
-
-// ROTAS ACESSO PROPRIETARIOS
-Route::get('/proprietario/dashboard', function () {
-    return view('proprietario.dashboard');
-})->middleware(['auth:proprietario', 'verified'])->name('proprietario.dashboard');
 
 
 require __DIR__.'/auth.php';
