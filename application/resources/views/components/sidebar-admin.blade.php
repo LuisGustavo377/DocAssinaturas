@@ -56,7 +56,7 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="#" aria-expanded="false">
                 <span>
-                  <i class="ti ti-article"></i>
+                  <i class="ti ti-cash"></i>
                 </span>
                 <span class="hide-menu">Cobranças</span>
               </a>
@@ -81,7 +81,7 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="#" aria-expanded="false">
                 <span>
-                  <i class="ti ti-clipboard"></i>
+                  <i class="ti ti-report"></i>
                 </span>
                 <span class="hide-menu">Relatórios</span>
               </a>
