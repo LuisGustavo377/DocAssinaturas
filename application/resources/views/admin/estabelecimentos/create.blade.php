@@ -28,8 +28,15 @@
 
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input @error('regime') is-invalid @enderror"
-                                            type="radio" name="regime" id="pfCheckbox" value="pf" checked
-                                            {{ old('regime') == 'pf' ? 'checked' : '' }}>
+                                               type="radio" 
+                                               name="regime" 
+                                               id="pfCheckbox" 
+                                               value="pf" 
+                                               checked
+                                               {{ old('regime') == 'pf' ? 'checked' : '' }}
+                                               minlength="11"
+                                               maxlength="11">
+                                               
                                         <label class="form-check-label" for="pfCheckbox">PF</label>
 
                                         @error('regime')
@@ -56,19 +63,23 @@
 
                                 <div class="mb-3">
                                     <label for="docInput" class="form-label" id="docLabel">
-                                        {{ old('regime') == 'pj' ? 'CNPJ' : 'CPF' }}
+                                        {{ old('regime', 'pf') == 'pj' ? 'CNPJ' : 'CPF' }}
                                     </label>
                                     <input type="text"
                                         class="form-control @error(old('regime') == 'pf' ? 'cpf' : 'cnpj') is-invalid @enderror"
                                         id="docInput" name="{{ old('regime') == 'pf' ? 'cpf' : 'cnpj' }}"
                                         placeholder="{{ old('regime') == 'pj' ? 'CNPJ' : 'CPF' }}"
-                                        value="{{ old('regime') == 'pj' ? old('cnpj') : old('cpf') }}">
+                                        value="{{ old('regime') == 'pj' ? old('cnpj') : old('cpf') }}"
+                                        minlength="{{ old('regime') == 'pf' ? '11' : '14' }}"
+                                        maxlength="{{ old('regime') == 'pf' ? '11' : '14' }}">
+                                    <!-- Adiciona a diretiva maxlength aqui -->
                                     @error(old('regime') == 'pf' ? 'cpf' : 'cnpj')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
+
 
                                 <div class="mb-3">
                                     <label class="form-label">Nome</label>
@@ -96,7 +107,7 @@
 
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Email</label>
-                                    <input  type="email" class="form-control @error('email') is-invalid @enderror"
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         id="exampleInputEmail1" name="email" placeholder="seumail@email.com"
                                         aria-describedby="emailHelp" value="{{ old('email') }}">
                                     @error('email')
@@ -179,15 +190,13 @@ function toggleDocFields() {
         docInput.placeholder = 'CPF';
         docInput.name = 'cpf';
         docInput.value = "{{ old('cpf') }}";
-        docInput.class = 'form-control @error('
-        cpf ') is-invalid @enderror';
+        docInput.className = 'form-control @error("cpf") is-invalid @enderror';
     } else if (pjCheckbox.checked) {
         docLabel.innerText = 'CNPJ';
         docInput.placeholder = 'CNPJ';
         docInput.name = 'cnpj';
         docInput.value = "{{ old('cnpj') }}";
-        docInput.class = 'form-control @error('
-        cnpj ') is-invalid @enderror';
+        docInput.className = 'form-control @error("cnpj") is-invalid @enderror';
     }
 }
     </script>
