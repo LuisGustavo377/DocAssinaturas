@@ -34,6 +34,8 @@ class EstabelecimentoController extends Controller
     public function store(EstabelecimentoRequest $request)
     {       
 
+        dd($request);
+
        try {
 
             if (auth()->check()) {

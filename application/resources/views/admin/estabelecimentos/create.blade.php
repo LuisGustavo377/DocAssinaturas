@@ -28,7 +28,7 @@
 
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input @error('regime') is-invalid @enderror"
-                                            type="radio" name="regime" id="pfCheckbox" value="pf"
+                                            type="radio" name="regime" id="pfCheckbox" value="pf" checked
                                             {{ old('regime') == 'pf' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="pfCheckbox">PF</label>
 
@@ -83,7 +83,8 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Telefone</label>
-                                    <input type="tel" class="form-control @error('telefone') is-invalid @enderror"
+                                    <input type="tel" oninput="mascaraTelefone(this)" maxlength="14"
+                                        class="form-control telefone @error('telefone') is-invalid @enderror"
                                         id="telefoneInput" name="telefone" placeholder="Telefone"
                                         value="{{ old('telefone') }}">
                                     @error('telefone')
@@ -95,9 +96,9 @@
 
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        id="exampleInputEmail1" name="email" placeholder="seumail@email.com" aria-describedby="emailHelp"
-                                        value="{{ old('email') }}">
+                                    <input  type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="exampleInputEmail1" name="email" placeholder="seumail@email.com"
+                                        aria-describedby="emailHelp" value="{{ old('email') }}">
                                     @error('email')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -111,7 +112,8 @@
                                         <input type="text"
                                             class="form-control @error('senha_temporaria') is-invalid @enderror"
                                             id="senha_temporaria" name="senha_temporaria"
-                                            value="{{ old('senha_temporaria') }}" placeholder="Clique no botão ao lado para gerar senha" readonly>
+                                            value="{{ old('senha_temporaria') }}"
+                                            placeholder="Clique no botão para gerar senha" readonly>
                                         @error('senha_temporaria')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -190,12 +192,27 @@ function toggleDocFields() {
 }
     </script>
 
+    <!-- Script para gerar senha temporaria -->
     <script>
 function generateTemporaryPassword() {
     const temporaryPasswordInput = document.getElementById('senha_temporaria');
     const temporaryPassword = Math.random().toString(36).slice(-8); // Generate an 8-character random string
     temporaryPasswordInput.value = temporaryPassword;
 }
+    </script>
+
+    <!-- Script de Mascara de Telefone -->
+
+    <script>
+$(document).ready(function() {
+    // Máscara para telefone fixo (ex: (99) 9999-9999)
+    $('#telefoneInput').mask('(00) 0000-0000');
+
+    // Máscara para telefone celular (ex: (99) 99999-9999)
+    $('#telefoneInput').mask('(00) 00000-0000', {
+        clearIfNotMatch: true
+    });
+});
     </script>
 
 
