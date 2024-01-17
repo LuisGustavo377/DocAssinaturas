@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminAuth\PasswordController;
 use App\Http\Controllers\AdminAuth\RegisteredUserController;
 use App\Http\Controllers\AdminAuth\PasswordResetLinkController;
 use App\Http\Controllers\AdminAuth\VerifyEmailController;
+use App\Http\Controllers\Admin\EstabelecimentoController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->prefix('admin')->group(function () {
@@ -58,8 +59,13 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
 });
 
 
-// ROTAS ACESSO ADMINISTRADORES DO SISTEMA
+//ROTAS ESTABELECIMENTOS
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
+Route::middleware('auth:admin')->prefix('admin')->group(function () {
+    Route::get('dashboard', function () {
+        return view('admin.dashboard');
+    })->middleware([ 'verified'])->name('admin.dashboard');
+
+
+    Route::resource('/estabelecimentos', EstabelecimentoController::class);
+});
