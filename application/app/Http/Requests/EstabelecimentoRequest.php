@@ -25,8 +25,8 @@ class EstabelecimentoRequest extends FormRequest
             //VALIDAÇÕES CADASTRO ESTABELECIMENTO
             'regime' => 'required',
             'name' => 'required|min:3|max:255',
-            'cpf' => 'unique:estabelecimentos|nullable|min:11|numeric',
-            'cnpj' => 'unique:estabelecimentos|nullable|min:14|numeric',
+            'cpf' => 'required| unique:estabelecimentos|nullable|min:11|numeric',
+            'cnpj' => 'required|unique:estabelecimentos|nullable|min:14|numeric',
             'telefone' => [
                 'required',
                 function ($attribute, $value, $fail) {
@@ -70,9 +70,12 @@ class EstabelecimentoRequest extends FormRequest
         'name.required' => '*O campo Nome é obrigatório.',
         'name.min' => '*O campo Nome deve ter pelo menos 3 caracteres.',
         'name.max' => '*O campo Nome deve ter no máximo 255 caracteres.',
+        'cpf.required' => '*O campo CPF é obrigatório.',
         'cpf.unique' => '*O CPF já está cadastrado.',
         'cpf.min' => '*O campo CPF deve ter 11 caracteres.',
+        'cpf.min' => '*O campo CPF deve ter 11 caracteres.',
         'cpf.numeric' => '*O campo CPF aceita apenas números.',
+        'cnpj.required' => '*O campo CNPJ é obrigatório.',
         'cnpj.unique' => '*O CNPJ já está cadastrado.',
         'cnpj.min' => '*O campo CNPJ deve ter 14 caracteres.',
         'cnpj.numeric' => '*O campo CNPJ aceita apenas números.',

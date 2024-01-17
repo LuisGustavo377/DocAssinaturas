@@ -25,39 +25,45 @@
                                 @csrf {{-- Prevenção do laravel de ataques a formularios --}}
                                 <div class="mb-3">
                                     <label class="form-label">Regime</label><br>
+
                                     <div class="form-check form-check-inline">
-                                        
-                                    @error('regime')
+                                        <input class="form-check-input @error('regime') is-invalid @enderror"
+                                            type="radio" name="regime" id="pfCheckbox" value="pf"
+                                            {{ old('regime') == 'pf' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="pfCheckbox">PF</label>
+
+                                        @error('regime')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                         @enderror
-                                        <input class="form-check-input  @error('regime') is-invalid @enderror"
-                                            type="radio" name="regime" id="pfCheckbox" value="pf">
-
-
-                                        <label class="form-check-label" for="pfCheckbox">PF</label>
                                     </div>
+
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input  @error('regime') is-invalid @enderror"
-                                            type="radio" name="regime" id="pjCheckbox" value="pj">
-
-                                            
-
+                                        <input class="form-check-input @error('regime') is-invalid @enderror"
+                                            type="radio" name="regime" id="pjCheckbox" value="pj"
+                                            {{ old('regime') == 'pj' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="pjCheckbox">PJ</label>
 
+                                        @error('regime')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
-
-
-
-
                                 </div>
 
+
                                 <div class="mb-3">
-                                    <label for="docInput" class="form-label" id="docLabel">CPF</label>
-                                    <input type="text" class="form-control @error('cpf') is-invalid @enderror"
-                                        id="docInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}">
-                                    @error('cpf')
+                                    <label for="docInput" class="form-label" id="docLabel">
+                                        {{ old('regime') == 'pj' ? 'CNPJ' : 'CPF' }}
+                                    </label>
+                                    <input type="text"
+                                        class="form-control @error(old('regime') == 'pf' ? 'cpf' : 'cnpj') is-invalid @enderror"
+                                        id="docInput" name="{{ old('regime') == 'pf' ? 'cpf' : 'cnpj' }}"
+                                        placeholder="{{ old('regime') == 'pj' ? 'CNPJ' : 'CPF' }}"
+                                        value="{{ old('regime') == 'pj' ? old('cnpj') : old('cpf') }}">
+                                    @error(old('regime') == 'pf' ? 'cpf' : 'cnpj')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -90,7 +96,7 @@
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        id="exampleInputEmail1" name="email" aria-describedby="emailHelp"
+                                        id="exampleInputEmail1" name="email" placeholder="seumail@email.com" aria-describedby="emailHelp"
                                         value="{{ old('email') }}">
                                     @error('email')
                                     <div class="invalid-feedback">
@@ -105,7 +111,7 @@
                                         <input type="text"
                                             class="form-control @error('senha_temporaria') is-invalid @enderror"
                                             id="senha_temporaria" name="senha_temporaria"
-                                            value="{{ old('senha_temporaria') }}" readonly>
+                                            value="{{ old('senha_temporaria') }}" placeholder="Clique no botão ao lado para gerar senha" readonly>
                                         @error('senha_temporaria')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -170,10 +176,16 @@ function toggleDocFields() {
         docLabel.innerText = 'CPF';
         docInput.placeholder = 'CPF';
         docInput.name = 'cpf';
+        docInput.value = "{{ old('cpf') }}";
+        docInput.class = 'form-control @error('
+        cpf ') is-invalid @enderror';
     } else if (pjCheckbox.checked) {
         docLabel.innerText = 'CNPJ';
         docInput.placeholder = 'CNPJ';
         docInput.name = 'cnpj';
+        docInput.value = "{{ old('cnpj') }}";
+        docInput.class = 'form-control @error('
+        cnpj ') is-invalid @enderror';
     }
 }
     </script>
