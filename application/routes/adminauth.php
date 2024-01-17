@@ -9,7 +9,8 @@ use App\Http\Controllers\AdminAuth\PasswordController;
 use App\Http\Controllers\AdminAuth\RegisteredUserController;
 use App\Http\Controllers\AdminAuth\PasswordResetLinkController;
 use App\Http\Controllers\AdminAuth\VerifyEmailController;
-use App\Http\Controllers\Admin\EstabelecimentoController;
+use App\Http\Controllers\AdminAuth\EstabelecimentoController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->prefix('admin')->group(function () {
@@ -67,5 +68,11 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     })->middleware([ 'verified'])->name('admin.dashboard');
 
 
-    Route::resource('/estabelecimentos', EstabelecimentoController::class);
+Route::get('/estabelecimentos', [EstabelecimentoController::class, 'index'])->name('admin.estabelecimento.index');
+Route::get('/estabelecimentos/create', [EstabelecimentoController::class, 'create'])->name('admin.estabelecimento.create');
+Route::post('/estabelecimentos', [EstabelecimentoController::class, 'store'])->name('admin.estabelecimento.store');
+Route::get('/estabelecimentos/{id}', [EstabelecimentoController::class, 'show'])->name('admin.estabelecimento.show');
+Route::get('/estabelecimentos/{id}/edit', [EstabelecimentoController::class, 'edit'])->name('admin.estabelecimento.edit');
+Route::put('/estabelecimentos/{id}', [EstabelecimentoController::class, 'update'])->name('admin.estabelecimento.update');
+
 });
