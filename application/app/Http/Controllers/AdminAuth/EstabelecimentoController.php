@@ -22,7 +22,11 @@ class EstabelecimentoController extends Controller
 
     public function index(): View
     {
-        return view('admin.estabelecimentos.index');
+        // Retrieve all establishments from the database
+        $estabelecimentos = Estabelecimento::all();
+
+        // Pass the data to the view
+        return view('admin.estabelecimentos.index', ['estabelecimentos' => $estabelecimentos]);
     }
 
     
@@ -34,7 +38,7 @@ class EstabelecimentoController extends Controller
     public function store(EstabelecimentoRequest $request)
     {       
 
-        dd($request);
+        dd('entrou aqui');
 
        try {
 
