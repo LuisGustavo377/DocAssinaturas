@@ -38,7 +38,7 @@ class EstabelecimentoController extends Controller
     public function store(EstabelecimentoRequest $request)
     {       
 
-        dd('entrou aqui');
+        dd($request);
 
        try {
 

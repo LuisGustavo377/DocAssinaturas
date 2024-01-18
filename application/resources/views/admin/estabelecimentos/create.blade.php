@@ -28,9 +28,15 @@
 
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input @error('regime') is-invalid @enderror"
-                                            type="radio" name="regime" id="pfCheckbox" value="pf" checked
-                                            {{ old('regime') == 'pf' ? 'checked' : '' }}>
-
+                                               type="radio" 
+                                               name="regime" 
+                                               id="pfCheckbox" 
+                                               value="pf" 
+                                               checked
+                                               {{ old('regime') == 'pf' ? 'checked' : '' }}
+                                               minlength="11"
+                                               maxlength="11">
+                                               
                                         <label class="form-check-label" for="pfCheckbox">PF</label>
 
                                         @error('regime')
@@ -60,28 +66,19 @@
                                         {{ old('regime', 'pf') == 'pj' ? 'CNPJ' : 'CPF' }}
                                     </label>
                                     <input type="text"
-                                        class="form-control @error('cpf') @if(old('regime') == 'pf' && !$errors->has('cpf')) is-invalid @endif
-                      @enderror @error('cnpj') @if(old('regime') == 'pj' && !$errors->has('cnpj')) is-invalid @endif @enderror"
+                                        class="form-control @error(old('regime') == 'pf' ? 'cpf' : 'cnpj') is-invalid @enderror"
                                         id="docInput" name="{{ old('regime') == 'pf' ? 'cpf' : 'cnpj' }}"
                                         placeholder="{{ old('regime') == 'pj' ? 'CNPJ' : 'CPF' }}"
                                         value="{{ old('regime') == 'pj' ? old('cnpj') : old('cpf') }}"
                                         minlength="{{ old('regime') == 'pf' ? '11' : '14' }}"
                                         maxlength="{{ old('regime') == 'pf' ? '11' : '14' }}">
                                     <!-- Adiciona a diretiva maxlength aqui -->
-
-                                    @if(old('regime') == 'pf' && !$errors->has('cpf') || old('regime') == 'pj' &&
-                                    !$errors->has('cnpj'))
+                                    @error(old('regime') == 'pf' ? 'cpf' : 'cnpj')
                                     <div class="invalid-feedback">
-                                        @if(old('regime') == 'pf')
-                                        {{ $errors->first('cpf') }}
-                                        @elseif(old('regime') == 'pj')
-                                        {{ $errors->first('cnpj') }}
-                                        @endif
+                                        {{ $message }}
                                     </div>
-                                    @endif
+                                    @enderror
                                 </div>
-
-
 
 
                                 <div class="mb-3">
@@ -97,7 +94,7 @@
 
                                 <div class="mb-3">
                                     <label class="form-label">Telefone</label>
-                                    <input type="tel" oninput="mascaraTelefone(this)" maxlength="14"
+                                    <input type="tel" oninput="mascaraTelefone(this)" maxlength="15"
                                         class="form-control telefone @error('telefone') is-invalid @enderror"
                                         id="telefoneInput" name="telefone" placeholder="Telefone"
                                         value="{{ old('telefone') }}">
@@ -227,33 +224,33 @@ $(document).ready(function() {
 });
     </script>
 
-    <!-- Script atualiza o max e min length de acordo com o botao pf ou pj selecionados no regime -->
-    <script>
-$(document).ready(function() {
-    // Função para atualizar dinamicamente o campo com base no regime selecionado
-    function updateFormFields() {
-        var regime = $('input[name="regime"]:checked').val();
+<!-- Script atualiza o max e min length de acordo com o botao pf ou pj selecionados no regime -->
+<script>
+    $(document).ready(function () {
+        // Função para atualizar dinamicamente o campo com base no regime selecionado
+        function updateFormFields() {
+            var regime = $('input[name="regime"]:checked').val();
 
-        // Atualiza o rótulo
-        $('#docLabel').text(regime === 'pj' ? 'CNPJ' : 'CPF');
+            // Atualiza o rótulo
+            $('#docLabel').text(regime === 'pj' ? 'CNPJ' : 'CPF');
 
-        // Atualiza o nome do campo
-        $('#docInput').attr('name', regime === 'pf' ? 'cpf' : 'cnpj');
+            // Atualiza o nome do campo
+            $('#docInput').attr('name', regime === 'pf' ? 'cpf' : 'cnpj');
 
-        // Atualiza minlength e maxlength
-        $('#docInput').attr('minlength', regime === 'pf' ? '11' : '14');
-        $('#docInput').attr('maxlength', regime === 'pf' ? '11' : '14');
-    }
+            // Atualiza minlength e maxlength
+            $('#docInput').attr('minlength', regime === 'pf' ? '11' : '14');
+            $('#docInput').attr('maxlength', regime === 'pf' ? '11' : '14');
+        }
 
-    // Adiciona um ouvinte de evento para alterações nos botões de opção
-    $('input[name="regime"]').change(function() {
+        // Adiciona um ouvinte de evento para alterações nos botões de opção
+        $('input[name="regime"]').change(function () {
+            updateFormFields();
+        });
+
+        // Chama a função inicialmente para configurar o formulário com os valores iniciais
         updateFormFields();
     });
-
-    // Chama a função inicialmente para configurar o formulário com os valores iniciais
-    updateFormFields();
-});
-    </script>
+</script>
 
 
 
