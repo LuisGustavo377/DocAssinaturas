@@ -174,32 +174,6 @@
 
     </div>
 
-    <script>
-// Add event listener to toggle between CPF and CNPJ labels and inputs based on regime selection
-const pfCheckbox = document.getElementById('pfCheckbox');
-const pjCheckbox = document.getElementById('pjCheckbox');
-const docLabel = document.getElementById('docLabel');
-const docInput = document.getElementById('docInput');
-
-pfCheckbox.addEventListener('change', toggleDocFields);
-pjCheckbox.addEventListener('change', toggleDocFields);
-
-function toggleDocFields() {
-    if (pfCheckbox.checked) {
-        docLabel.innerText = 'CPF';
-        docInput.placeholder = 'CPF';
-        docInput.name = 'cpf';
-        docInput.value = "{{ old('cpf') }}";
-        docInput.className = 'form-control @error("cpf") is-invalid @enderror';
-    } else if (pjCheckbox.checked) {
-        docLabel.innerText = 'CNPJ';
-        docInput.placeholder = 'CNPJ';
-        docInput.name = 'cnpj';
-        docInput.value = "{{ old('cnpj') }}";
-        docInput.className = 'form-control @error("cnpj") is-invalid @enderror';
-    }
-}
-    </script>
 
     <!-- Script para gerar senha temporaria -->
     <script>
