@@ -9,13 +9,14 @@ use App\Http\Controllers\AdminAuth\PasswordController;
 use App\Http\Controllers\AdminAuth\RegisteredUserController;
 use App\Http\Controllers\AdminAuth\PasswordResetLinkController;
 use App\Http\Controllers\AdminAuth\VerifyEmailController;
-use App\Http\Controllers\AdminAuth\EstabelecimentoController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->prefix('admin')->group(function () {
 
     Route::get('register', [RegisteredUserController::class, 'create'])
+    ->name('admin.register');
+
+    Route::post('register', [RegisteredUserController::class, 'store'])
     ->name('admin.register');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])

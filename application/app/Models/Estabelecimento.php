@@ -64,10 +64,12 @@ class Estabelecimento extends Model
         return $this->hasOne(EnderecosEstabelecimento::class);
     }
 
-    public function usuarios()
+    public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(Admin::class);
     }
+
+ 
     public function contasEstabelecimento()
     {
         return $this->hasMany(ContasEstabelecimento::class);

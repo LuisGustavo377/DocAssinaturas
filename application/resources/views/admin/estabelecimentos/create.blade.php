@@ -23,66 +23,43 @@
                             <form method="POST" action="{{ route('admin.estabelecimento.store') }}">
 
                                 @csrf {{-- Prevenção do laravel de ataques a formularios --}}
+
                                 <div class="mb-3">
-                                    <label class="form-label">Regime</label><br>
-
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input @error('regime') is-invalid @enderror"
-                                               type="radio" 
-                                               name="regime" 
-                                               id="pfCheckbox" 
-                                               value="pf" 
-                                               checked
-                                               {{ old('regime') == 'pf' ? 'checked' : '' }}
-                                               minlength="11"
-                                               maxlength="11">
-                                               
-                                        <label class="form-check-label" for="pfCheckbox">PF</label>
-
-                                        @error('regime')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input @error('regime') is-invalid @enderror"
-                                            type="radio" name="regime" id="pjCheckbox" value="pj"
-                                            {{ old('regime') == 'pj' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="pjCheckbox">PJ</label>
-
-                                        @error('regime')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
+                                    <div class="mb-3">
+                                        <label class="form-label">Regime</label><br>
+                                        <select name="regime" id="regime" class="form-control" required>
+                                            <option value="">-- Selecione um regime --</option>
+                                            <option value="PF" @if(old('regime')==='PF' ) selected @endif>Pessoa Física </option>
+                                            <option value="PJ" @if(old('regime')==='PJ' ) selected @endif>Pessoa Jurídica</option>
+                                        </select>
                                     </div>
                                 </div>
 
-
-                                <div class="mb-3">
-                                    <label for="docInput" class="form-label" id="docLabel">
-                                        {{ old('regime', 'pf') == 'pj' ? 'CNPJ' : 'CPF' }}
-                                    </label>
-                                    <input type="text"
-                                        class="form-control @error(old('regime') == 'pf' ? 'cpf' : 'cnpj') is-invalid @enderror"
-                                        id="docInput" name="{{ old('regime') == 'pf' ? 'cpf' : 'cnpj' }}"
-                                        placeholder="{{ old('regime') == 'pj' ? 'CNPJ' : 'CPF' }}"
-                                        value="{{ old('regime') == 'pj' ? old('cnpj') : old('cpf') }}"
-                                        minlength="{{ old('regime') == 'pf' ? '11' : '14' }}"
-                                        maxlength="{{ old('regime') == 'pf' ? '11' : '14' }}">
-                                    <!-- Adiciona a diretiva maxlength aqui -->
-                                    @error(old('regime') == 'pf' ? 'cpf' : 'cnpj')
+                                <div class="mb-3" id="cpfContainer">
+                                    <label class="form-label">CPF</label>
+                                    <input type="text" class="form-control @error('cpf') is-invalid @enderror"
+                                        id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}" required>
+                                    @error('cpf')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
 
+                                <div class="mb-3" id="cnpjContainer" style="display: none;">
+                                    <label class="form-label">CNPJ</label>
+                                    <input type="text" class="form-control @error('cnpj') is-invalid @enderror"
+                                        id="cnpjInput" name="cnpj" placeholder="CNPJ" value="{{ old('cnpj') }}"
+                                        required>
+                                    @error('cnpj')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Nome</label>
+                                    <label id="nomeLabel" class="form-label">Nome</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                                         id="nomeInput" name="name" placeholder="Nome" value="{{ old('name') }}">
                                     @error('name')
@@ -125,13 +102,14 @@
                                             id="senha_temporaria" name="senha_temporaria"
                                             value="{{ old('senha_temporaria') }}"
                                             placeholder="Clique no botão para gerar senha" readonly>
+
+                                        <button type="button" class="btn btn-outline-success"
+                                            onclick="generateTemporaryPassword()">Gerar Senha</button>
                                         @error('senha_temporaria')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                         @enderror
-                                        <button type="button" class="btn btn-outline-success"
-                                            onclick="generateTemporaryPassword()">Gerar Senha</button>
                                     </div>
                                 </div>
 
@@ -149,7 +127,6 @@
 
 
                                 <div class="mb-3 d-flex justify-content-end">
-
                                     <div class="mb-3">
                                         <div class="text-center my-4">
                                             <a href="javascript:history.back()" class="btn btn-light me-2">
@@ -161,11 +138,9 @@
                                                 Cadastrar
                                             </button>
                                         </div>
-
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -198,35 +173,44 @@ $(document).ready(function() {
 });
     </script>
 
-<!-- Script atualiza o max e min length de acordo com o botao pf ou pj selecionados no regime -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script>
     $(document).ready(function () {
-        // Função para atualizar dinamicamente o campo com base no regime selecionado
-        function updateFormFields() {
-            var regime = $('input[name="regime"]:checked').val();
+        // Função para atualizar a visibilidade e o estado dos campos CPF e CNPJ
+        function updateFieldsVisibility() {
+            var regime = $("#regime").val();
 
-            // Atualiza o rótulo
-            $('#docLabel').text(regime === 'pj' ? 'CNPJ' : 'CPF');
-
-            // Atualiza o nome do campo
-            $('#docInput').attr('name', regime === 'pf' ? 'cpf' : 'cnpj');
-
-            // Atualiza minlength e maxlength
-            $('#docInput').attr('minlength', regime === 'pf' ? '11' : '14');
-            $('#docInput').attr('maxlength', regime === 'pf' ? '11' : '14');
+            if (regime === "PF") {
+                $("#cpfContainer").show();
+                $("#cpfInput").prop("disabled", false);
+                $("#cnpjContainer").hide();
+                $("#cnpjInput").prop("disabled", true);
+                $("#nomeLabel").text("Nome");
+            } else if (regime === "PJ") {
+                $("#cpfContainer").hide();
+                $("#cpfInput").prop("disabled", true);
+                $("#cnpjContainer").show();
+                $("#cnpjInput").prop("disabled", false);
+                $("#nomeLabel").text("Razão Social"); 
+            } else {
+                $("#cpfContainer").hide();
+                $("#cpfInput").prop("disabled", true);
+                $("#cnpjContainer").hide();
+                $("#cnpjInput").prop("disabled", true);
+                $("#nomeLabel").text("Nome");
+            }
         }
 
-        // Adiciona um ouvinte de evento para alterações nos botões de opção
-        $('input[name="regime"]').change(function () {
-            updateFormFields();
-        });
+        // Chamada inicial para configurar o estado dos campos com base no valor inicial do regime
+        updateFieldsVisibility();
 
-        // Chama a função inicialmente para configurar o formulário com os valores iniciais
-        updateFormFields();
+        // Adiciona um ouvinte de eventos para detectar alterações no campo de regime
+        $("#regime").on("change", function () {
+            updateFieldsVisibility();
+        });
     });
 </script>
-
-
 
 
     @endsection

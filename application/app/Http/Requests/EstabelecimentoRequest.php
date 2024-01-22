@@ -25,17 +25,9 @@ class EstabelecimentoRequest extends FormRequest
             // VALIDAÇÕES CADASTRO ESTABELECIMENTO
             'regime' => 'required',
             'name' => 'required|min:3|max:255',
-            'telefone' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    $digitsOnly = preg_replace('/[^0-9]/', '', $value); // Remove caracteres especiais
-                    if (strlen($digitsOnly) < 10 || strlen($digitsOnly) > 11) {
-                        $fail('O número de telefone deve conter entre 10 e 11 dígitos.');
-                    }
-                },
-            ],
-            'cpf' => 'required|regex:/^\d{11}$/|unique:estabelecimentos',
-            'cnpj' => 'required|regex:/^\d{14}$/|unique:estabelecimentos',
+            'telefone' => 'required',
+            'cpf' => 'nullable|unique:estabelecimentos',
+            'cnpj' => 'nullable| unique:estabelecimentos',
             'email' => 'required|email|unique:estabelecimentos',
             'senha_temporaria' => 'required',
             // 'logradouro' => 'required|max:255',
@@ -70,16 +62,9 @@ class EstabelecimentoRequest extends FormRequest
             'name.required' => '*O campo Nome é obrigatório.',
             'name.min' => '*O campo Nome deve ter pelo menos 3 caracteres.',
             'name.max' => '*O campo Nome deve ter no máximo 255 caracteres.',
-            'cpf.required' => '*O campo CPF é obrigatório.',
             'cpf.unique' => '*O CPF já está cadastrado.',
-            'cpf.min' => '*O campo CPF deve conter 11 números.',
-            'cpf.max' => '*O campo CPF deve ter 11 números.',
 
-            'cnpj.required' => '*O campo CNPJ é obrigatório.',
             'cnpj.unique' => '*O CNPJ já está cadastrado.',
-            'cnpj.min' => '*O campo CNPJ deve ter 14 números.',
-            'cnpj.max' => '*O campo CNPJ deve ter 14 números.',
-            'cnpj.integer' => '*O campo CNPJ deve conter apenas números.',
             'telefone.required' => '*O campo Telefone é obrigatório.',
             'telefone.regex' => 'O campo Telefone deve conter apenas dígitos e ter entre 10 e 11 caracteres.',
             'email.required' => '*O campo Email é obrigatório.',

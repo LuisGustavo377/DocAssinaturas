@@ -16,6 +16,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class EstabelecimentoController extends Controller
 {
@@ -37,8 +38,6 @@ class EstabelecimentoController extends Controller
 
     public function store(EstabelecimentoRequest $request)
     {       
-
-        dd($request);
 
        try {
 
@@ -62,9 +61,9 @@ class EstabelecimentoController extends Controller
                 $estabelecimento->user_id = $user_id;
 
                 // Image Upload
-                if ($request->hasFile('logo') && $request->file('logotipo')->isValid()) {
+                if ($request->hasFile('logotipo') && $request->file('logotipo')->isValid()) {
 
-                    $requestImage = $request->logo;
+                    $requestImage = $request->logotipo;
 
                     $extension = $requestImage->extension();
 
@@ -75,14 +74,15 @@ class EstabelecimentoController extends Controller
                     $estabelecimento->logo = $imageName;
                 }
 
-
                 $estabelecimento->save();
+
+                
              
 
-                // Atualize o campo estabelecimento_id do usuário
-                $user = Auth::user();
-                $user->estabelecimento_id = $estabelecimento->id;
-                $user->save();
+                // // Atualize o campo estabelecimento_id do usuário
+                // $user = Auth::user();
+                // $user->estabelecimento_id = $estabelecimento->id;
+                // $user->save();
 
                 
                 // Fim - Salvar Estabelecimento no Banco

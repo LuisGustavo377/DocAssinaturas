@@ -47,6 +47,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($proprietario);
 
-        return redirect(RouteServiceProvider::PROPRIETARIO_DASHBOARD);
+        return redirect('/proprietario/login');
     }
 }
