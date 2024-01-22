@@ -4,6 +4,8 @@ namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Estabelecimento;
+use App\Models\Estado;
+use App\Models\Cidade;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -23,21 +25,29 @@ class EstabelecimentoController extends Controller
 
     public function index(): View
     {
-        // Retrieve all establishments from the database
+        
         $estabelecimentos = Estabelecimento::all();
-
+                
         // Pass the data to the view
-        return view('admin.estabelecimentos.index', ['estabelecimentos' => $estabelecimentos]);
+        return view('admin.estabelecimentos.index', compact('estabelecimento'));
     }
 
     
     public function create(): View
+    
     {
-        return view('admin.estabelecimentos.create');
+
+        // Consultas iniciais
+        $estados = Estado::all();
+        $cidades = Cidade::all();
+
+
+        return view('admin.estabelecimentos.create', compact('estados', 'cidades'));
     }
 
     public function store(EstabelecimentoRequest $request)
     {       
+
 
 
        try {
@@ -98,6 +108,18 @@ class EstabelecimentoController extends Controller
             DB::rollback();
             throw $e;
         }
+    }
+
+    public function getCidades(Request $request)
+    {
+        $estadoId = $request->input('estado_id');
+        $estado = Estado::find($estadoId);
+
+        if ($estado) {
+            return response()->json($estado->cidades);
+        }
+
+        return response()->json([]);
     }
 
 }

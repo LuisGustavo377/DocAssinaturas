@@ -76,5 +76,7 @@ Route::post('/estabelecimentos', [EstabelecimentoController::class, 'store'])->n
 Route::get('/estabelecimentos/{id}', [EstabelecimentoController::class, 'show'])->name('admin.estabelecimento.show');
 Route::get('/estabelecimentos/{id}/edit', [EstabelecimentoController::class, 'edit'])->name('admin.estabelecimento.edit');
 Route::put('/estabelecimentos/{id}', [EstabelecimentoController::class, 'update'])->name('admin.estabelecimento.update');
+Route::get('/estabelecimentos/get-cidades', [EstabelecimentoController::class, 'getCidades'])->name('admin.estabelecimento.getcidades');
+
 
 });

@@ -75,7 +75,7 @@
                                 </td>
                                 <td class="border-bottom-0">
                                     @if($estabelecimento->status == 'ativo')
-                                    <span class="badge bg-secondary rounded-3 fw-semibold">Ativo</span>
+                                    <span class="badge bg-success rounded-3 fw-semibold">Ativo</span>
                                     @elseif($estabelecimento->status == 'inativo')
                                     <span class="badge bg-danger rounded-3 fw-semibold">Inativo</span>
                                     @else

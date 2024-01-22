@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Cidade extends Model
 {
 
-  
-
     /**
      * The attributes that are mass assignable.
      *
