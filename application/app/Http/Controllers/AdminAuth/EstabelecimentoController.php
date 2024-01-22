@@ -39,6 +39,7 @@ class EstabelecimentoController extends Controller
     public function store(EstabelecimentoRequest $request)
     {       
 
+
        try {
 
             if (auth()->check()) {
@@ -90,7 +91,7 @@ class EstabelecimentoController extends Controller
 
                 DB::commit();
 
-                return redirect()->route('estabelecimentos.index')->with('msg', 'Estabelecimento criado com sucesso!');
+                return redirect()->route('admin.estabelecimento.index')->with('msg', 'Estabelecimento criado com sucesso!');
             }
         } catch (\Exception $e) {
             // Em caso de erro, reverta a transação e lance a exceção novamente.

@@ -60,35 +60,46 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if(isset($estabelecimentos) && count($estabelecimentos) > 0)
+                            @foreach($estabelecimentos as $estabelecimento)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">1</h6>
+                                    <h6 class="fw-semibold mb-0">{{ $estabelecimento->nome }}</h6>
                                 </td>
                                 <td class="border-bottom-0">
-                                <span class="badge bg-secondary rounded-3 fw-semibold">PF</span>
+                                    <span
+                                        class="badge bg-secondary rounded-3 fw-semibold">{{ $estabelecimento->regime }}</span>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <span class="fw-normal">Web Designer</span>
+                                    <span class="fw-normal">{{ $estabelecimento->numero_telefone }}</span>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <span class="badge bg-secondary rounded-3 fw-semibold">Medium</span>
+                                    @if($estabelecimento->status == 'ativo')
+                                    <span class="badge bg-secondary rounded-3 fw-semibold">Ativo</span>
+                                    @elseif($estabelecimento->status == 'inativo')
+                                    <span class="badge bg-danger rounded-3 fw-semibold">Inativo</span>
+                                    @else
+                                    <span class="badge bg-warning rounded-3 fw-semibold">Bloqueado</span>
+                                    @endif
                                 </td>
                                 <td class="border-bottom-0">
-                                    <!-- Add your action buttons (Detalhes, Editar, Inativar) with icons here -->
                                     <button class="btn btn-primary m-1" title="Detalhar">
-                                    <i class="ti ti-search" ></i>
+                                        <i class="ti ti-search"></i>
                                     </button>
                                     <button class="btn btn-success m-1" title="Editar">
-                                    <i class="ti ti-edit" ></i>
+                                        <i class="ti ti-edit"></i>
                                     </button>
                                     <button class="btn btn-danger m-1" title="Inativar">
-                                        <i class="ti ti-lock" ></i>
+                                        <i class="ti ti-lock"></i>
                                     </button>
                                 </td>
-
                             </tr>
-                            <!-- Repeat similar rows for other entries -->
-                        </tbody>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td colspan="5">Nenhum resultado encontrado.</td>
+                            </tr>
+                            @endif
                     </table>
                 </div>
 

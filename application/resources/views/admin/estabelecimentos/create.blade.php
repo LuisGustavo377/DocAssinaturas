@@ -38,7 +38,7 @@
                                 <div class="mb-3" id="cpfContainer">
                                     <label class="form-label">CPF</label>
                                     <input type="text" class="form-control @error('cpf') is-invalid @enderror"
-                                        id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}" required>
+                                        id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}" minLength="11" maxLength="11" required>
                                     @error('cpf')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -49,7 +49,7 @@
                                 <div class="mb-3" id="cnpjContainer" style="display: none;">
                                     <label class="form-label">CNPJ</label>
                                     <input type="text" class="form-control @error('cnpj') is-invalid @enderror"
-                                        id="cnpjInput" name="cnpj" placeholder="CNPJ" value="{{ old('cnpj') }}"
+                                        id="cnpjInput" name="cnpj" placeholder="CNPJ" value="{{ old('cnpj') }}" minLength="14" maxLength="14"
                                         required>
                                     @error('cnpj')
                                     <div class="invalid-feedback">
