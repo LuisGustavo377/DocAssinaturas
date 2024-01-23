@@ -315,18 +315,18 @@
     </div>
 
 
-    <!-- Script para gerar senha temporaria -->
-    <script>
+<!-- Script para gerar senha temporaria -->
+<script>
 function generateTemporaryPassword() {
     const temporaryPasswordInput = document.getElementById('senha_temporaria');
     const temporaryPassword = Math.random().toString(36).slice(-8); // Generate an 8-character random string
     temporaryPasswordInput.value = temporaryPassword;
 }
-    </script>
+</script>
 
-    <!-- Script de Mascara de Telefone -->
+<!-- Script de Mascara de Telefone -->
 
-    <script>
+<script>
 $(document).ready(function() {
     // Máscara para telefone fixo (ex: (99) 9999-9999)
     $('#telefoneInput').mask('(00) 0000-0000');
@@ -336,11 +336,12 @@ $(document).ready(function() {
         clearIfNotMatch: true
     });
 });
-    </script>
+</script>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <script>
+<!-- Script para alterar os campos CPF e CNPJ de acordo com  regime -->
+
+<script>
 $(document).ready(function() {
     // Função para atualizar a visibilidade e o estado dos campos CPF e CNPJ
     function updateFieldsVisibility() {
@@ -375,31 +376,32 @@ $(document).ready(function() {
         updateFieldsVisibility();
     });
 });
-    </script>
+</script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
 <script>
-    $(document).ready(function(){
-        $('#estadoSelect').change(function(){
-            var estado_id = $(this).val();
-            
-            // Limpar o dropdown de cidades
-            $('#cidadeSelect').empty();
-            
-            // Fazer a solicitação AJAX para obter as cidades do estado selecionado
-            $.ajax({
-                url: '/api/cidades/' + estado_id,
-                type: 'GET',
-                success: function(data){
-                    // Adicionar as opções de cidades ao dropdown
-                    $.each(data, function(key, value){
-                        $('#cidadeSelect').append('<option value="' + value.id + '">' + value.nome + '</option>');
-                    });
-                }
-            });
+$(document).ready(function() {
+    $('#estadoSelect').change(function() {
+        var estado_id = $(this).val();
+
+        // Limpar o dropdown de cidades
+        $('#cidadeSelect').empty();
+
+        // Fazer a solicitação AJAX para obter as cidades do estado selecionado
+        $.ajax({
+            url: '/api/cidades/' + estado_id,
+            type: 'GET',
+            success: function(data) {
+                // Adicionar as opções de cidades ao dropdown
+                $.each(data, function(key, value) {
+                    $('#cidadeSelect').append('<option value="' + value.id + '">' +
+                        value.nome + '</option>');
+                });
+            }
         });
     });
+});
 </script>
 
     @endsection
