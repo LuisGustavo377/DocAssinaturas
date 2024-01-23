@@ -4,14 +4,16 @@ namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Estabelecimento;
+use App\Models\EnderecoEstabelecimento;
+use App\Models\ResponsavelEstabelecimento;
 use App\Models\Estado;
 use App\Models\Cidade;
+use App\Models\Admin;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\EstabelecimentoRequest;
-use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -37,18 +39,17 @@ class EstabelecimentoController extends Controller
     public function create(): View
     
     {
-
         // Consultas iniciais
         $estados = Estado::all();
         $cidades = Cidade::all();
         $admins = Admin::all();
-
 
         return view('admin.estabelecimentos.create', compact('estados', 'cidades', 'admins'));
     }
 
     public function store(EstabelecimentoRequest $request)
     {       
+        dd($request);
        try {
 
             if (auth()->check()) {

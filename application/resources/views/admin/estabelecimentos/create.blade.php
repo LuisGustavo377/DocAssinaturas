@@ -23,8 +23,9 @@
                             <form method="POST" action="{{ route('admin.estabelecimento.store') }}">
                                 @csrf {{-- Prevenção do laravel de ataques a formularios --}}
 
-                                <div class="alert alert-success">
-                                    Dados Cadastrais
+                                <div class="alert alert-light">
+                                    <i class="ti ti-file-description" style="color: #13deb9"></i>
+                                    <label class="form-label" style="color: #13deb9">Dados Cadastrais</label>
                                 </div>
 
                                 <div class="card-body">
@@ -132,9 +133,11 @@
                                     </div>
                                 </div>
 
-                                <div class="alert alert-success">
-                                    Contato
+                                <div class="alert alert-light">
+                                    <i class="ti ti-address-book" style="color: #13deb9"></i>
+                                    <label class="form-label" style="color: #13deb9">Endereço</label>
                                 </div>
+
 
                                 <div class="card-body">
 
@@ -229,18 +232,20 @@
 
                                 </div>
 
-                                <div class="alert alert-success">
-                                    Responsável
+                                <div class="alert alert-light">
+                                    <i class="ti ti-user" style="color: #13deb9"></i>
+                                    <label class="form-label" style="color: #13deb9">Responsável</label>
                                 </div>
+
 
                                 <div class="card-body">
                                     <div class="mb-3">
                                         <label id="nomeCompletoLabel" class="form-label">Nome Completo</label>
                                         <input type="text"
-                                            class="form-control @error('nome_completo') is-invalid @enderror"
-                                            id="nomeCompletoInput" name="nome_completo" placeholder="Nome Completo"
-                                            value="{{ old('nome_completo') }}">
-                                        @error('nome_completo')
+                                            class="form-control @error('nome_responsavel') is-invalid @enderror"
+                                            id="nomeCompletoInput" name="nome_responsavel" placeholder="Nome Completo"
+                                            value="{{ old('nome_responsavel') }}">
+                                        @error('nome_responsavel')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -315,18 +320,18 @@
     </div>
 
 
-<!-- Script para gerar senha temporaria -->
-<script>
+    <!-- Script para gerar senha temporaria -->
+    <script>
 function generateTemporaryPassword() {
     const temporaryPasswordInput = document.getElementById('senha_temporaria');
     const temporaryPassword = Math.random().toString(36).slice(-8); // Generate an 8-character random string
     temporaryPasswordInput.value = temporaryPassword;
 }
-</script>
+    </script>
 
-<!-- Script de Mascara de Telefone -->
+    <!-- Script de Mascara de Telefone -->
 
-<script>
+    <script>
 $(document).ready(function() {
     // Máscara para telefone fixo (ex: (99) 9999-9999)
     $('#telefoneInput').mask('(00) 0000-0000');
@@ -336,12 +341,12 @@ $(document).ready(function() {
         clearIfNotMatch: true
     });
 });
-</script>
+    </script>
 
 
-<!-- Script para alterar os campos CPF e CNPJ de acordo com  regime -->
+    <!-- Script para alterar os campos CPF e CNPJ de acordo com  regime -->
 
-<script>
+    <script>
 $(document).ready(function() {
     // Função para atualizar a visibilidade e o estado dos campos CPF e CNPJ
     function updateFieldsVisibility() {
@@ -376,32 +381,44 @@ $(document).ready(function() {
         updateFieldsVisibility();
     });
 });
-</script>
+    </script>
 
 
-<!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
-<script>
+    <!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
+    <script>
 $(document).ready(function() {
+    // Desabilitar o campo de cidade inicialmente
+    $('#cidadeSelect').prop('disabled', true);
+
     $('#estadoSelect').change(function() {
         var estado_id = $(this).val();
 
         // Limpar o dropdown de cidades
         $('#cidadeSelect').empty();
 
-        // Fazer a solicitação AJAX para obter as cidades do estado selecionado
-        $.ajax({
-            url: '/api/cidades/' + estado_id,
-            type: 'GET',
-            success: function(data) {
-                // Adicionar as opções de cidades ao dropdown
-                $.each(data, function(key, value) {
-                    $('#cidadeSelect').append('<option value="' + value.id + '">' +
-                        value.nome + '</option>');
-                });
-            }
-        });
+        if (estado_id) {
+            // Remover o atributo disabled quando um estado for selecionado
+            $('#cidadeSelect').prop('disabled', false);
+
+            // Fazer a solicitação AJAX para obter as cidades do estado selecionado
+            $.ajax({
+                url: '/api/cidades/' + estado_id,
+                type: 'GET',
+                success: function(data) {
+                    // Adicionar as opções de cidades ao dropdown
+                    $.each(data, function(key, value) {
+                        $('#cidadeSelect').append('<option value="' + value.id + '">' +
+                            value.nome + '</option>');
+                    });
+                }
+            });
+        } else {
+            // Se nenhum estado for selecionado, desabilitar novamente o campo de cidade
+            $('#cidadeSelect').prop('disabled', true);
+        }
     });
 });
 </script>
+
 
     @endsection

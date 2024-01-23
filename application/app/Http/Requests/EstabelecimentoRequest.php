@@ -30,26 +30,22 @@ class EstabelecimentoRequest extends FormRequest
             'cnpj' =>'nullable|numeric|digits:14|unique:estabelecimentos',
             'email' => 'required|email|unique:estabelecimentos',
             'senha_temporaria' => 'required',
-            // 'logradouro' => 'required|max:255',
-            // 'numero' => 'required',
-            // 'complemento' => 'nullable',
-            // 'estado' => 'required',
-            // 'cidade' => 'required',
+
+            // VALIDAÇÕES FORMULARIO ENDEREÇO
+
+            'logradouro' => 'required|min:3|max:255',
+            'numero' => 'required',
+            'complemento' => 'nullable',
+            'bairro' => 'required|min:3|max:255',
+            'estado' => 'required',
+            'cidade' => 'required',
 
             // VALIDAÇÕES CADASTRO RESPONSAVEL ESTABELECIMENTO
 
-            // 'nome_responsavel' => 'required|min:3|max:255',
-            // 'numero_telefone_responsavel' => [
-            //     'nullable',
-            //     function ($attribute, $value, $fail) {
-            //         $digitsOnly = preg_replace('/[^0-9]/', '', $value); // Remove caracteres especiais
-            //         if (strlen($digitsOnly) < 10 || strlen($digitsOnly) > 11) {
-            //             $fail('O número de telefone deve conter entre 10 e 11 dígitos.');
-            //         }
-            //     },
-            // ],
-            // 'cpf_responsavel' => 'min:11|numeric',
-            // 'email_responsavel' => 'required|email',
+            'nome_responsavel' => 'required|min:3|max:255',
+            'telefone_responsavel' => 'required',
+            'cpf_responsavel' => 'required|min:11|numeric',
+            'email_responsavel' => 'required|email',
 
         ];
     }
@@ -65,7 +61,6 @@ class EstabelecimentoRequest extends FormRequest
             'cpf.unique' => '*O CPF já está cadastrado.',
             'cpf.numeric' => '*O campo CPF aceita apenas números.',
             'cpf.digits' => '*O CPF deve conter 11 dígitos.',
-
             'cnpj.unique' => '*O CNPJ já está cadastrado.',
             'cnpj.numeric' => '*O campo CNPJ aceita apenas números.',
             'cnpj.digits' => '*O CNPJ deve conter 14 dígitos.',
@@ -77,17 +72,28 @@ class EstabelecimentoRequest extends FormRequest
             'senha_temporaria.required' => '*O campo Senha Temporária é obrigatório.',
             'regime.required' => '*Selecione o campo Regime.',
 
+            //VALIDAÇÕES ENDEREÇO
+
+            'logradouro.required' => '*O campo Nome é obrigatório.',
+            'logradouro.min' => '*O campo Nome deve ter pelo menos 3 caracteres.',
+            'logradouro.max' => '*O campo Nome deve ter no máximo 255 caracteres.',
+	        'numero.required' => '*O campo Número é obrigatório.',
+            'bairro.required' => '*O campo Bairro é obrigatório.',
+            'estado.required' => '*O campo Estado é obrigatório.',
+            'cidade.required' => '*O campo Cidade é obrigatório.',
+
             // VALIDAÇÕES CADASTRO RESPONSAVEL ESTABELECIMENTO
 
-            // 'nome_responsavel.required' => '*O campo Nome do Responsável é obrigatório.',
-            // 'nome_responsavel.min' => '*O campo Nome do Responsável deve ter pelo menos 3 caracteres.',
-            // 'nome_responsavel.max' => '*O campo Nome do Responsável deve ter no máximo 255 caracteres.',
-            // 'numero_telefone_responsavel.required' => '*O campo Número do Responsável de telefone é obrigatório.',
-            // 'numero_telefone_responsavel.regex' => 'O Número de telefone do responsável deve conter apenas dígitos e ter entre 10 e 11 caracteres.',
-            // 'cpf_responsavel.min' => '*O campo CPF do Responsável deve ter 11 caracteres.',
-            // 'cpf_responsavel.numeric' => '*O campo CPF aceita apenas números.',
-            // 'email_responsavel.email' => '*Preencha um Email do responsavel válido (Exemplo: email@email.com).',
-            // 'email_responsavel.request' => '*O campo Email do responsável é obrigatório.',
+            'nome_responsavel.required' => '*O campo Nome do Responsável é obrigatório.',
+            'nome_responsavel.min' => '*O campo Nome do Responsável deve ter pelo menos 3 caracteres.',
+            'nome_responsavel.max' => '*O campo Nome do Responsável deve ter no máximo 255 caracteres.',
+            'telefone_responsavel.required' => '*O campo Telefone é obrigatório.',
+            'telefone_responsavel.numero' => 'O campo Telefone do responsável deve conter apenas dígitos e ter entre 10 e 11 caracteres.',
+            'cpf_responsavel.required' => '*O campo Nome do Responsável é obrigatório.',
+            'cpf_responsavel.min' => '*O campo CPF do Responsável deve ter 11 caracteres.',
+            'cpf_responsavel.numeric' => '*O campo CPF aceita apenas números.',
+            'email_responsavel.email' => '*Preencha um Email do responsavel válido (Exemplo: email@email.com).',
+            'email_responsavel.required' => '*O campo Email do responsável é obrigatório.',
 
         ];
     }
