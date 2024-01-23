@@ -109,16 +109,12 @@ class EstabelecimentoController extends Controller
         }
     }
 
-    public function getCidades(Request $request)
-    {
-        $estadoId = $request->input('estado_id');
-        $estado = Estado::find($estadoId);
+    public function getCidadesPorEstado($estado_id)
+{
+    $cidades = Cidade::where('estado_id', $estado_id)->get();
+    return response()->json($cidades);
+}
 
-        if ($estado) {
-            return response()->json($estado->cidades);
-        }
 
-        return response()->json([]);
-    }
 
 }
