@@ -97,10 +97,7 @@ class Estabelecimento extends Model
         } else {
             $this->attributes['email'] = $value;
         }
-    }
-
-
- 
+    } 
 
 
 }

@@ -23,11 +23,11 @@ return new class extends Migration
             $table->enum('senha_temporaria', ['sim', 'nao'])->nullable();
             $table->string('logo')->nullable();
             $table->enum('status', ['ativo', 'inativo', 'pendente-pagamento'])->default('ativo');
-            $table->uuid('user_id');
+            $table->uuid('admin_id');
             
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('admins');
+            $table->foreign('admin_id')->references('id')->on('admins');
 
         });
     }

@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\EstabelecimentoRequest;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -29,7 +30,7 @@ class EstabelecimentoController extends Controller
         $estabelecimentos = Estabelecimento::all();
                 
         // Pass the data to the view
-        return view('admin.estabelecimentos.index', compact('estabelecimento'));
+        return view('admin.estabelecimentos.index', compact('estabelecimentos'));
     }
 
     
@@ -40,16 +41,14 @@ class EstabelecimentoController extends Controller
         // Consultas iniciais
         $estados = Estado::all();
         $cidades = Cidade::all();
+        $admins = Admin::all();
 
 
-        return view('admin.estabelecimentos.create', compact('estados', 'cidades'));
+        return view('admin.estabelecimentos.create', compact('estados', 'cidades', 'admins'));
     }
 
     public function store(EstabelecimentoRequest $request)
     {       
-
-
-
        try {
 
             if (auth()->check()) {
@@ -69,7 +68,7 @@ class EstabelecimentoController extends Controller
                 $estabelecimento->email = $request->email;
                 $estabelecimento->senha = $request->senha_temporaria;
                 $estabelecimento->senha_temporaria = 'sim';
-                $estabelecimento->user_id = $user_id;
+                $estabelecimento->admin_id = $user_id;
 
                 // Image Upload
                 if ($request->hasFile('logotipo') && $request->file('logotipo')->isValid()) {
