@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grupos_de_negocio', function (Blueprint $table) {
+        Schema::create('historico_transacoes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->timestamps();
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grupos_de_negocio');
+        Schema::dropIfExists('historico_transacoes');
     }
 };

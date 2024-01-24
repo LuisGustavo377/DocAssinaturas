@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->uuid('estabelecimento_id')->nullable();
-            $table->foreign('estabelecimento_id')->references('id')->on('estabelecimentos');
+        Schema::create('tipos_de_cobranca', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('descricao');
+            $table->timestamps();
         });
     }
 
@@ -22,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('tipos_de_cobranca');
     }
 };

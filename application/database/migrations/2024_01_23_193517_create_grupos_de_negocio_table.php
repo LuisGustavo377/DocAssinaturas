@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipos_de_relacionamento', function (Blueprint $table) {
+        Schema::create('grupos_de_negocio', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('descricao')->nullable();
+            $table->string('nome');
+            $table->string('observacao')->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipos_de_relacionamento');
+        Schema::dropIfExists('grupos_de_negocio');
     }
 };
