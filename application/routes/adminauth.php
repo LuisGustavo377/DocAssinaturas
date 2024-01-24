@@ -9,7 +9,7 @@ use App\Http\Controllers\AdminAuth\PasswordController;
 use App\Http\Controllers\AdminAuth\RegisteredUserController;
 use App\Http\Controllers\AdminAuth\PasswordResetLinkController;
 use App\Http\Controllers\AdminAuth\VerifyEmailController;
-use App\Http\Controllers\AdminAuth\EstabelecimentoController;
+use App\Http\Controllers\AdminAuth\GrupoDeNegociosController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->prefix('admin')->group(function () {
@@ -76,6 +76,14 @@ Route::post('/estabelecimentos', [EstabelecimentoController::class, 'store'])->n
 Route::get('/estabelecimentos/{id}', [EstabelecimentoController::class, 'show'])->name('admin.estabelecimento.show');
 Route::get('/estabelecimentos/{id}/edit', [EstabelecimentoController::class, 'edit'])->name('admin.estabelecimento.edit');
 Route::put('/estabelecimentos/{id}', [EstabelecimentoController::class, 'update'])->name('admin.estabelecimento.update');
+
+
+Route::get('/grupo-de-negocios', [GrupoDeNegociosController::class, 'index'])->name('admin.grupo-de-negocios.index');
+Route::get('/grupo-de-negocios/create', [GrupoDeNegociosController::class, 'create'])->name('admin.grupo-de-negocios.create');
+Route::post('/grupo-de-negocios', [GrupoDeNegociosController::class, 'store'])->name('admin.grupo-de-negocios.store');
+Route::get('/grupo-de-negocios/{id}', [GrupoDeNegociosController::class, 'show'])->name('admin.grupo-de-negocios.show');
+Route::get('/grupo-de-negocios/{id}/edit', [GrupoDeNegociosController::class, 'edit'])->name('admin.grupo-de-negocios.edit');
+Route::put('/grupo-de-negocios/{id}', [GrupoDeNegociosController::class, 'update'])->name('admin.grupo-de-negocios.update');
 
 });
 

@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('grupos_de_negocio', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nome');
+            $table->enum('status', ['ativo', 'inativo'])->default('ativo');
             $table->string('observacao')->nullable();
+            $table->uuid('user_cadastro_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_cadastro_id')->references('id')->on('admins');
         });
     }
 

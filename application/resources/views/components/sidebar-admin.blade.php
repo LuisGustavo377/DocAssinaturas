@@ -30,17 +30,33 @@
                     <span class="hide-menu">FUNÇÕES</span>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="/admin/estabelecimentos" aria-expanded="false">
+                    <a class="sidebar-link" href="/admin/grupo-de-negocios" aria-expanded="false">
                         <span>
-                            <i class="ti ti-building-bank"></i>
+                            <i class="ti ti-circles-relation"></i>
                         </span>
-                        <span class="hide-menu">Estabelecimentos</span>
+                        <span class="hide-menu">Grupos de Negócio</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
-                            <i class="ti ti-settings"></i>
+                            <i class="ti ti-brand-unity"></i>
+                        </span>
+                        <span class="hide-menu">Unidades de Negócio</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-building-bank"></i>
+                        </span>
+                        <span class="hide-menu">Cadastro de Pessoas</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-premium-rights"></i>
                         </span>
                         <span class="hide-menu">Bancos</span>
                     </a>
@@ -65,7 +81,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
-                            <i class="ti ti-user"></i>
+                            <i class="ti ti-users"></i>
                         </span>
                         <span class="hide-menu">Usuários</span>
                     </a>

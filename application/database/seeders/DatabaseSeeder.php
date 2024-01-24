@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             BancosSeeder::class,
             TiposRelacionamentoSeeder::class,
             TiposTransacaoSeeder::class,
-            TiposCobrancaSeeder::class
+            TiposCobrancaSeeder::class,
+            GrupoNegocioSeeder::class
         ]);
     }
 }
