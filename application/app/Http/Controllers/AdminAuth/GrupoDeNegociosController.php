@@ -137,6 +137,21 @@ class GrupoDeNegociosController extends Controller
 
         return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo não encontrado.');
     }
+
+    public function reativar($id)
+    {
+
+        $grupo = GrupoDeNegocios::findOrFail($id);
+
+        if ($grupo) {
+            $grupo->status = 'ativo';
+            $grupo->save();
+
+            return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo reativado com sucesso.');
+        }
+
+        return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo não encontrado.');
+    }
 }
 
 

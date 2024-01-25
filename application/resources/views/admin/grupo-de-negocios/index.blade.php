@@ -3,11 +3,11 @@
 @section('title', 'Grupo de Negócios')
 
 @section('sidebar')
-    <x-sidebar-admin></x-sidebar-admin>
+<x-sidebar-admin></x-sidebar-admin>
 @endsection
 
 @section('navbar')
-    <x-navbar-admin></x-navbar-admin>
+<x-navbar-admin></x-navbar-admin>
 @endsection
 
 @section('content')
@@ -31,7 +31,7 @@
                     @csrf
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="search" placeholder="Buscar...">
-                        <button class="btn btn-outline-success" type="submit"> 
+                        <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
                             Pesquisar
                         </button>
@@ -63,22 +63,36 @@
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <span class="badge bg-{{ $grupo->status === 'ativo' ? 'success' : ($grupo->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
+                                    <span
+                                        class="badge bg-{{ $grupo->status === 'ativo' ? 'success' : ($grupo->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
                                         {{ ucfirst($grupo->status) }}
                                     </span>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id) }}" class="btn btn-primary m-1" title="Detalhar">
+                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id) }}"
+                                        class="btn btn-primary m-1" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id . '/edit') }}" class="btn btn-success m-1" title="Editar">
+                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id . '/edit') }}"
+                                        class="btn btn-success m-1" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id) }}" class="btn btn-danger m-1" title="Inativar">
+                                    @if($grupo->status==='ativo')
+
+                                    <a href="{{ url('admin/grupo-de-negocios/inativar/' . $grupo->id) }}"
+                                        class="btn btn-danger m-1" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </a>
+
+                                    @elseif ($grupo->status==='inativo')
+
+                                    <a href="{{ url('admin/grupo-de-negocios/reativar/' . $grupo->id) }}"
+                                        class="btn btn-warning m-1" title="Reativar">
+                                        <i class="ti ti-lock-off"></i>
+                                    </a>
+                                    @endif
                                 </td>
                             </tr>
                             @empty
