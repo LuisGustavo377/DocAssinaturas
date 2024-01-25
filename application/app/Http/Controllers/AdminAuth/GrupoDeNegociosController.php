@@ -23,9 +23,8 @@ class GrupoDeNegociosController extends Controller
 {
     public function index(): View
     {
-        $grupos = GrupoDeNegocios::all();
+        $grupos = GrupoDeNegocios::orderBy('nome')->get();
               
-        // Pass the data to the view
         return view('admin.grupo-de-negocios.index', compact('grupos'));
     }
 
@@ -71,13 +70,7 @@ class GrupoDeNegociosController extends Controller
     
     public function show($id)
     {
-        try {
-            $grupo = GrupoDeNegocios::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            // Tratamento de exceção: Grupo não encontrado
-            abort(404, 'Grupo não encontrado.');
-        }
-    
+        $grupo = GrupoDeNegocios::findOrFail($id);
         return view('admin.grupo-de-negocios.show', compact('grupo'));
     }
 
@@ -97,29 +90,38 @@ class GrupoDeNegociosController extends Controller
     {
         try {
             DB::beginTransaction();
-    
-            // Recuperando o grupo pelo ID
+
             $grupo = GrupoDeNegocios::findOrFail($id);
-    
+
             if (!$grupo) {
                 throw new \Exception('Grupo não encontrado');
             }
-    
-            // Atualizando os campos necessários       
+
             $grupo->nome = $request->input('name');
             $grupo->observacao = $request->input('observacao');
-    
             $grupo->save();
-    
-            // Se todas as operações foram concluídas com sucesso, faça o commit da transação.
+
             DB::commit();
-    
+
             return redirect()->route('admin.grupo-de-negocios.index', ['id' => $grupo->id])->with('msg', 'Grupo alterado com sucesso!');
         } catch (\Exception $e) {
-            // Em caso de erro, reverta a transação e lance a exceção novamente.
             DB::rollback();
             throw $e;
         }
     }
 
+    public function search(Request $request)
+    {
+        $termoPesquisa = $request->input('search');
+
+        if (Auth::check()) {
+            $resultados = GrupoDeNegocios::where('nome', 'ILIKE', "%$termoPesquisa%")->get();
+        } else {
+            $resultados = [];
+        }
+
+        return view('admin.grupo-de-negocios.search', compact('resultados', 'termoPesquisa'));
+    }
 }
+
+

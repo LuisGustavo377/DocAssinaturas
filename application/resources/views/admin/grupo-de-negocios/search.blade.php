@@ -1,42 +1,40 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Grupo de Negócios')
+@section('title', 'Resultados Pesquisa')
 
 @section('sidebar')
-    <x-sidebar-admin></x-sidebar-admin>
+<x-sidebar-admin></x-sidebar-admin>
 @endsection
 
 @section('navbar')
-    <x-navbar-admin></x-navbar-admin>
+<x-navbar-admin></x-navbar-admin>
 @endsection
 
 @section('content')
 
 <div class="container-fluid">
+
+
     <div class="col-lg-12 d-flex align-items-stretch">
         <div class="card w-100">
             <div class="card-body p-4">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="card-title fw-semibold">Grupo de Negócios</h5>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="card-title fw-semibold">Resultados da Pesquisa: {{$termoPesquisa}}</h5>
 
                     <!-- Button to Create Establishment -->
-                    <a href="{{ route('admin.grupo-de-negocios.create') }}" class="btn btn-success float-end">
-                        <i class="ti ti-plus"></i>
-                        Novo
-                    </a>
+                    <a href="javascript:history.back()" class="btn btn-outline-success">
+                    <i class="ti ti-arrow-left me-1"></i>
+                    Limpar Pesquisa
+                </a>
                 </div>
 
-                <!-- Formulário da Barra de Pesquisa -->
-                <form action="{{ route('admin.grupo-de-negocios.search') }}" method="post">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search" placeholder="Buscar...">
-                        <button class="btn btn-outline-success" type="submit"> 
-                            <i class="ti ti-search"></i>
-                            Pesquisar
-                        </button>
-                    </div>
-                </form>
+                @if ($resultados->isEmpty())
+
+                <p>Não encontramos nenhum resultado em sua pesquisa <b>{{$termoPesquisa}}</b>. Por favor, tente
+                    novamente.</p>
+
+                @else
 
                 <!-- Tabela resultados -->
                 <div class="table-responsive">
@@ -56,23 +54,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($grupos as $grupo)
+                            @forelse($resultados as $resultado)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">{{ $grupo->nome }}</h6>
+                                    <h6 class="fw-semibold mb-0">{{ $resultado->nome }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <span class="badge bg-{{ $grupo->status === 'ativo' ? 'success' : ($grupo->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
-                                        {{ ucfirst($grupo->status) }}
+                                    <span
+                                        class="badge bg-{{ $resultado->status === 'ativo' ? 'success' : ($resultado->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
+                                        {{ ucfirst($resultado->status) }}
                                     </span>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id) }}" class="btn btn-primary m-1" title="Detalhar">
+                                    <a href="{{ url('admin/grupo-de-negocios/' . $resultado->id) }}"
+                                        class="btn btn-primary m-1" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id . '/edit') }}" class="btn btn-success m-1" title="Editar">
+                                    <a href="{{ url('admin/grupo-de-negocios/' . $resultado->id . '/edit') }}"
+                                        class="btn btn-success m-1" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
 
@@ -89,6 +90,8 @@
                         </tbody>
                     </table>
                 </div>
+
+                @endif
 
             </div>
         </div>

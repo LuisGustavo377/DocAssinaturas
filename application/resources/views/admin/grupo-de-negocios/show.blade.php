@@ -40,7 +40,7 @@
                             <div class="mb-3">
                                 <label id="observacaoLabel" class="form-label">Observações</label>
                                 <textarea class="form-control @error('observacao') is-invalid @enderror"
-                                    id="observacaoInput" name="observacao" 
+                                    id="observacaoInput" name="observacao"
                                     disabled>{{ $grupo->observacao }}</textarea>
                                 @error('observacao')
                                 <div class="invalid-feedback">

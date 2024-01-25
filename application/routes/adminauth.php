@@ -70,20 +70,14 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
     })->middleware([ 'verified'])->name('admin.dashboard');
 
 
-Route::get('/estabelecimentos', [EstabelecimentoController::class, 'index'])->name('admin.estabelecimento.index');
-Route::get('/estabelecimentos/create', [EstabelecimentoController::class, 'create'])->name('admin.estabelecimento.create');
-Route::post('/estabelecimentos', [EstabelecimentoController::class, 'store'])->name('admin.estabelecimento.store');
-Route::get('/estabelecimentos/{id}', [EstabelecimentoController::class, 'show'])->name('admin.estabelecimento.show');
-Route::get('/estabelecimentos/{id}/edit', [EstabelecimentoController::class, 'edit'])->name('admin.estabelecimento.edit');
-Route::put('/estabelecimentos/{id}', [EstabelecimentoController::class, 'update'])->name('admin.estabelecimento.update');
-
-
 Route::get('/grupo-de-negocios', [GrupoDeNegociosController::class, 'index'])->name('admin.grupo-de-negocios.index');
 Route::get('/grupo-de-negocios/create', [GrupoDeNegociosController::class, 'create'])->name('admin.grupo-de-negocios.create');
 Route::post('/grupo-de-negocios', [GrupoDeNegociosController::class, 'store'])->name('admin.grupo-de-negocios.store');
 Route::get('/grupo-de-negocios/{id}', [GrupoDeNegociosController::class, 'show'])->name('admin.grupo-de-negocios.show');
 Route::get('/grupo-de-negocios/{id}/edit', [GrupoDeNegociosController::class, 'edit'])->name('admin.grupo-de-negocios.edit');
 Route::put('/grupo-de-negocios/{id}', [GrupoDeNegociosController::class, 'update'])->name('admin.grupo-de-negocios.update');
+Route::post('/grupo-de-negocios/search', [GrupoDeNegociosController::class, 'search'])->name('admin.grupo-de-negocios.search');
+
 
 });
 
