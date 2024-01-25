@@ -1,13 +1,13 @@
-@extends ('layouts.dashboard')
+@extends('layouts.dashboard')
 
 @section('title', 'Grupo de Negócios')
 
 @section('sidebar')
-<x-sidebar-admin></x-sidebar-admin>
+    <x-sidebar-admin></x-sidebar-admin>
 @endsection
 
 @section('navbar')
-<x-navbar-admin></x-navbar-admin>
+    <x-navbar-admin></x-navbar-admin>
 @endsection
 
 @section('content')
@@ -20,14 +20,15 @@
                     <h5 class="card-title fw-semibold">Grupo de Negócios</h5>
 
                     <!-- Button to Create Establishment -->
-                    <a href="{{route ('admin.grupo-de-negocios.create')}}" class="btn btn-success float-end">
+                    <a href="{{ route('admin.grupo-de-negocios.create') }}" class="btn btn-success float-end">
                         <i class="ti ti-plus"></i>
                         Novo
                     </a>
                 </div>
 
-                <!-- Formulario da Barra de Pesquisa -->
-                <form action="" method="post">
+                <!-- Formulário da Barra de Pesquisa -->
+                <form action="{{ url('admin/grupo-de-negocios/search') }}" method="post">
+                    @csrf
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="search" placeholder="Buscar...">
                         <button class="btn btn-outline-success" type="submit">
@@ -55,40 +56,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if(isset($grupos) && count($grupos) > 0)
-                            @foreach($grupos as $grupo)
+                            @forelse($grupos as $grupo)
                             <tr>
                                 <td class="border-bottom-0">
                                     <h6 class="fw-semibold mb-0">{{ $grupo->nome }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    @if($grupo->status == 'ativo')
-                                    <span class="badge bg-success rounded-3 fw-semibold">Ativo</span>
-                                    @elseif($grupo->status == 'inativo')
-                                    <span class="badge bg-danger rounded-3 fw-semibold">Inativo</span>
-                                    @else
-                                    <span class="badge bg-warning rounded-3 fw-semibold">Bloqueado</span>
-                                    @endif
+                                    <span class="badge bg-{{ $grupo->status === 'ativo' ? 'success' : ($grupo->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
+                                        {{ ucfirst($grupo->status) }}
+                                    </span>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <button class="btn btn-primary m-1" title="Detalhar">
+                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id) }}" class="btn btn-primary m-1" title="Detalhar">
                                         <i class="ti ti-search"></i>
-                                    </button>
-                                    <button class="btn btn-success m-1" title="Editar">
+                                    </a>
+
+                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id . '/edit') }}" class="btn btn-success m-1" title="Editar">
                                         <i class="ti ti-edit"></i>
-                                    </button>
+                                    </a>
+
                                     <button class="btn btn-danger m-1" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </button>
                                 </td>
                             </tr>
-                            @endforeach
-                            @else
+                            @empty
                             <tr>
-                                <td colspan="5">Nenhum resultado encontrado.</td>
+                                <td colspan="3">Nenhum resultado encontrado.</td>
                             </tr>
-                            @endif
+                            @endforelse
+                        </tbody>
                     </table>
                 </div>
 
@@ -96,7 +94,5 @@
         </div>
     </div>
 </div>
-
-
 
 @endsection
