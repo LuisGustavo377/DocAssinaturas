@@ -114,7 +114,7 @@ class GrupoDeNegociosController extends Controller
             // Se todas as operações foram concluídas com sucesso, faça o commit da transação.
             DB::commit();
     
-            return redirect()->route('admin.grupo-de-negocios.edit', ['id' => $grupo->id])->with('msg', 'Grupo alterado com sucesso!');
+            return redirect()->route('admin.grupo-de-negocios.index', ['id' => $grupo->id])->with('msg', 'Grupo alterado com sucesso!');
         } catch (\Exception $e) {
             // Em caso de erro, reverta a transação e lance a exceção novamente.
             DB::rollback();
