@@ -76,9 +76,9 @@
                                         <i class="ti ti-edit"></i>
                                     </a>
 
-                                    <button class="btn btn-danger m-1" title="Inativar">
+                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id) }}" class="btn btn-danger m-1" title="Inativar">
                                         <i class="ti ti-lock"></i>
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                             @empty

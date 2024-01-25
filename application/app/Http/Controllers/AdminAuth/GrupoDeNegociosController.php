@@ -122,6 +122,21 @@ class GrupoDeNegociosController extends Controller
 
         return view('admin.grupo-de-negocios.search', compact('resultados', 'termoPesquisa'));
     }
+
+    public function inativar($id)
+    {
+
+        $grupo = GrupoDeNegocios::findOrFail($id);
+
+        if ($grupo) {
+            $grupo->status = 'inativo';
+            $grupo->save();
+
+            return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo inativado com sucesso.');
+        }
+
+        return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo não encontrado.');
+    }
 }
 
 
