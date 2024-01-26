@@ -11,16 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contas_bancarias_propria', function (Blueprint $table) {
+        Schema::create('pessoas_juridica_conta_bancaria', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('tipo_de_conta', ['CC', 'CP','PG']);
+            $table->enum('tipo_de_conta', ['conta-corrente', 'conta-poupanca','conta-pagamento']);
             $table->string('agencia');
             $table->string('numero_conta');
             $table->string('codigo_banco');
-            $table->string('digito'); // verificar funcionamento               
+            $table->string('digito'); // verificar funcionamento  
+            $table->enum('status', ['ativo', 'inativo'])->default('ativo');             
+            $table->uuid('pessoa_juridica_id');
+            $table->uuid('banco_id');
             $table->uuid('user_cadastro_id');
             $table->timestamps();
-                       
+
+            $table->foreign('pessoa_juridica_id')->references('id')->on('pessoa_juridica');                       
             $table->foreign('codigo_banco')->references('codigo')->on('bancos');
         });
     }
@@ -30,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contas_bancarias_propria');
+        Schema::dropIfExists('pessoas_juridica_conta_bancaria');
     }
 };

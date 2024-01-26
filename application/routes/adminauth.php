@@ -10,6 +10,8 @@ use App\Http\Controllers\AdminAuth\RegisteredUserController;
 use App\Http\Controllers\AdminAuth\PasswordResetLinkController;
 use App\Http\Controllers\AdminAuth\VerifyEmailController;
 use App\Http\Controllers\AdminAuth\GrupoDeNegociosController;
+use App\Http\Controllers\AdminAuth\PessoaFisicaController;
+use App\Http\Controllers\AdminAuth\PessoaJuridicaController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->prefix('admin')->group(function () {
@@ -69,7 +71,7 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
         return view('admin.dashboard');
     })->middleware([ 'verified'])->name('admin.dashboard');
 
-
+//GRUPOS DE NEGOCIOS
 Route::get('/grupo-de-negocios', [GrupoDeNegociosController::class, 'index'])->name('admin.grupo-de-negocios.index');
 Route::get('/grupo-de-negocios/create', [GrupoDeNegociosController::class, 'create'])->name('admin.grupo-de-negocios.create');
 Route::post('/grupo-de-negocios', [GrupoDeNegociosController::class, 'store'])->name('admin.grupo-de-negocios.store');
@@ -79,6 +81,28 @@ Route::put('/grupo-de-negocios/{id}', [GrupoDeNegociosController::class, 'update
 Route::post('/grupo-de-negocios/search', [GrupoDeNegociosController::class, 'search'])->name('admin.grupo-de-negocios.search');
 Route::get('/grupo-de-negocios/inativar/{id}', [GrupoDeNegociosController::class, 'inativar'])->name('admin.grupo-de-negocios.inativar');
 Route::get('/grupo-de-negocios/reativar/{id}', [GrupoDeNegociosController::class, 'reativar'])->name('admin.grupo-de-negocios.reativar');
+
+//PESSOA FISICA
+Route::get('/pessoa-fisica', [PessoaFisicaController::class, 'index'])->name('admin.pessoa-fisica.index');
+Route::get('/pessoa-fisica/create', [PessoaFisicaController::class, 'create'])->name('admin.pessoa-fisica.create');
+Route::post('/pessoa-fisica', [PessoaFisicaController::class, 'store'])->name('admin.pessoa-fisica.store');
+Route::get('/pessoa-fisica/{id}', [PessoaFisicaController::class, 'show'])->name('admin.pessoa-fisica.show');
+Route::get('/pessoa-fisica/{id}/edit', [PessoaFisicaController::class, 'edit'])->name('admin.pessoa-fisica.edit');
+Route::put('/pessoa-fisica/{id}', [PessoaFisicaController::class, 'update'])->name('admin.pessoa-fisica.update');
+Route::post('/pessoa-fisica/search', [PessoaFisicaController::class, 'search'])->name('admin.pessoa-fisica.search');
+Route::get('/pessoa-fisica/inativar/{id}', [PessoaFisicaController::class, 'inativar'])->name('admin.pessoa-fisica.inativar');
+Route::get('/pessoa-fisica/reativar/{id}', [PessoaFisicaController::class, 'reativar'])->name('admin.pessoa-fisica.reativar');
+
+//PESSOA JURIDICA
+Route::get('/pessoa-juridica', [PessoaJuridicaController::class, 'index'])->name('admin.pessoa-juridica.index');
+Route::get('/pessoa-juridica/create', [PessoaJuridicaController::class, 'create'])->name('admin.pessoa-juridica.create');
+Route::post('/pessoa-juridica', [PessoaJuridicaController::class, 'store'])->name('admin.pessoa-juridica.store');
+Route::get('/pessoa-juridica/{id}', [PessoaJuridicaController::class, 'show'])->name('admin.pessoa-juridica.show');
+Route::get('/pessoa-juridica/{id}/edit', [PessoaJuridicaController::class, 'edit'])->name('admin.pessoa-juridica.edit');
+Route::put('/pessoa-juridica/{id}', [PessoaJuridicaController::class, 'update'])->name('admin.pessoa-juridica.update');
+Route::post('/pessoa-juridica/search', [PessoaJuridicaController::class, 'search'])->name('admin.pessoa-juridica.search');
+Route::get('/pessoa-juridica/inativar/{id}', [PessoaJuridicaController::class, 'inativar'])->name('admin.pessoa-juridica.inativar');
+Route::get('/pessoa-juridica/reativar/{id}', [PessoaJuridicaController::class, 'reativar'])->name('admin.pessoa-juridica.reativar');
 
 });
 

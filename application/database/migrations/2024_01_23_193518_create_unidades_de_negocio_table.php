@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('unidades_de_negocio', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('user_cadastro_id');
             $table->timestamps();
         });
     }

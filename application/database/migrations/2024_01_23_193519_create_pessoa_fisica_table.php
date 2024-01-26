@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nome');
             $table->string('cpf')->unique();
             $table->string('email')->nullable();
-            $table->string('telefone')->nullable();
             $table->enum('tipo_logradouro', ['Alameda', 'Área', 'Avenida', 'Campo', 'Chácara', 'Colônia', 'Condomínio', 'Conjunto', 'Distrito', 'Esplanada', 'Estação', 'Estrada', 'Favela', 'Fazenda', 'Feira', 'Jardim', 'Ladeira', 'Lago', 'Lagoa', 'Largo', 'Loteamento', 'Morro', 'Núcleo', 'Parque', 'Passarela', 'Pátio', 'Praça', 'Quadra', 'Residencial', 'Rodovia', 'Rua', 'Setor', 'Sítio', 'Travessa', 'Trecho', 'Trevo', 'Vale', 'Vereda', 'Via', 'Viaduto', 'Viela', 'Vila']);
             $table->string('logradouro')->nullable();
             $table->string('numero')->nullable();
@@ -27,12 +26,25 @@ return new class extends Migration
             $table->text('senha')->nullable();
             $table->enum('senha_temporaria', ['sim', 'nao'])->nullable();
             $table->enum('status', ['ativo', 'inativo', 'pendente-pagamento'])->default('ativo');
-            $table->uuid('user_id');
+            $table->string('imagem')->nullable();
+        // Inicio Dados Necessários quando a pessoa for Funcionário
+            $table->string('rg')->nullable();
+            $table->date('data_de_nascimento')->nullable();
+            $table->enum('estado_civil', ['Solteiro(a)', 'Casado(a)', 'Viúvo(a)', 'Divorciado(a)', 'Casado(a)', 'União Estável', 'Anulado(a)']);
+            $table->string('nacionalidade')->nullable();
+            $table->string('nome_da_mãe')->nullable();
+            $table->string('nome_do_pai')->nullable();
+            $table->string('titulo_de_eleitor')->nullable();
+            $table->string('numero_pis_pasep')->nullable();
+            $table->string('escolaridade')->nullable();
+            $table->string('cargo')->nullable();
+            // Fim Dados Necessários quando a pessoa for Funcionário
             $table->uuid('tipo_relacionamento_id');
             $table->uuid('unidade_negocio_id');
+            $table->uuid('user_cadastro_id');
             $table->timestamps();
     
-            $table->foreign('user_id')->references('id')->on('users');
+            
             $table->foreign('tipo_relacionamento_id')->references('id')->on('tipos_de_relacionamento');
             $table->foreign('unidade_negocio_id')->references('id')->on('unidades_de_negocio');
             $table->foreign('estado_id')->references('id')->on('estados');

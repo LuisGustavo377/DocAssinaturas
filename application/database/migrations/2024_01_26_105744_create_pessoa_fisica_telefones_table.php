@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grupos_de_negocio', function (Blueprint $table) {
+        Schema::create('pessoa_fisica_telefones', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nome');
-            $table->enum('status', ['ativo', 'inativo'])->default('ativo');
-            $table->string('observacao')->nullable();
-            $table->uuid('user_cadastro_id')->nullable();
+            $table->string('telefone');
+            $table->uuid('pessoa_id');
+            $table->uuid('user_cadastro_id');
             $table->timestamps();
-
             
+            $table->foreign('pessoa_id')->references('id')->on('pessoa_fisica');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grupos_de_negocio');
+        Schema::dropIfExists('pessoa_fisica_telefones');
     }
 };

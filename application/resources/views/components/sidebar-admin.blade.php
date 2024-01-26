@@ -52,6 +52,24 @@
                         </span>
                         <span class="hide-menu">Cadastro de Pessoas</span>
                     </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <!-- Submenu for Pessoa Fisica -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/pessoa-fisica">
+                                <span class="hide-menu">
+                                    Pessoa Física
+                                </span>
+                            </a>
+                        </li>
+                        <!-- Submenu for Pessoa Juridica -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/pessoa-juridica">
+                                <span class="hide-menu">
+                                    Pessoa Jurídica
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#" aria-expanded="false">
