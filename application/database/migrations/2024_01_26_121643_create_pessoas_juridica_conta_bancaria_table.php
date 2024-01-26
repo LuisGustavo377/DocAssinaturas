@@ -22,6 +22,7 @@ return new class extends Migration
             $table->uuid('pessoa_juridica_id');
             $table->uuid('banco_id');
             $table->uuid('user_cadastro_id');
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
 
             $table->foreign('pessoa_juridica_id')->references('id')->on('pessoa_juridica');                       

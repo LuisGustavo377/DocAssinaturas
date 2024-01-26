@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('codigo_banco');
             $table->string('digito'); // verificar funcionamento               
             $table->uuid('user_cadastro_id');
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
                        
             $table->foreign('codigo_banco')->references('codigo')->on('bancos');

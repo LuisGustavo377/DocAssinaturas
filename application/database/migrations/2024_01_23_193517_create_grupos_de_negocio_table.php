@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');
             $table->string('observacao')->nullable();
             $table->uuid('user_cadastro_id')->nullable();
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
 
             

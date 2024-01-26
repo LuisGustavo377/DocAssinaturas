@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('contratos', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_cadastro_id');
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
         });
     }

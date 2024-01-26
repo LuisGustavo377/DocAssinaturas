@@ -33,6 +33,7 @@ return new class extends Migration
             $table->uuid('tipo_relacionamento_id');
             $table->uuid('unidade_negocio_id');
             $table->uuid('user_cadastro_id');
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
 
             

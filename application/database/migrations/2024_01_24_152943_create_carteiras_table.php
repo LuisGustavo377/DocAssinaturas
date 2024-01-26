@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('saldo_disponivel');
             $table->string('saldo_bloqueado');
             $table->uuid('unidade_de_negocio_id');
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
 
             $table->foreign('unidade_de_negocio_id')->references('id')->on('unidades_de_negocio');
