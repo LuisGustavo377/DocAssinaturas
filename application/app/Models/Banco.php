@@ -26,8 +26,13 @@ class Banco extends Model
 
     ];
 
-    public function contasEstabelecimento()
+    public function pessoaJuridicaContaBancaria()
     {
-        return $this->hasMany(ContasEstabelecimento::class, 'codigo_banco');
+        return $this->hasMany(PessoaJuridicaContaBancaria::class, 'codigo_banco');
+    }
+
+    public function pessoaFisicaContaBancaria()
+    {
+        return $this->hasMany(PessoaFisicaContaBancaria::class, 'codigo_banco');
     }
 }

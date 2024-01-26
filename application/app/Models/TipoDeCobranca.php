@@ -20,4 +20,6 @@ class TipoDeCobranca extends Model
    protected $fillable = [
     'descricao',
 ];
+
+
 }

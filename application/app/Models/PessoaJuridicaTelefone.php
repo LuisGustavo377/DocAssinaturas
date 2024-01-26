@@ -18,13 +18,14 @@ class PessoaJuridicaTelefone extends Model
    //Fim Configuração UUID
 
    protected $fillable = [
-    'tipo_de_conta',
-    'agencia',
-    'numero_conta',
-    'digito',
-    'status',
-    'pessoa_juridica_id',
+    'telefone',
+    'pessoa_id',
     'user_cadastro_id',
     'user_ultima_atualizacao_id',
 ];
+
+public function pessoaJuridica()
+{
+    return $this->belongsTo(PessoaFisicaContaBancaria::class);
+}
 }

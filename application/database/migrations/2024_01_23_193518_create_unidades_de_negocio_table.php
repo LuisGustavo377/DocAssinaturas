@@ -16,7 +16,11 @@ return new class extends Migration
             $table->enum('natureza', ['matriz', 'filial']);
             $table->uuid('user_cadastro_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
+            $table->uuid('grupo_negocio_id');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('grupo_negocio_id')->references('id')->on('grupos_de_negocio');
         });
     }
 

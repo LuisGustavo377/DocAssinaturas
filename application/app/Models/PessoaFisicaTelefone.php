@@ -18,13 +18,14 @@ class PessoaFisicaTelefone extends Model
    //Fim Configuração UUID
 
    protected $fillable = [
-    'tipo_de_conta',
-    'agencia',
-    'numero_conta',
-    'digito',
-    'status',
-    'banco_id',
+    'telefone',
+    'pessoa_id',
     'user_cadastro_id',
     'user_ultima_atualizacao_id',
 ];
+
+public function pessoaFisica()
+{
+    return $this->belongsTo(PessoaFisica::class);
+}
 }

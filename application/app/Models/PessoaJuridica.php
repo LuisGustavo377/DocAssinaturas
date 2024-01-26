@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PessoaFisica extends Model
+class PessoaJuridica extends Model
 {
     use HasFactory;
 
-    protected $table = 'pessoa_fisica';
+    protected $table = 'pessoa_juridica';
 
     //Inicio Configuração UUID
     protected $primaryKey = 'id'; // Nome da coluna UUID
@@ -19,8 +19,11 @@ class PessoaFisica extends Model
 
 
     protected $fillable = [
-        'nome',
-        'cpf',
+        'razao_social',
+        'cnpj',
+        'nome_fantasia',
+        'inscricao_estadual',
+        'inscricao_municipal',
         'email',
         'tipo_logradouro',
         'logradouro',
@@ -33,31 +36,17 @@ class PessoaFisica extends Model
         'senha_temporaria',
         'status',
         'imagem',
-        'rg',
-        'data_de_nascimento',
-        'estado_civil',
-        'nacionalidade',
-        'nome_da_mae',
-        'nome_do_pai',
-        'titulo_de_eleitor',
-        'numero_pis_pasep',
-        'escolaridade',
-        'cargo',
-        'tipo_relacionamento_id',
-        'unidade_negocio_id',
-        'user_cadastro_id',
-        'user_ultima_atualizacao_id',
     ];
 
-
-    public function cidade()
-    {
-        return $this->belongsTo(Cidade::class, 'cidade_id');
-    }
 
     public function estado()
     {
         return $this->belongsTo(Estado::class, 'estado_id');
+    }
+
+    public function cidade()
+    {
+        return $this->belongsTo(Cidade::class, 'cidade_id');
     }
 
     public function unidadeDeNegocio()
@@ -70,14 +59,14 @@ class PessoaFisica extends Model
         return $this->HasMany(TipoDeRelacionamento::class);
     }
 
-    public function pessoaFisicaContaBancaria()
-    {
-        return $this->hasMany(PessoaFisicaContaBancaria::class);
-    }
-
     public function pessoaJuridicaContaBancaria()
     {
-        return $this->hasMany(PessoaJuridicaContaBancaria::class);
+        return $this->HasMany(PessoaJuridicaContaBancaria::class);
+    }
+
+    public function pessoaJuridicaTelefone()
+    {
+        return $this->HasMany(PessoaJuridicaTelefone::class);
     }
 
 }

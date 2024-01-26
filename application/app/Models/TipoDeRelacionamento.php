@@ -20,4 +20,15 @@ class TipoDeRelacionamento extends Model
    protected $fillable = [
     'descricao',
 ];
+
+public function pessoaFisica()
+{
+    return $this->belongsTo(TipoDeRelacionamento::class);
+}
+
+public function pessoaJuridica()
+{
+    return $this->belongsTo(TipoDeRelacionamento::class);
+}
+
 }

@@ -30,4 +30,15 @@ class PessoaFisicaContaBancaria extends Model
     'user_ultima_atualizacao_id',
 ];
 
+public function pessoaFisica()
+{
+    return $this->belongsTo(PessoaFisicaContaBancaria::class);
+}
+
+public function banco()
+{
+    return $this->belongsTo(Banco::class);
+}
+
+
 }

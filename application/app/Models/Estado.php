@@ -42,19 +42,22 @@ class Estado extends Model
     /**
      * Get all of the cities for the state.
      */
+
+
+
     public function cidades()
     {
-
         return $this->hasMany(Cidade::class);
-
     }
 
-
-    public function create()
+    public function pessoaFisica()
     {
-        $estados = Estado::all(); // Recupere os estados do banco de dados (ou de outra fonte de dados)
+        return $this->hasMany(PessoaFisica::class);
+    }
 
-        return view('create', compact('estados'));
+    public function pessoaJuridica()
+    {
+        return $this->hasMany(PessoaFisica::class);
     }
 
 

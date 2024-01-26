@@ -22,4 +22,9 @@ class Carteira extends Model
         'saldo_bloqueado',
         'user_ultima_atualizacao_id',
     ];
+
+    public function unidade_de_negocio()
+    {
+        return $this->belongsTo(UnidadeDeNegocio::class, 'id');
+    }
 }
