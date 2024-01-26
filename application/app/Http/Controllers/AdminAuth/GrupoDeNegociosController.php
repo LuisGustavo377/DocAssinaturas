@@ -89,6 +89,7 @@ class GrupoDeNegociosController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
             DB::beginTransaction();
 
             $grupo = GrupoDeNegocios::findOrFail($id);
@@ -99,6 +100,7 @@ class GrupoDeNegociosController extends Controller
 
             $grupo->nome = $request->input('name');
             $grupo->observacao = $request->input('observacao');
+            $grupo->user_ultima_atualizacao_id = $user_ultima_atualizacao;
             $grupo->save();
 
             DB::commit();
