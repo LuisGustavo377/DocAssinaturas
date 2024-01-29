@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminAuth\RegisteredUserController;
 use App\Http\Controllers\AdminAuth\PasswordResetLinkController;
 use App\Http\Controllers\AdminAuth\VerifyEmailController;
 use App\Http\Controllers\AdminAuth\GrupoDeNegociosController;
+use App\Http\Controllers\AdminAuth\LicencasController;
 use App\Http\Controllers\AdminAuth\PessoaFisicaController;
 use App\Http\Controllers\AdminAuth\PessoaJuridicaController;
 use App\Http\Controllers\AdminAuth\UnidadeDeNegocioController;
@@ -117,6 +118,17 @@ Route::put('/pessoa-juridica/{id}', [PessoaJuridicaController::class, 'update'])
 Route::post('/pessoa-juridica/search', [PessoaJuridicaController::class, 'search'])->name('admin.pessoa-juridica.search');
 Route::get('/pessoa-juridica/inativar/{id}', [PessoaJuridicaController::class, 'inativar'])->name('admin.pessoa-juridica.inativar');
 Route::get('/pessoa-juridica/reativar/{id}', [PessoaJuridicaController::class, 'reativar'])->name('admin.pessoa-juridica.reativar');
+
+//LICENÇAS
+Route::get('/licenca', [LicencasController::class, 'index'])->name('admin.licencas.index');
+Route::get('/licenca/create', [LicencasController::class, 'create'])->name('admin.licencas.create');
+Route::post('/licenca', [LicencasController::class, 'store'])->name('admin.licencas.store');
+Route::get('/licenca/{id}', [LicencasController::class, 'show'])->name('admin.licencas.show');
+Route::get('/licenca/{id}/edit', [LicencasController::class, 'edit'])->name('admin.licencas.edit');
+Route::put('/licenca/{id}', [LicencasController::class, 'update'])->name('admin.licencas.update');
+Route::post('/licenca/search', [LicencasController::class, 'search'])->name('admin.licencas.search');
+Route::get('/licenca/inativar/{id}', [LicencasController::class, 'inativar'])->name('admin.licencas.inativar');
+Route::get('/licenca/reativar/{id}', [LicencasController::class, 'reativar'])->name('admin.licencas.reativar');
 
 });
 

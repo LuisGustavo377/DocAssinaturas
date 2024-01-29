@@ -1,6 +1,6 @@
 @extends ('layouts.dashboard')
 
-@section('title', 'Grupo de Negócios')
+@section('title', 'Unidade de Negócios')
 
 @section('sidebar')
     <x-sidebar-admin></x-sidebar-admin>

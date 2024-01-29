@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('licencas', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('grupo');
+            $table->string('numero_contrato');
+            $table->string('descricao');
+            $table->string('inicio');
+            $table->string('termino');
+            $table->string('limite_para_licencimento');
             $table->uuid('user_cadastro_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
