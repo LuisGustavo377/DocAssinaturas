@@ -12,6 +12,8 @@ use App\Http\Controllers\AdminAuth\VerifyEmailController;
 use App\Http\Controllers\AdminAuth\GrupoDeNegociosController;
 use App\Http\Controllers\AdminAuth\PessoaFisicaController;
 use App\Http\Controllers\AdminAuth\PessoaJuridicaController;
+use App\Http\Controllers\AdminAuth\UnidadeDeNegocioController;
+use App\Http\Controllers\CidadesController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->prefix('admin')->group(function () {
@@ -82,6 +84,18 @@ Route::post('/grupo-de-negocios/search', [GrupoDeNegociosController::class, 'sea
 Route::get('/grupo-de-negocios/inativar/{id}', [GrupoDeNegociosController::class, 'inativar'])->name('admin.grupo-de-negocios.inativar');
 Route::get('/grupo-de-negocios/reativar/{id}', [GrupoDeNegociosController::class, 'reativar'])->name('admin.grupo-de-negocios.reativar');
 
+//UNIDADE DE NEGOCIOS
+Route::get('/unidade-de-negocio', [UnidadeDeNegocioController::class, 'index'])->name('admin.unidade-de-negocio.index');
+Route::get('/unidade-de-negocio/create', [UnidadeDeNegocioController::class, 'create'])->name('admin.unidade-de-negocio.create');
+Route::post('/unidade-de-negocio', [UnidadeDeNegocioController::class, 'store'])->name('admin.unidade-de-negocio.store');
+Route::get('/unidade-de-negocio/{id}', [UnidadeDeNegocioController::class, 'show'])->name('admin.unidade-de-negocio.show');
+Route::get('/unidade-de-negocio/{id}/edit', [UnidadeDeNegocioController::class, 'edit'])->name('admin.unidade-de-negocio.edit');
+Route::put('/unidade-de-negocio/{id}', [UnidadeDeNegocioController::class, 'update'])->name('admin.unidade-de-negocio.update');
+Route::post('/unidade-de-negocio/search', [UnidadeDeNegocioController::class, 'search'])->name('admin.unidade-de-negocio.search');
+Route::get('/unidade-de-negocio/inativar/{id}', [UnidadeDeNegocioController::class, 'inativar'])->name('admin.unidade-de-negocio.inativar');
+Route::get('/unidade-de-negocio/reativar/{id}', [UnidadeDeNegocioController::class, 'reativar'])->name('admin.unidade-de-negocio.reativar');
+
+
 //PESSOA FISICA
 Route::get('/pessoa-fisica', [PessoaFisicaController::class, 'index'])->name('admin.pessoa-fisica.index');
 Route::get('/pessoa-fisica/create', [PessoaFisicaController::class, 'create'])->name('admin.pessoa-fisica.create');
@@ -107,7 +121,8 @@ Route::get('/pessoa-juridica/reativar/{id}', [PessoaJuridicaController::class, '
 });
 
 
+
 //ROTAS PARA CIDADES
-Route::get('/api/cidades/{estado_id}', [EstabelecimentoController::class, 'getCidadesPorEstado']);
+Route::get('/api/cidades/{estado_id}', [CidadesController::class, 'getCidadesPorEstado']);
 
 

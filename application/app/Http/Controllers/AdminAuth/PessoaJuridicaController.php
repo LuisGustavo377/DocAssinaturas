@@ -26,7 +26,13 @@ class PessoaJuridicaController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::check()) {
+            $pessoas = PessoaJuridica::orderBy('razao_social')->get();
+        } else {
+            $pessoas = [];
+        }
+
+        return view('admin.pessoa-juridica.index', compact('pessoas'));
     }
 
     /**
@@ -48,7 +54,7 @@ class PessoaJuridicaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PessoaFisica $pessoaFisica)
+    public function show(PessoaJuridica $pessoaJuridica)
     {
         //
     }
@@ -56,7 +62,7 @@ class PessoaJuridicaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PessoaFisica $pessoaFisica)
+    public function edit(PessoaJuridica $pessoaJuridica)
     {
         //
     }
@@ -64,7 +70,7 @@ class PessoaJuridicaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PessoaFisica $pessoaFisica)
+    public function update(Request $request, PessoaJuridica $pessoaJuridica)
     {
         //
     }
@@ -72,7 +78,7 @@ class PessoaJuridicaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PessoaFisica $pessoaFisica)
+    public function destroy(PessoaJuridica $pessoaJuridica)
     {
         //
     }
