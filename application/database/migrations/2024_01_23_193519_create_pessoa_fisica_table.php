@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('cpf')->unique();
             $table->string('email')->nullable();
-            $table->enum('tipo_logradouro', ['Alameda', 'Área', 'Avenida', 'Campo', 'Chácara', 'Colônia', 'Condomínio', 'Conjunto', 'Distrito', 'Esplanada', 'Estação', 'Estrada', 'Favela', 'Fazenda', 'Feira', 'Jardim', 'Ladeira', 'Lago', 'Lagoa', 'Largo', 'Loteamento', 'Morro', 'Núcleo', 'Parque', 'Passarela', 'Pátio', 'Praça', 'Quadra', 'Residencial', 'Rodovia', 'Rua', 'Setor', 'Sítio', 'Travessa', 'Trecho', 'Trevo', 'Vale', 'Vereda', 'Via', 'Viaduto', 'Viela', 'Vila']);
+            $table->string('tipo_de_logradouro')->nullable();
             $table->string('logradouro')->nullable();
             $table->string('numero')->nullable();
             $table->string('complemento')->nullable();
@@ -32,22 +32,24 @@ return new class extends Migration
             $table->date('data_de_nascimento')->nullable();
             $table->enum('estado_civil', ['Solteiro(a)', 'Casado(a)', 'Viúvo(a)', 'Divorciado(a)', 'Casado(a)', 'União Estável', 'Anulado(a)']);
             $table->string('nacionalidade')->nullable();
-            $table->string('nome_da_mãe')->nullable();
+            $table->string('nome_da_mae')->nullable();
             $table->string('nome_do_pai')->nullable();
             $table->string('titulo_de_eleitor')->nullable();
             $table->string('numero_pis_pasep')->nullable();
             $table->string('escolaridade')->nullable();
-            $table->string('cargo')->nullable();
+            
             // Fim Dados Necessários quando a pessoa for Funcionário
-            $table->uuid('tipo_relacionamento_id');
-            $table->uuid('unidade_negocio_id');
-            $table->uuid('user_cadastro_id');
+            $table->uuid('tipo_relacionamento_id')->nullable();
+            $table->uuid('cargo_id')->nullable();
+            $table->uuid('unidade_negocio_id')->nullable();
+            $table->uuid('user_cadastro_id')->nullable();
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
     
             
             $table->foreign('tipo_relacionamento_id')->references('id')->on('tipos_de_relacionamento');
             $table->foreign('unidade_negocio_id')->references('id')->on('unidades_de_negocio');
+            $table->foreign('cargo_id')->references('id')->on('cargos');
             $table->foreign('estado_id')->references('id')->on('estados');
             $table->foreign('cidade_id')->references('id')->on('cidades');
         });

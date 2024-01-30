@@ -26,7 +26,7 @@ class UnidadeDeNegocioController extends Controller
 {
     public function index(): View
     {
-        $unidades = UnidadeDeNegocio::orderBy('nome')->get();
+        $unidades = UnidadeDeNegocio::orderBy('id')->get();
               
         return view('admin.unidade-de-negocio.index', compact('unidades'));
     }

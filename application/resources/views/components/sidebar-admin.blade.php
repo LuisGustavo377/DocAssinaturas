@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="#" aria-expanded="false">
+                    <a class="sidebar-link" href="/admin/unidade-de-negocio">
                         <span>
                             <i class="ti ti-brand-unity"></i>
                         </span>
