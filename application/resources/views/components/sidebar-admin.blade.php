@@ -45,6 +45,16 @@
                         <span class="hide-menu">Unidades de Negócio</span>
                     </a>
                 </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/admin/licencas">
+                        <span>
+                            <i class="ti ti-key"></i>
+                        </span>
+                        <span class="hide-menu">Licenças</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>

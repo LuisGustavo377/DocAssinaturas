@@ -18,9 +18,8 @@ return new class extends Migration
             $table->string('descricao');
             $table->date('inicio');
             $table->date('termino');
-            // $table->string('limite_para_licencimento');
-            // $table->enum('status', ['ativo', 'inativo','bloqueado']);
-            // $table->enum('tipo_de_renovacao', ['anual', 'semestral','mensal']);
+            $table->enum('status', ['ativo', 'inativo','bloqueado']);
+            $table->enum('tipo_de_renovacao', ['anual', 'semestral','mensal']);
             $table->uuid('unidade_negocio_id')->nullable();
             $table->uuid('contrato_id')->nullable();
             $table->uuid('user_cadastro_id')->nullable();

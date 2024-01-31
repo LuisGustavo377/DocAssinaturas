@@ -1,7 +1,7 @@
 <div class="mb-3">
     <label id="tipoLogradouroLabel" class="form-label">Tipos de Logradouro</label>
-    <select class="form-select @error('tipo_logradouro') is-invalid @enderror" id="tipoLogradouroInput"
-        name="tipo_logradouro">
+    <select class="form-select @error('tipo__de_logradouro') is-invalid @enderror" id="tipoDeLogradouroInput"
+        name="tipo_de_logradouro">
         <option value="">-- Selecione um tipo de logradouro --</option>
         <option value="alameda">Alameda</option>
         <option value="area">Área</option>
@@ -46,7 +46,7 @@
         <option value="viela">Viela</option>
         <option value="vila">Vila</option>
     </select>
-    @error('tipo_logradouro')
+    @error('tipo_de_logradouro')
     <div class="invalid-feedback">
         {{ $message }}
     </div>

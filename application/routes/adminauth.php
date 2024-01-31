@@ -14,7 +14,10 @@ use App\Http\Controllers\AdminAuth\LicencasController;
 use App\Http\Controllers\AdminAuth\PessoaFisicaController;
 use App\Http\Controllers\AdminAuth\PessoaJuridicaController;
 use App\Http\Controllers\AdminAuth\UnidadeDeNegocioController;
+use App\Http\Controllers\AdminAuth\CargoController;
+use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
 use App\Http\Controllers\CidadesController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->prefix('admin')->group(function () {

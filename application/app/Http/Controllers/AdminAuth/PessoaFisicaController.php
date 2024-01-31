@@ -7,6 +7,8 @@ use App\Models\PessoaFisica;
 use App\Models\Estado;
 use App\Models\Cidade;
 use App\Models\Admin;
+use App\Models\Cargo;
+use App\Models\TipoDeRelacionamento;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -46,9 +48,9 @@ class PessoaFisicaController extends Controller
         
         $estados = Estado::all();
         $cidades = Cidade::all();
-     
+        $cargos = Cargo::all();  
         
-        return view('admin.pessoa-fisica.create', compact('estados', 'cidades'));
+        return view('admin.pessoa-fisica.create', compact('estados', 'cidades', 'cargos'));
 
     }
 
@@ -60,42 +62,29 @@ class PessoaFisicaController extends Controller
         try {
             if (Auth::check()) {
                 $user_id = Auth::id(); // Recupera o ID do usuário da sessão
-    
+               
                 DB::beginTransaction();
     
                 // Inicio - Salvar Grupo no Banco
     
                 $pessoa = new PessoaFisica;
     
-                $pessoa->id = Str::uuid();
-                $pessoa->tipo_relacionamento = $request->tipo_de_logradouro;
+                $pessoa->id = Str::uuid();                
                 $pessoa->nome = $request->nome; 
                 $pessoa->cpf = $request->cpf; 
                 $pessoa->email = $request->email; 
-                $pessoa->tipo_logradouro = $request->tipo_de_logradouro;               
+                $pessoa->telefone = $request->telefone; 
+                $pessoa->tipo_de_logradouro = $request->tipo_de_logradouro;               
                 $pessoa->logradouro = $request->logradouro;
                 $pessoa->numero = $request->numero;
                 $pessoa->complemento = $request->complemento;
                 $pessoa->bairro = $request->bairro;
-                $pessoa->estado_id = $request->estado_id;
-                $pessoa->cidade_id = $request->cidade_id;
+                $pessoa->estado_id = $request->estado;
+                $pessoa->cidade_id = $request->cidade;
                 $pessoa->imagem = $request->imagem;
-
-                // Dados Necessários quando a pessoa for Funcionário
-                $pessoa->rg = $request->rg;
-                $pessoa->data_de_nascimento = $request->data_de_nascimento;
-                $pessoa->estado_civil = $request->estado_civil;
-                $pessoa->nacionalidade = $request->nacionalidade;
-                $pessoa->nome_da_mae = $request->nome_da_mae;
-                $pessoa->nome_do_pai = $request->nome_do_pai;
-                $pessoa->titulo_de_eleitor = $request->titulo_de_eleitor;
-                $pessoa->numero_pis_pasep = $request->numero_pis_pasep;
-                $pessoa->escolaridade = $request->escolaridade;
-                $pessoa->cargo_id = $request->cargo_id;
-                // Fim Dados Necessários quando a pessoa for Funcionário
-                $pessoa->tipo_relacionamento_id = $request->tipo_relacionamento_id;
                 $pessoa->user_cadastro_id = $user_id ;
                 $pessoa->user_ultima_atualizacao_id = $user_id ;
+
                 $pessoa->save();   
                 
                 // //Salva telefone na tabela PessoaFisica telefones
@@ -103,8 +92,8 @@ class PessoaFisicaController extends Controller
                 // $pessoa_telefone->telefone = $request->telefone; 
     
                 DB::commit();
-    
-                return redirect()->route('admin.pessoa-fisica.index')->with('msg', 'Pessoa Física criado com sucesso!');
+
+                return redirect()->route('admin.pessoa-fisica.index')->with('msg', 'Pessoa Física criada com sucesso!');
             }
         } catch (\Exception $e) {
             // Em caso de erro, reverta a transação e lance a exceção novamente.
