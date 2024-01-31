@@ -40,7 +40,7 @@ return new class extends Migration
             
             // Fim Dados Necessários quando a pessoa for Funcionário
             $table->uuid('tipo_relacionamento_id')->nullable();
-            $table->uuid('cargo_id')->nullable();
+            // $table->uuid('cargo_id')->nullable();
             $table->uuid('unidade_negocio_id')->nullable();
             $table->uuid('user_cadastro_id')->nullable();
             $table->uuid('user_ultima_atualizacao_id')->nullable();
@@ -49,7 +49,7 @@ return new class extends Migration
             
             $table->foreign('tipo_relacionamento_id')->references('id')->on('tipos_de_relacionamento');
             $table->foreign('unidade_negocio_id')->references('id')->on('unidades_de_negocio');
-            $table->foreign('cargo_id')->references('id')->on('cargos');
+            // $table->foreign('cargo_id')->references('id')->on('cargos');
             $table->foreign('estado_id')->references('id')->on('estados');
             $table->foreign('cidade_id')->references('id')->on('cidades');
         });

@@ -120,7 +120,7 @@ Route::get('/pessoa-juridica/inativar/{id}', [PessoaJuridicaController::class, '
 Route::get('/pessoa-juridica/reativar/{id}', [PessoaJuridicaController::class, 'reativar'])->name('admin.pessoa-juridica.reativar');
 
 //LICENÇAS
-Route::get('/licenca', [LicencasController::class, 'index'])->name('admin.licencas.index');
+Route::get('/licencas', [LicencasController::class, 'index'])->name('admin.licencas.index');
 Route::get('/licenca/create', [LicencasController::class, 'create'])->name('admin.licencas.create');
 Route::post('/licenca', [LicencasController::class, 'store'])->name('admin.licencas.store');
 Route::get('/licenca/{id}', [LicencasController::class, 'show'])->name('admin.licencas.show');

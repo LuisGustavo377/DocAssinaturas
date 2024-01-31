@@ -13,14 +13,17 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Termwind\Components\Dd;
 
 class LicencasController extends Controller
 {
     public function index(): View
     {
-        $unidades = Licenca::orderBy('nome')->get();
+        
+        $licencas = Licenca::all();
+        $grupos = GrupoDeNegocios::all();
               
-        return view('admin.licencas.index', compact('unidades'));
+        return view('admin.licencas.index', compact('licencas', 'grupos'));
     }
 
 
@@ -28,14 +31,12 @@ class LicencasController extends Controller
     
     {
         $gruposDeNegocios = GrupoDeNegocios::orderBy('nome')->get();
-        $unidades = UnidadeDeNegocio::orderBy('id')->get();
-        $licenca = Licenca::orderBy('id')->get();
-        $pessoaFisica = PessoaFisica::orderBy('nome')->get();
-        $pessoaJuridica = PessoaJuridica::orderBy('razao_social')->get();
+        $unidades = UnidadeDeNegocio::orderBy('id')->get(); // talvez ainda nem precise 
+        $licencas = Licenca::orderBy('id')->get();
 
-        $pessoas = $pessoaFisica->merge($pessoaJuridica);
+        // $pessoas = $gruposDeNegocios->merge($unidades); utilizar na unidade de negócio
 
-        return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios','pessoas'));
+        return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas'));
     }
 
     public function store(Request $request)
@@ -53,20 +54,19 @@ class LicencasController extends Controller
                 $licenca = new Licenca();
 
                 $licenca->id = Str::uuid();
-                $licenca->grupo = $request->grupo;
+                $licenca->grupos_de_negocio_id = $request->grupos_de_negocio_id;
                 $licenca->numero_contrato = $request->numero_contrato;
                 $licenca->descricao = $request->descricao;
                 $licenca->inicio = $request->inicio;
                 $licenca->termino = $request->termino;
-                $licenca->limite_para_licenciamento = $request->limite_para_licenciamento;
-                $licenca->user_cadastro_id = $user_id;    
-                $licenca->user_ultima_aualizacao_id = $user_id;    
+                // $licenca->limite_para_licenciamento = $request->limite_para_licenciamento;
+                // $licenca->user_cadastro_id = $user_id;    
+                // $licenca->user_ultima_aualizacao_id = $user_id;    
                 $licenca->save();     
-
 
                 DB::commit();
 
-                return redirect()->route('admin.licencas.index')->with('msg', 'Unidade de Negócio criado com sucesso!');
+                return redirect()->route('admin.licencas.index')->with('msg', 'Licença criada com sucesso!');
             }
         } catch (\Exception $e) {
             // Em caso de erro, reverta a transação e lance a exceção novamente.
@@ -78,20 +78,20 @@ class LicencasController extends Controller
     
     public function show($id)
     {
-        $licenca = Licenca::findOrFail($id);
-        return view('admin.licencas.show', compact('unidade'));
+        $licencas = Licenca::findOrFail($id);
+        return view('admin.licencas.show', compact('licencas'));
     }
 
     public function edit($id)
     {
         try {
-            $unidade = UnidadeDeNegocio::findOrFail($id);
+            $licencas = Licenca::findOrFail($id);
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Grupo não encontrado
-            abort(404, 'Grupo não encontrado.');
+            abort(404, 'Licença não encontrada.');
         }
     
-        return view('admin.licencas.edit', compact('unidade'));
+        return view('admin.licencas.edit', compact('licencas'));
     }
 
     public function update(Request $request, $id)
@@ -107,12 +107,13 @@ class LicencasController extends Controller
             }
 
             $licenca->id = $request->input('id');
+            $licenca->grupo_id = $request->grupo_id;
             $licenca->user_ultima_atualizacao_id = $user_ultima_atualizacao;
             $licenca->save();
 
             DB::commit();
 
-            return redirect()->route('admin.licencas.index', ['id' => $licenca->id])->with('msg', 'Unidade alterado com sucesso!');
+            return redirect()->route('admin.licencas.index', ['id' => $licenca->id])->with('msg', 'Licença alterada com sucesso!');
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
@@ -135,7 +136,7 @@ class LicencasController extends Controller
     public function inativar($id)
     {
 
-        $licenca = UnidadeDeNegocio::findOrFail($id);
+        $licenca = Licenca::findOrFail($id);
 
         if ($licenca) {
             $licenca->status = 'inativo';
@@ -144,13 +145,13 @@ class LicencasController extends Controller
             return redirect()->route('admin.licencas.index')->with('msg', 'Licença inativada com sucesso.');
         }
 
-        return redirect()->route('admin.licencas.index')->with('msg', 'Licença não encontrado.');
+        return redirect()->route('admin.licencas.index')->with('msg', 'Licença não encontrada.');
     }
 
     public function reativar($id)
     {
 
-        $licenca = UnidadeDeNegocio::findOrFail($id);
+        $licenca = Licenca::findOrFail($id);
 
         if ($licenca) {
             $licenca->status = 'ativo';
@@ -159,7 +160,7 @@ class LicencasController extends Controller
             return redirect()->route('admin.licencas.index')->with('msg', 'Licença reativada com sucesso.');
         }
 
-        return redirect()->route('admin.licencas.index')->with('msg', 'Licença não encontrado.');
+        return redirect()->route('admin.licencas.index')->with('msg', 'Licença não encontrada.');
     }
 }
 

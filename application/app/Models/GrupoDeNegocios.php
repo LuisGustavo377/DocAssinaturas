@@ -26,8 +26,15 @@ class GrupoDeNegocios extends Model
 
     ];
 
-    public function unidade()
-    {
-        return $this->hasMany(UnidadeDeNegocios::class);
-    }
+
+    public function licencas()
+{
+    return $this->hasMany(Licenca::class, 'grupos_de_negocio_id');
+}
+
+
+    // public function unidade()
+    // {
+    //     return $this->hasMany(UnidadeDeNegocios::class);
+    // }
 }
