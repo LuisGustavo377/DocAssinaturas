@@ -76,10 +76,12 @@
                                             </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">{{ $licenca->inicio }}</h6>
+                                            <h6 class="mb-0 fw-semibold">
+                                                {{ \Carbon\Carbon::parse($licenca->inicio)->format('d/m/Y') }}</h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">{{ $licenca->termino }}</h6>
+                                            <h6 class="mb-0 fw-semibold">
+                                                {{ \Carbon\Carbon::parse($licenca->termino)->format('d/m/Y') }}</h6>
                                         </td>
 
                                         <td class="border-bottom-0">
@@ -98,8 +100,8 @@
                                                 class="m-1 btn btn-success" title="Editar">
                                                 <i class="ti ti-edit"></i>
                                             </a>
-
-                                            @if ($licenca->status === 'ativo')
+                                            {{-- OLHAR COM LETICIA  --}}
+                                            {{-- @if ($licenca->status === 'ativo')
                                                 <a href="{{ url('admin/licenca/inativar/' . $licenca->id) }}"
                                                     class="m-1 btn btn-danger" title="Inativar">
                                                     <i class="ti ti-lock"></i>
@@ -109,7 +111,7 @@
                                                     class="m-1 btn btn-warning" title="Reativar">
                                                     <i class="ti ti-lock-off"></i>
                                                 </a>
-                                            @endif
+                                            @endif --}}
                                         </td>
                                     </tr>
                                 @empty
