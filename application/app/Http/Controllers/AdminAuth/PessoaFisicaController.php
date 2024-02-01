@@ -91,6 +91,9 @@ class PessoaFisicaController extends Controller
                     $requestImage->move(public_path('img/pessoaFisica'), $imageName);
                     $pessoa->imagem = $imageName;
                 }
+                else{
+                    $pessoa->imagem = 'imagem_padrao';
+                }
     
                 $pessoa->save();   
     
