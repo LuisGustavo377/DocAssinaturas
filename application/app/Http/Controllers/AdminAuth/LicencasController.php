@@ -19,16 +19,16 @@ class LicencasController extends Controller
 {
     public function index(): View
     {
-        
+
         $licencas = Licenca::all();
         $grupos = GrupoDeNegocios::all();
-              
+
         return view('admin.licencas.index', compact('licencas', 'grupos'));
     }
 
 
     public function create(): View
-    
+
     {
         $gruposDeNegocios = GrupoDeNegocios::orderBy('nome')->get();
         $unidades = UnidadeDeNegocio::orderBy('id')->get(); // talvez ainda nem precise 
@@ -40,9 +40,9 @@ class LicencasController extends Controller
     }
 
     public function store(Request $request)
-    {       
-     
-       try {
+    {
+        
+        try {
 
             if (auth()->check()) {
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
@@ -53,16 +53,11 @@ class LicencasController extends Controller
 
                 $licenca = new Licenca();
 
+                $licenca->fill($request->all());
                 $licenca->id = Str::uuid();
-                $licenca->grupos_de_negocio_id = $request->grupos_de_negocio_id;
-                $licenca->numero_contrato = $request->numero_contrato;
-                $licenca->descricao = $request->descricao;
-                $licenca->inicio = $request->inicio;
-                $licenca->termino = $request->termino;
-                // $licenca->limite_para_licenciamento = $request->limite_para_licenciamento;
-                // $licenca->user_cadastro_id = $user_id;    
-                // $licenca->user_ultima_aualizacao_id = $user_id;    
-                $licenca->save();     
+                $licenca->status = 'ativo';
+                $licenca->user_cadastro_id = auth()->id();
+                $licenca->save();
 
                 DB::commit();
 
@@ -75,23 +70,23 @@ class LicencasController extends Controller
         }
     }
 
-    
+
     public function show($id)
     {
-        $licencas = Licenca::findOrFail($id);
-        return view('admin.licencas.show', compact('licencas'));
+        $licenca = Licenca::findOrFail($id);
+        return view('admin.licencas.show', compact('licenca'));
     }
 
     public function edit($id)
     {
         try {
-            $licencas = Licenca::findOrFail($id);
+            $licenca = Licenca::findOrFail($id);
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Grupo não encontrado
             abort(404, 'Licença não encontrada.');
         }
-    
-        return view('admin.licencas.edit', compact('licencas'));
+
+        return view('admin.licencas.edit', compact('licenca'));
     }
 
     public function update(Request $request, $id)
@@ -106,9 +101,8 @@ class LicencasController extends Controller
                 throw new \Exception('Licença não encontrado');
             }
 
-            $licenca->id = $request->input('id');
-            $licenca->grupo_id = $request->grupo_id;
-            $licenca->user_ultima_atualizacao_id = $user_ultima_atualizacao;
+            $licenca->fill($request->all());
+            $licenca->user_ultima_atualizacao_id = auth()->id();
             $licenca->save();
 
             DB::commit();
@@ -123,14 +117,19 @@ class LicencasController extends Controller
     public function search(Request $request)
     {
         $termoPesquisa = $request->input('search');
+        $licenca = Licenca::all();
 
         if (Auth::check()) {
-            $resultados = UnidadeDeNegocio::where('nome', 'ILIKE', "%$termoPesquisa%")->get();
+            $resultados = Licenca::with('grupoDeNegocios')
+                ->whereHas('grupoDeNegocios', function ($query) use ($termoPesquisa) {
+                    $query->where('nome', 'ILIKE', "%$termoPesquisa%");
+                })
+                ->get();
         } else {
             $resultados = [];
         }
 
-        return view('admin.licencas.search', compact('resultados', 'termoPesquisa'));
+        return view('admin.licencas.search', compact('resultados', 'termoPesquisa', 'licenca'));
     }
 
     public function inativar($id)
@@ -163,5 +162,3 @@ class LicencasController extends Controller
         return redirect()->route('admin.licencas.index')->with('msg', 'Licença não encontrada.');
     }
 }
-
-

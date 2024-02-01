@@ -18,7 +18,12 @@ class Licenca extends Model
    //Fim Configuração UUID
 
     protected $fillable = [
-        'nome',
+        'numero_contrato',
+        'descricao',
+        'inicio',
+        'termino',
+        'status',
+        'tipo_de_renovacao',
         'user_cadastro_id',
         'user_ultima_atualizacao_id',
         'grupos_de_negocio_id',
