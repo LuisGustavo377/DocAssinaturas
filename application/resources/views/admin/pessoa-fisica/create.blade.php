@@ -19,7 +19,7 @@
                 <h5 class="card-title fw-semibold mb-4">@yield('title')</h5>
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('admin.pessoa-fisica.store') }}">
+                        <form method="POST" action="{{ route('admin.pessoa-fisica.store') }}" enctype="multipart/form-data">>
                             @csrf {{-- Prevenção do laravel de ataques a formularios --}}
 
                             <div class="alert alert-light">

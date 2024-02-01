@@ -60,13 +60,11 @@ class PessoaFisicaController extends Controller
         try {
             if (Auth::check()) {
                 $user_id = Auth::id(); // Recupera o ID do usuário da sessão
-               
+    
                 DB::beginTransaction();
     
-                // Inicio - Salvar Grupo no Banco
-    
                 $pessoa = new PessoaFisica;
-
+    
                 $atributosParaMaiusculas = [
                     'nome', 
                     'tipo_de_logradouro',
@@ -75,31 +73,32 @@ class PessoaFisicaController extends Controller
                     'bairro',
                 ];              
     
+                $pessoa->fill($request->all());
                 $pessoa->id = Str::uuid();                
-                $pessoa->nome = $request->nome; 
-                $pessoa->cpf = $request->cpf; 
-                $pessoa->email = $request->email; 
-                $pessoa->telefone = $request->telefone; 
-                $pessoa->tipo_de_logradouro = $request->tipo_de_logradouro;               
-                $pessoa->logradouro = $request->logradouro;
-                $pessoa->numero = $request->numero;
-                $pessoa->complemento = $request->complemento;
-                $pessoa->bairro = $request->bairro;
-                $pessoa->estado_id = $request->estado;
-                $pessoa->cidade_id = $request->cidade;
-                $pessoa->imagem = $request->imagem;
                 $pessoa->user_cadastro_id = $user_id ;
                 $pessoa->user_ultima_atualizacao_id = $user_id ;
-
                 $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
+    
+                // Upload de Imagem
+                if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+                    $request->validate([
+                        'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
+                    ]);
+    
+                    $requestImage = $request->imagem;
+                    $extension = $requestImage->extension();
+                    $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+                    $requestImage->move(public_path('img/pessoaFisica'), $imageName);
+                    $pessoa->imagem = $imageName;
+                }
+    
                 $pessoa->save();   
-                
-                // //Salva telefone na tabela PessoaFisica telefones
-
+    
+                // Salva telefone na tabela PessoaFisica telefones
                 // $pessoa_telefone->telefone = $request->telefone; 
     
                 DB::commit();
-
+    
                 return redirect()->route('admin.pessoa-fisica.index')->with('msg', 'Pessoa Física criada com sucesso!');
             }
         } catch (\Exception $e) {
