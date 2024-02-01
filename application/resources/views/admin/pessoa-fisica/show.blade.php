@@ -1,3 +1,4 @@
+
 @extends('layouts.dashboard')
 
 @section('title', 'Detalhar Pessoa Fisica')
@@ -115,11 +116,11 @@
                                 
 
                                 @if ($pessoa->imagem === 'imagem_padrao')
-                                <img src="{{ asset('assets/images/profile/imagem_user.svg') }}" width="100" height="100"
+                                <img src="{{ asset('assets/images/profile/imagem_user.svg') }}" width="500" height="500"
                                     class="img-fluid rounded" alt="Imagem Padrão">
                                 @else
                                 <img src="{{ asset('img/pessoaFisica/' . $pessoa->imagem) }}"
-                                    class="w-100 img-fluid rounded" alt="Imagem">
+                                    class="img-fluid rounded" width="500" height="500">
                                 @endif
                             </div>
                         </div>

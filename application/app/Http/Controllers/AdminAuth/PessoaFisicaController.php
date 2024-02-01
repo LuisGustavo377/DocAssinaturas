@@ -22,6 +22,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 
 class PessoaFisicaController extends Controller
 {
@@ -59,8 +60,7 @@ class PessoaFisicaController extends Controller
     {
         try {
             if (Auth::check()) {
-                $user_id = Auth::id(); // Recupera o ID do usuário da sessão
-    
+
                 DB::beginTransaction();
     
                 $pessoa = new PessoaFisica;
@@ -75,26 +75,36 @@ class PessoaFisicaController extends Controller
     
                 $pessoa->fill($request->all());
                 $pessoa->id = Str::uuid();                
-                $pessoa->user_cadastro_id = $user_id ;
-                $pessoa->user_ultima_atualizacao_id = $user_id ;
+                $pessoa->user_cadastro_id = Auth::id();
+                $pessoa->user_ultima_atualizacao_id = $Auth::id();
                 $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
     
-                // Upload de Imagem
+                // Inicio - Upload de Imagem
                 if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
                     $request->validate([
                         'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
                     ]);
-    
+
                     $requestImage = $request->imagem;
                     $extension = $requestImage->extension();
                     $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+
+                    // Salva a imagem original
                     $requestImage->move(public_path('img/pessoaFisica'), $imageName);
+
+                    // Redimensiona a imagem para um tamanho específico
+                    $resizedImage = Image::make(public_path('img/pessoaFisica') . '/' . $imageName)
+                        ->fit(100, 100) // Tamanho desejado
+                        ->save();
+
                     $pessoa->imagem = $imageName;
-                }
-                else{
+                } else {
                     $pessoa->imagem = 'imagem_padrao';
                 }
-    
+                
+                // Fim - Upload de Imagem
+
+
                 $pessoa->save();   
     
                 // Salva telefone na tabela PessoaFisica telefones
@@ -117,30 +127,80 @@ class PessoaFisicaController extends Controller
     public function show($id)
     {
         $pessoa = PessoaFisica::findOrFail($id);
-        return view('admin.pessoa-fisica.show', compact('pessoa'));
+        $estados = Estado::all();
+        $cidades = Cidade::all();
+        return view('admin.pessoa-fisica.show', compact('pessoa', 'estados', 'cidades'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PessoaFisica $pessoaFisica)
+    public function edit($id)
     {
-        //
+        $pessoa = PessoaFisica::findOrFail($id);
+        $estados = Estado::all();
+        $cidades = Cidade::all();
+
+        try {
+            $pessoa = PessoaFisica::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            // Tratamento de exceção
+            abort(404, 'Pessoa não encontrada.');
+        }
+    
+        return view('admin.pessoa-fisica.edit', compact('pessoa', 'estados', 'cidades'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PessoaFisica $pessoaFisica)
+    public function update(Request $request, $id)
     {
-        //
-    }
+        try {
+            DB::beginTransaction();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PessoaFisica $pessoaFisica)
-    {
-        //
+            $pessoa = PessoaFisica::findOrFail($id);
+
+            if (!$pessoa) {
+                throw new \Exception('Pessoa não encontrada');
+            }
+
+            $atributosParaMaiusculas = [
+                'nome', 
+                'tipo_de_logradouro',
+                'logradouro',
+                'complemento',
+                'bairro',
+            ]; 
+
+            $pessoa->fill($request->all());
+            $pessoa->user_ultima_atualizacao_id = auth()->id();
+            $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
+
+            // Upload de Imagem
+            if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+                $request->validate([
+                    'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
+                ]);
+
+                $requestImage = $request->imagem;
+                $extension = $requestImage->extension();
+                $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+                $requestImage->move(public_path('img/pessoaFisica'), $imageName);
+                $pessoa->imagem = $imageName;
+            }
+            else{
+                $pessoa->imagem = 'imagem_padrao';
+            }
+
+            $pessoa->save();
+
+            DB::commit();
+
+            return redirect()->route('admin.pessoa-fisica.index', ['id' => $pessoa->id])->with('msg', 'Pessoa Física alterada com sucesso!');
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 }
