@@ -74,7 +74,6 @@ class PessoaFisicaController extends Controller
                     'complemento',
                     'bairro',
                 ];              
-        
     
                 $pessoa->id = Str::uuid();                
                 $pessoa->nome = $request->nome; 
