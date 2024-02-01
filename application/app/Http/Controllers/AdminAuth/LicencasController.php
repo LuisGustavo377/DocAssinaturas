@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminAuth\LicencaRequest as AdminAuthLicencaRequest;
+use App\Http\Requests\LicencaRequest;
 use App\Models\GrupoDeNegocios;
 use App\Models\UnidadeDeNegocio;
 use App\Models\Licenca;
@@ -39,7 +41,7 @@ class LicencasController extends Controller
         return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas'));
     }
 
-    public function store(Request $request)
+    public function store(AdminAuthLicencaRequest $request)
     {
         
         try {
