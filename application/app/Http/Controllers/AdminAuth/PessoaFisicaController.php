@@ -44,14 +44,12 @@ class PessoaFisicaController extends Controller
      */
     public function create(): View
     
-    {
-        
+    {        
         $estados = Estado::all();
         $cidades = Cidade::all();
         $cargos = Cargo::all();  
         
         return view('admin.pessoa-fisica.create', compact('estados', 'cidades', 'cargos'));
-
     }
 
     /**
@@ -68,6 +66,15 @@ class PessoaFisicaController extends Controller
                 // Inicio - Salvar Grupo no Banco
     
                 $pessoa = new PessoaFisica;
+
+                $atributosParaMaiusculas = [
+                    'nome', 
+                    'tipo_de_logradouro',
+                    'logradouro',
+                    'complemento',
+                    'bairro',
+                ];              
+        
     
                 $pessoa->id = Str::uuid();                
                 $pessoa->nome = $request->nome; 
@@ -85,6 +92,7 @@ class PessoaFisicaController extends Controller
                 $pessoa->user_cadastro_id = $user_id ;
                 $pessoa->user_ultima_atualizacao_id = $user_id ;
 
+                $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
                 $pessoa->save();   
                 
                 // //Salva telefone na tabela PessoaFisica telefones
@@ -105,9 +113,10 @@ class PessoaFisicaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PessoaFisica $pessoaFisica)
+    public function show($id)
     {
-        //
+        $pessoa = PessoaFisica::findOrFail($id);
+        return view('admin.pessoa-fisica.show', compact('pessoa'));
     }
 
     /**

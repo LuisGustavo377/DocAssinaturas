@@ -13,7 +13,6 @@
 @section('content')
 
 <div class="container-fluid">
-
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -136,8 +135,8 @@
 
                                 <div class="mb-3">
                                     <label for="estadoSelect" class="form-label">Estado</label>
-                                    <select class="form-select @error('estado') is-invalid @enderror" id="estadoSelect"
-                                        name="estado">
+                                    <select class="form-select @error('estado_id') is-invalid @enderror" id="estadoSelect"
+                                        name="estado_id">
                                         <option value="" selected disabled> -- Selecione o estado -- </option>
                                         @foreach($estados as $estado)
                                         <option value="{{ $estado->id }}"
@@ -154,8 +153,8 @@
 
                                 <div class="mb-3">
                                     <label for="cidadeSelect" class="form-label">Cidade</label>
-                                    <select class="form-select @error('cidade') is-invalid @enderror" id="cidadeSelect"
-                                        name="cidade">
+                                    <select class="form-select @error('cidade_id') is-invalid @enderror" id="cidadeSelect"
+                                        name="cidade_id">
                                         <option value="" selected disabled> -- Selecione a cidade -- </option>
                                         @foreach($cidades as $cidade)
                                         <option value="{{ $cidade->id }}"
@@ -242,5 +241,6 @@
             </div>
         </div>
     </div>
+</div>
 
-    @endsection
+@endsection

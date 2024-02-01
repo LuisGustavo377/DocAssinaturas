@@ -36,7 +36,7 @@ class PessoaFisica extends Model
         'imagem',
         'unidade_negocio_id',
         'user_cadastro_id',
-        'ser_ultima_atualizacao_id'
+        'user_ultima_atualizacao_id'
  
     ];
 
@@ -69,6 +69,16 @@ class PessoaFisica extends Model
     public function pessoaJuridicaContaBancaria()
     {
         return $this->hasMany(PessoaJuridicaContaBancaria::class);
+    }
+
+    public function salvarComAtributosMaiusculos(array $atributos)
+    {
+        foreach ($atributos as $atributo) {
+            if (isset($this->$atributo)) {
+                $this->$atributo = ucwords(strtolower($this->$atributo));
+            }
+        }
+        $this->save();
     }
 
 }
