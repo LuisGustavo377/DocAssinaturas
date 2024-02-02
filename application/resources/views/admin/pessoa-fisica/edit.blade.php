@@ -83,198 +83,187 @@
                             <label class="form-label" style="color: #13deb9">Endereço</label>
                         </div>
 
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label id="tipoLogradouroLabel" class="form-label">Tipos de Logradouro</label>
-                                <select class="form-select @error('tipo_de_logradouro') is-invalid @enderror"
-                                    id="tipoDeLogradouroInput" name="tipo_de_logradouro">
-                                    <option value="">-- Selecione um tipo de logradouro --</option>
-                                    @foreach([
-                                    'alameda', 'area', 'avenida', 'campo', 'chacara', 'colonia', 'condominio',
-                                    'conjunto', 'distrito',
-                                    'esplanada', 'estacao', 'estrada', 'favela', 'fazenda', 'feira', 'jardim',
-                                    'ladeira', 'lago', 'lagoa',
-                                    'largo', 'loteamento', 'morro', 'nucleo', 'parque', 'passarela', 'patio',
-                                    'praca', 'quadra', 'residencial',
-                                    'rodovia', 'rua', 'setor', 'sitio', 'travessa', 'trecho', 'trevo', 'vale',
-                                    'vereda', 'via', 'viduto', 'viaduto',
-                                    'viela', 'vila'
-                                    ] as $tipo)
-                                    <option value="{{ $tipo }}"
-                                        {{ $pessoa->tipo_de_logradouro == $tipo || old('tipo_de_logradouro') == $tipo ? 'selected' : '' }}>
-                                        {{ ucfirst($tipo) }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('tipo_de_logradouro')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
+                        <div class="mb-3">
+                            <label for="TipoDeLogradouroSelect" class="form-label">Tipo de Logradouro</label>
+                            <select class="form-select @error('tipo_de_logradouro_id') is-invalid @enderror"
+                                id="estadoSelect" name="tipo_de_logradouro_id">
+                                <option value="" selected disabled> -- Selecione o tipo de logradouro -- </option>
+                                @foreach($tipos_de_logradouro as $tipo)
+                                <option value="{{ $tipo->id }}"
+                                    {{ old('tipo_de_logradouro_id', $pessoa->tipo_de_logradouro_id) == $tipo->id ? 'selected' : '' }}>
+                                    {{ $tipo->descricao }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('tipo_de_logradouro_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
                             </div>
-
-
-                            <div class="mb-3">
-                                <label id="logradouroLabel" class="form-label">Logradouro</label>
-                                <input type="text" class="form-control @error('logradouro') is-invalid @enderror"
-                                    id="logradouroInput" name="logradouro" placeholder="Logradouro"
-                                    value="{{ $pessoa->logradouro }}">
-                                @error('logradouro')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label id="numeroLabel" class="form-label">Número</label>
-                                <input type="text" class="form-control @error('numero') is-invalid @enderror"
-                                    id="numeroInput" name="numero" placeholder="Número" value="{{ $pessoa->numero }}">
-                                @error('numero')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label id="complementoLabel" class="form-label">Complemento</label>
-                                <input type="text" class="form-control @error('complemento') is-invalid @enderror"
-                                    id="complementoInput" name="complemento" placeholder="Complemento"
-                                    value="{{ $pessoa->complemento }}">
-                                @error('complemento')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label id="bairroLabel" class="form-label">Bairro</label>
-                                <input type="text" class="form-control @error('bairro') is-invalid @enderror"
-                                    id="bairroInput" name="bairro" placeholder="Bairro" value="{{ $pessoa->bairro }}">
-                                @error('bairro')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="estadoSelect" class="form-label">Estado</label>
-                                <select class="form-select @error('estado_id') is-invalid @enderror" id="estadoSelect"
-                                    name="estado_id">
-                                    <option value="" selected disabled> -- Selecione o estado -- </option>
-                                    @foreach($estados as $estado)
-                                    <option value="{{ $estado->id }}"
-                                        {{ old('estado_id', $pessoa->estado_id) == $estado->id ? 'selected' : '' }}>
-                                        {{ $estado->nome }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('estado_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="cidadeSelect" class="form-label">Cidade</label>
-                                <select class="form-select @error('cidade_id') is-invalid @enderror" id="cidadeSelect"
-                                    name="cidade_id">
-                                    <option value="" selected disabled> -- Selecione a cidade -- </option>
-                                    @foreach($cidades as $cidade)
-                                    <option value="{{ $cidade->id }}"
-                                        {{ old('cidade_id', $pessoa->cidade_id) == $cidade->id ? 'selected' : '' }}>
-                                        {{ $cidade->nome }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('cidade_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
+                            @enderror
                         </div>
 
-                        <div class="alert alert-light">
-                            <i class="ti ti-photo" style="color: #13deb9"></i>
-                            <label class="form-label" style="color: #13deb9">Imagem</label>
-                        </div>
 
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label id="imagemLabel" class="form-label">Nova Imagem</label>
-                                <input type="file" class="form-control @error('imagem') is-invalid @enderror"
-                                    id="imagemInput" name="imagem">
-                                @error('imagem')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
+                        <div class="mb-3">
+                            <label id="logradouroLabel" class="form-label">Logradouro</label>
+                            <input type="text" class="form-control @error('logradouro') is-invalid @enderror"
+                                id="logradouroInput" name="logradouro" placeholder="Logradouro"
+                                value="{{ $pessoa->logradouro }}">
+                            @error('logradouro')
+                            <div class="invalid-feedback">
+                                {{ $message }}
                             </div>
+                            @enderror
                         </div>
 
-                        <div class="mb-3 d-flex justify-content-end">
-                            <div class="mb-3">
-                                <div class="text-center my-4">
-                                    <a href="javascript:history.back()" class="btn btn-light me-2">
-                                        <i class="ti ti-arrow-left me-1"></i>
-                                        Voltar
-                                    </a>
-                                    <button type="submit" class="btn btn-success ms-2">
-                                        <i class="ti ti-edit me-1"></i>
-                                        Alterar
-                                    </button>
-                                </div>
+                        <div class="mb-3">
+                            <label id="numeroLabel" class="form-label">Número</label>
+                            <input type="text" class="form-control @error('numero') is-invalid @enderror"
+                                id="numeroInput" name="numero" placeholder="Número" value="{{ $pessoa->numero }}">
+                            @error('numero')
+                            <div class="invalid-feedback">
+                                {{ $message }}
                             </div>
+                            @enderror
                         </div>
-                    </form>
 
-                    <!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
-                    <script>
-                    $(document).ready(function() {
-                        // Desabilitar o campo de cidade inicialmente
-                        $('#cidadeSelect').prop('disabled', true);
+                        <div class="mb-3">
+                            <label id="complementoLabel" class="form-label">Complemento</label>
+                            <input type="text" class="form-control @error('complemento') is-invalid @enderror"
+                                id="complementoInput" name="complemento" placeholder="Complemento"
+                                value="{{ $pessoa->complemento }}">
+                            @error('complemento')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
 
-                        $('#estadoSelect').change(function() {
-                            var estado_id = $(this).val();
+                        <div class="mb-3">
+                            <label id="bairroLabel" class="form-label">Bairro</label>
+                            <input type="text" class="form-control @error('bairro') is-invalid @enderror"
+                                id="bairroInput" name="bairro" placeholder="Bairro" value="{{ $pessoa->bairro }}">
+                            @error('bairro')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
 
-                            // Limpar o dropdown de cidades
-                            $('#cidadeSelect').empty();
+                        <div class="mb-3">
+                            <label for="estadoSelect" class="form-label">Estado</label>
+                            <select class="form-select @error('estado_id') is-invalid @enderror" id="estadoSelect"
+                                name="estado_id">
+                                <option value="" selected disabled> -- Selecione o estado -- </option>
+                                @foreach($estados as $estado)
+                                <option value="{{ $estado->id }}"
+                                    {{ old('estado_id', $pessoa->estado_id) == $estado->id ? 'selected' : '' }}>
+                                    {{ $estado->nome }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('estado_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
 
-                            if (estado_id) {
-                                // Remover o atributo disabled quando um estado for selecionado
-                                $('#cidadeSelect').prop('disabled', false);
-
-                                // Fazer a solicitação AJAX para obter as cidades do estado selecionado
-                                $.ajax({
-                                    url: '/api/cidades/' + estado_id,
-                                    type: 'GET',
-                                    success: function(data) {
-                                        // Adicionar as opções de cidades ao dropdown
-                                        $.each(data, function(key, value) {
-                                            $('#cidadeSelect').append(
-                                                '<option value="' + value.id +
-                                                '">' +
-                                                value.nome + '</option>'
-                                            );
-                                        });
-                                    }
-                                });
-                            } else {
-                                // Se nenhum estado for selecionado, desabilitar novamente o campo de cidade
-                                $('#cidadeSelect').prop('disabled', true);
-                            }
-                        });
-                    });
-                    </script>
+                        <div class="mb-3">
+                            <label for="cidadeSelect" class="form-label">Cidade</label>
+                            <select class="form-select @error('cidade_id') is-invalid @enderror" id="cidadeSelect"
+                                name="cidade_id">
+                                <option value="" selected disabled> -- Selecione a cidade -- </option>
+                                @foreach($cidades as $cidade)
+                                <option value="{{ $cidade->id }}"
+                                    {{ old('cidade_id', $pessoa->cidade_id) == $cidade->id ? 'selected' : '' }}>
+                                    {{ $cidade->nome }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('cidade_id')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
                 </div>
+
+                <div class="alert alert-light">
+                    <i class="ti ti-photo" style="color: #13deb9"></i>
+                    <label class="form-label" style="color: #13deb9">Imagem</label>
+                </div>
+
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label id="imagemLabel" class="form-label">Nova Imagem</label>
+                        <input type="file" class="form-control @error('imagem') is-invalid @enderror" id="imagemInput"
+                            name="imagem">
+                        @error('imagem')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="mb-3 d-flex justify-content-end">
+                    <div class="mb-3">
+                        <div class="text-center my-4">
+                            <a href="javascript:history.back()" class="btn btn-light me-2">
+                                <i class="ti ti-arrow-left me-1"></i>
+                                Voltar
+                            </a>
+                            <button type="submit" class="btn btn-success ms-2">
+                                <i class="ti ti-edit me-1"></i>
+                                Alterar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+
+                <!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
+                <script>
+                $(document).ready(function() {
+                    // Desabilitar o campo de cidade inicialmente
+                    $('#cidadeSelect').prop('disabled', true);
+
+                    $('#estadoSelect').change(function() {
+                        var estado_id = $(this).val();
+
+                        // Limpar o dropdown de cidades
+                        $('#cidadeSelect').empty();
+
+                        if (estado_id) {
+                            // Remover o atributo disabled quando um estado for selecionado
+                            $('#cidadeSelect').prop('disabled', false);
+
+                            // Fazer a solicitação AJAX para obter as cidades do estado selecionado
+                            $.ajax({
+                                url: '/api/cidades/' + estado_id,
+                                type: 'GET',
+                                success: function(data) {
+                                    // Adicionar as opções de cidades ao dropdown
+                                    $.each(data, function(key, value) {
+                                        $('#cidadeSelect').append(
+                                            '<option value="' + value.id +
+                                            '">' +
+                                            value.nome + '</option>'
+                                        );
+                                    });
+                                }
+                            });
+                        } else {
+                            // Se nenhum estado for selecionado, desabilitar novamente o campo de cidade
+                            $('#cidadeSelect').prop('disabled', true);
+                        }
+                    });
+                });
+                </script>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 @endsection

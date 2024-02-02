@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('bairro')->nullable();
             $table->integer('estado_id');
             $table->integer('cidade_id');
+            $table->uuid('tipo_de_logradouro_id');
             $table->text('senha')->nullable();
             $table->enum('senha_temporaria', ['sim', 'nao'])->nullable();
             $table->enum('status', ['ativo', 'inativo', 'pendente-pagamento'])->default('ativo');
@@ -37,6 +38,7 @@ return new class extends Migration
             $table->foreign('unidade_negocio_id')->references('id')->on('unidades_de_negocio');
             $table->foreign('estado_id')->references('id')->on('estados');
             $table->foreign('cidade_id')->references('id')->on('cidades');
+            $table->foreign('tipo_de_logradouro_id')->references('id')->on('tipos_de_logradouro');
             
         });
     }

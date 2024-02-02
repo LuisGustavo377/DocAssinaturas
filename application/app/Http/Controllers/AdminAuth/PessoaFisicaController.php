@@ -7,8 +7,8 @@ use App\Models\PessoaFisica;
 use App\Models\Estado;
 use App\Models\Cidade;
 use App\Models\Admin;
-use App\Models\Cargo;
 use App\Models\TipoDeRelacionamento;
+use App\Models\TipoDeLogradouro;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -23,6 +23,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+
 
 class PessoaFisicaController extends Controller
 {
@@ -48,9 +49,9 @@ class PessoaFisicaController extends Controller
     {        
         $estados = Estado::all();
         $cidades = Cidade::all();
-        $cargos = Cargo::all();  
-        
-        return view('admin.pessoa-fisica.create', compact('estados', 'cidades', 'cargos'));
+        $tipos_de_logradouro = TipoDeLogradouro::all();
+      
+        return view('admin.pessoa-fisica.create', compact('estados', 'cidades', 'tipos_de_logradouro'));
     }
 
     /**
@@ -76,7 +77,7 @@ class PessoaFisicaController extends Controller
                 $pessoa->fill($request->all());
                 $pessoa->id = Str::uuid();                
                 $pessoa->user_cadastro_id = Auth::id();
-                $pessoa->user_ultima_atualizacao_id = $Auth::id();
+                $pessoa->user_ultima_atualizacao_id = Auth::id();
                 $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
     
                 // Inicio - Upload de Imagem
@@ -129,6 +130,7 @@ class PessoaFisicaController extends Controller
         $pessoa = PessoaFisica::findOrFail($id);
         $estados = Estado::all();
         $cidades = Cidade::all();
+        $tipos_de_logradouro = TipoDeLogradouro::all();
         return view('admin.pessoa-fisica.show', compact('pessoa', 'estados', 'cidades'));
     }
 
@@ -137,10 +139,6 @@ class PessoaFisicaController extends Controller
      */
     public function edit($id)
     {
-        $pessoa = PessoaFisica::findOrFail($id);
-        $estados = Estado::all();
-        $cidades = Cidade::all();
-
         try {
             $pessoa = PessoaFisica::findOrFail($id);
         } catch (ModelNotFoundException $e) {
@@ -148,8 +146,13 @@ class PessoaFisicaController extends Controller
             abort(404, 'Pessoa não encontrada.');
         }
     
-        return view('admin.pessoa-fisica.edit', compact('pessoa', 'estados', 'cidades'));
+        $estados = Estado::all();
+        $cidades = Cidade::all();
+        $tipos_de_logradouro = TipoDeLogradouro::all();
+
+        return view('admin.pessoa-fisica.edit', compact('pessoa', 'estados', 'cidades', 'tipos_de_logradouro'));
     }
+    
 
     /**
      * Update the specified resource in storage.

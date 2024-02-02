@@ -84,7 +84,25 @@
 
                             <div class="card-body">
 
-                                <x-tipo-de-logradouro></x-tipo-de-logradouro>
+                                <div class="mb-3">
+                                    <label class="form-label">Tipo de Logradouro</label>
+                                    <select class="form-select @error('tipo_logradouro') is-invalid @enderror"
+                                        id="tipoLogradouroInput" name="tipo_de_logradouro_id">
+                                        <option value="" selected disabled>Selecione o Tipo de Logradouro</option>
+                                        @foreach($tipos_de_logradouro as $tipo)
+                                        <option value="{{ $tipo['id'] }}"
+                                            {{ old('tipo_logradouro') == $tipo['id'] ? 'selected' : '' }}>
+                                            {{ $tipo['descricao'] }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @error('tipo_logradouro')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
 
                                 <div class="mb-3">
                                     <label id="logradouroLabel" class="form-label">Logradouro</label>

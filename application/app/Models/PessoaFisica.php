@@ -36,7 +36,8 @@ class PessoaFisica extends Model
         'imagem',
         'unidade_negocio_id',
         'user_cadastro_id',
-        'user_ultima_atualizacao_id'
+        'user_ultima_atualizacao_id',
+        'tipo_de_logradouro_id'
  
     ];
 
@@ -60,6 +61,10 @@ class PessoaFisica extends Model
     {
         return $this->HasMany(TipoDeRelacionamento::class);
     }
+    public function tipoDeLogradouro()
+    {
+        return $this->belongsTo(TipoDeLogradouro::class, 'tipo_de_logradouro_id');
+    }
 
     public function pessoaFisicaContaBancaria()
     {
@@ -80,5 +85,6 @@ class PessoaFisica extends Model
         }
         $this->save();
     }
+
 
 }

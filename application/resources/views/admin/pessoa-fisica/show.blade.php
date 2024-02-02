@@ -67,7 +67,7 @@
                             <label id="logradouroLabel" class="form-label">Logradouro</label>
                             <input type="text" class="form-control @error('logradouro') is-invalid @enderror"
                                 id="logradouroInput" name="logradouro" placeholder="Logradouro"
-                                value="{{ $pessoa->tipo_de_logradouro . ' ' . $pessoa->logradouro }}" disabled>
+                                value="{{ $pessoa->tipoDeLogradouro->descricao . ' ' . $pessoa->logradouro }}" disabled>
                         </div>
 
                         <div class="mb-3">
