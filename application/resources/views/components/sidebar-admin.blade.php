@@ -6,7 +6,7 @@
                 <img src="{{ asset('assets/images/logos/dark-logo.svg') }}" width="180" alt="" />
 
             </a>
-            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <div class="cursor-pointer close-btn d-xl-none d-block sidebartoggler" id="sidebarCollapse">
                 <i class="ti ti-x fs-8"></i>
             </div>
         </div>
@@ -52,6 +52,14 @@
                             <i class="ti ti-key"></i>
                         </span>
                         <span class="hide-menu">Licenças</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/admin/contratos">
+                        <span>
+                            <i class="ti ti-file-certificate"></i>
+                        </span>
+                        <span class="hide-menu">Contratos   </span>
                     </a>
                 </li>
 

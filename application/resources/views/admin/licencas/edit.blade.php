@@ -71,8 +71,8 @@
                                     </div>
                                     <div class="mb-3 col-md-4">
                                         <label id="statusLabel" class="form-label">Status</label>
-                                        <select class="form-select @error('status') is-invalid @enderror"
-                                            id="statusInput" name="status">
+                                        <select class="form-select @error('status') is-invalid @enderror" id="statusInput"
+                                            name="status">
                                             <option value="" disabled>-- Altere o Status --</option>
                                             @foreach (['ativo', 'inativo', 'bloqueado'] as $opcao)
                                                 <option value="{{ $opcao }}"
@@ -122,22 +122,24 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="mb-3 d-flex justify-content-end">
+                                <div class="mb-3">
+                                    <div class="my-4 text-center">
+                                        <a href="javascript:history.back()" class="btn btn-light me-2">
+                                            <i class="ti ti-arrow-left me-1"></i>
+                                            Voltar
+                                        </a>
+                                        <button type="submit" class="btn btn-success ms-2">
+                                            <i class="ti ti-check me-1"></i>
+                                            Alterar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
 
-                    <div class="mb-3 d-flex justify-content-end">
-                        <div class="mb-3">
-                            <div class="my-4 text-center">
-                                <a href="javascript:history.back()" class="btn btn-light me-2">
-                                    <i class="ti ti-arrow-left me-1"></i>
-                                    Voltar
-                                </a>
-                                <button type="submit" class="btn btn-success ms-2">
-                                    <i class="ti ti-check me-1"></i>
-                                    Alterar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+
                     </form>
                 </div>
             </div>

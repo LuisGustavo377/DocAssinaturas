@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contratos', function (Blueprint $table) {
+        Schema::create('contratos_arquivos', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('contrato_id');
             $table->string('numero_contrato');
-            $table->enum('status', ['ativo', 'inativo']);
+            $table->binary('arquivo');
+            $table->uuid('user_cadastro_id')->nullable();
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contratos');
+        Schema::dropIfExists('contratos_arquivos');
     }
 };

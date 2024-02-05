@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Contrato extends Model
+class ContratoArquivo extends Model
 {
     use HasFactory;
 
-    protected $table = 'contratos';
+    protected $table = 'contratos_arquivos';
 
     //Inicio Configuração UUID
     protected $primaryKey = 'id'; // Nome da coluna UUID
@@ -19,13 +19,16 @@ class Contrato extends Model
 
     protected $fillable = [
         'numero_contrato',
-        'status'
+        'arquivo',
+        'contrato_id',
+        'user_cadastro_id',
+        'user_ultima_atualizacao_id'
 
     ];
 
-    public function contratoArquivo()
+   
+    public function contrato()
     {
-        return $this->hasMany(ContratoArquivo::class);
+        return $this->belongsTo(Contrato::class);
     }
-
 }

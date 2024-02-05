@@ -15,6 +15,7 @@ use App\Http\Controllers\AdminAuth\PessoaFisicaController;
 use App\Http\Controllers\AdminAuth\PessoaJuridicaController;
 use App\Http\Controllers\AdminAuth\UnidadeDeNegocioController;
 use App\Http\Controllers\AdminAuth\CargoController;
+use App\Http\Controllers\AdminAuth\ContratosController;
 use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
 use App\Http\Controllers\CidadesController;
 
@@ -132,6 +133,19 @@ Route::put('/licenca/{id}', [LicencasController::class, 'update'])->name('admin.
 Route::post('/licenca/search', [LicencasController::class, 'search'])->name('admin.licencas.search');
 Route::get('/licenca/inativar/{id}', [LicencasController::class, 'inativar'])->name('admin.licencas.inativar');
 Route::get('/licenca/reativar/{id}', [LicencasController::class, 'reativar'])->name('admin.licencas.reativar');
+
+
+
+//CONTRATOS
+Route::get('/contratos', [ContratosController::class, 'index'])->name('admin.contratos.index');
+Route::get('/contrato/create', [ContratosController::class, 'create'])->name('admin.contratos.create');
+Route::post('/contrato', [ContratosController::class, 'store'])->name('admin.contratos.store');
+Route::get('/contrato/{id}', [ContratosController::class, 'show'])->name('admin.contratos.show');
+Route::get('/contrato/{id}/edit', [ContratosController::class, 'edit'])->name('admin.contratos.edit');
+Route::put('/contrato/{id}', [ContratosController::class, 'update'])->name('admin.contratos.update');
+Route::post('/contrato/search', [ContratosController::class, 'search'])->name('admin.contratos.search');
+Route::get('/contrato/inativar/{id}', [ContratosController::class, 'inativar'])->name('admin.contratos.inativar');
+Route::get('/contrato/reativar/{id}', [ContratosController::class, 'reativar'])->name('admin.contratos.reativar');
 
 });
 
