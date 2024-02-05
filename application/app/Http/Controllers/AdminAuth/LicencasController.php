@@ -10,6 +10,7 @@ use App\Models\UnidadeDeNegocio;
 use App\Models\Licenca;
 use App\Models\PessoaFisica;
 use App\Models\PessoaJuridica;
+use App\Models\TipoDeRenovacao;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
@@ -35,10 +36,11 @@ class LicencasController extends Controller
         $gruposDeNegocios = GrupoDeNegocios::orderBy('nome')->get();
         $unidades = UnidadeDeNegocio::orderBy('id')->get(); // talvez ainda nem precise 
         $licencas = Licenca::orderBy('id')->get();
+        $tiposDeRenovacao = TipoDeRenovacao::all();
 
         // $pessoas = $gruposDeNegocios->merge($unidades); utilizar na unidade de negócio
 
-        return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas'));
+        return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas', 'tiposDeRenovacao'));
     }
 
     public function store(AdminAuthLicencaRequest $request)
@@ -58,6 +60,7 @@ class LicencasController extends Controller
                 $licenca->fill($request->all());
                 $licenca->id = Str::uuid();
                 $licenca->status = 'ativo';
+                $licenca->tipo_de_renovacao_id = $request->tipo_de_renovacao;
                 $licenca->user_cadastro_id = auth()->id();
                 $licenca->save();
 

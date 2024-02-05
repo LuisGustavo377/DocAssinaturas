@@ -23,7 +23,7 @@ class Licenca extends Model
         'inicio',
         'termino',
         'status',
-        'tipo_de_renovacao',
+        'tipo_de_renovacao_id',
         'user_cadastro_id',
         'user_ultima_atualizacao_id',
         'grupos_de_negocio_id',
@@ -33,5 +33,10 @@ class Licenca extends Model
     public function grupoDeNegocios()
 {
     return $this->belongsTo(GrupoDeNegocios::class, 'grupos_de_negocio_id');
+}
+
+public function tipoDeRenovacao()
+{
+    return $this->hasOne(TipoDeRenovacao::class, 'id', 'tipo_de_renovacao_id');
 }
 }

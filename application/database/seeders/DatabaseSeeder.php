@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             TiposTransacaoSeeder::class,
             TiposCobrancaSeeder::class,
             TiposDeLogradouroSeeder::class,
+            TiposDeRenovacaoSeeder::class,
             GrupoNegocioSeeder::class,
             CargosSeeder::class,
             AdminSeeder::class

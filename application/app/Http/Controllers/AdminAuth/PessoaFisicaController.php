@@ -13,7 +13,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\EstabelecimentoRequest;
+use App\Http\Requests\AdminAuth\PessoaFisicaRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -57,7 +57,7 @@ class PessoaFisicaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PessoaFisicaRequest $request)
     {
         try {
             if (Auth::check()) {

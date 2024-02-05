@@ -43,7 +43,7 @@
                                     <div class="mb-3 col-md-4">
                                         <label id="tipoDeRenovacaoLabel" class="form-label">Tipo de Renovação</label>
                                         <input type="text" class="form-control" id="nomeDeRenovacaoInput"
-                                            name="tipo_de_renovacao" value="{{ ucfirst($licenca->tipo_de_renovacao) }}"
+                                            name="tipo_de_renovacao" value="{{ $licenca->tipoDeRenovacao->descricao }}"
                                             disabled>
                                     </div>
                                     <div class="mb-3 col-md-4">

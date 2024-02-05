@@ -161,7 +161,7 @@
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('estado')
+                                    @error('estado_id')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -179,7 +179,7 @@
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('cidade')
+                                    @error('cidade_id')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
