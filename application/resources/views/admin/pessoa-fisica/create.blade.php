@@ -31,9 +31,9 @@
                             <div class="card-body">
 
                                 <div class="mb-3">
-                                    <label id="nomeLabel" class="form-label">Nome</label>
+                                    <label id="nomeLabel" class="form-label">Nome Completo</label>
                                     <input type="text" class="form-control @error('nome') is-invalid @enderror"
-                                        id="nomeInput" name="nome" placeholder="Nome" value="{{ old('nome') }}">
+                                        id="nomeInput" name="nome" placeholder="Nome Completo" value="{{ old('nome') }}" >
                                     @error('nome')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -44,7 +44,7 @@
                                 <div class="mb-3">
                                     <label id="cpfLabel" class="form-label">CPF</label>
                                     <input type="text" class="form-control @error('cpf') is-invalid @enderror"
-                                        id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}">
+                                        id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}" maxLength='11' >
                                     @error('cpf')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -57,7 +57,7 @@
                                     <input type="tel" oninput="mascaraTelefone(this)" maxlength="15"
                                         class="form-control telefone @error('telefone') is-invalid @enderror"
                                         id="telefoneInput" name="telefone" placeholder="Telefone"
-                                        value="{{ old('telefone') }}">
+                                        value="{{ old('telefone') }}" >
                                     @error('telefone')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -68,7 +68,7 @@
                                 <div class="mb-3">
                                     <label id="emailLabel" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                        id="emailInput" name="email" placeholder="Email" value="{{ old('email') }}">
+                                        id="emailInput" name="email" placeholder="Email" value="{{ old('email') }}" >
                                     @error('email')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -88,7 +88,7 @@
                                     <label class="form-label">Tipo de Logradouro</label>
                                     <select class="form-select @error('tipo_logradouro') is-invalid @enderror"
                                         id="tipoLogradouroInput" name="tipo_de_logradouro_id">
-                                        <option value="" selected disabled>Selecione o Tipo de Logradouro</option>
+                                        <option value="" selected disabled> -- Selecione o tipo de logradouro -- </option>
                                         @foreach($tipos_de_logradouro as $tipo)
                                         <option value="{{ $tipo['id'] }}"
                                             {{ old('tipo_logradouro') == $tipo['id'] ? 'selected' : '' }}>
@@ -108,7 +108,7 @@
                                     <label id="logradouroLabel" class="form-label">Logradouro</label>
                                     <input type="text" class="form-control @error('logradouro') is-invalid @enderror"
                                         id="logradouroInput" name="logradouro" placeholder="Logradouro"
-                                        value="{{ old('logradouro') }}">
+                                        value="{{ old('logradouro') }}" >
                                     @error('logradouro')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -119,7 +119,7 @@
                                 <div class="mb-3">
                                     <label id="numeroLabel" class="form-label">Número</label>
                                     <input type="text" class="form-control @error('numero') is-invalid @enderror"
-                                        id="numeroInput" name="numero" placeholder="Número" value="{{ old('numero') }}">
+                                        id="numeroInput" name="numero" placeholder="Número" value="{{ old('numero') }}" >
                                     @error('numero')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -131,7 +131,7 @@
                                     <label id="complementoLabel" class="form-label">Complemento</label>
                                     <input type="text" class="form-control @error('complemento') is-invalid @enderror"
                                         id="complementoInput" name="complemento" placeholder="Complemento"
-                                        value="{{ old('complemento') }}">
+                                        value="{{ old('complemento') }}" >
                                     @error('complemento')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -142,7 +142,7 @@
                                 <div class="mb-3">
                                     <label id="bairroLabel" class="form-label">Bairro</label>
                                     <input type="text" class="form-control @error('bairro') is-invalid @enderror"
-                                        id="bairroInput" name="bairro" placeholder="Bairro" value="{{ old('bairro') }}">
+                                        id="bairroInput" name="bairro" placeholder="Bairro" value="{{ old('bairro') }}" >
                                     @error('bairro')
                                     <div class="invalid-feedback">
                                         {{ $message }}
