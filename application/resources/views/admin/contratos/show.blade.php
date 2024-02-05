@@ -28,9 +28,10 @@
                             <div class="card-body">
                                 <div class="mb-3">
                                     <label id="numero_contratoLabel" class="form-label">Número Contrato</label>
-                                    <input type="text" class="form-control @error('numero_contrato') is-invalid @enderror"
-                                        id="numero_contratoInput" name="numero_contrato" placeholder="Número Contrato" value="{{ $contrato->numero_contrato }}"
-                                        disabled>
+                                    <input type="text"
+                                        class="form-control @error('numero_contrato') is-invalid @enderror"
+                                        id="numero_contratoInput" name="numero_contrato" placeholder="Número Contrato"
+                                        value="{{ $contrato->numero_contrato }}" disabled>
                                     @error('numero_contrato')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -47,7 +48,7 @@
                                     <div class="mb-3 col-md-6">
                                         <label id="arquivoLabel" class="form-label">Contrato</label>
                                         <input type="text" class="form-control" id="arquivoInput" name="arquivo"
-                                            value="{{ $contrato->arquivo }}" disabled>
+                                            value="{{ $contrato->contratoArquivo->first()->arquivo }}" disabled>
                                     </div>
                                 </div>
                             </div>

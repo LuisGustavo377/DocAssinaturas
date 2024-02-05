@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('contrato_id');
             $table->string('numero_contrato');
-            $table->binary('arquivo');
+            $table->string('arquivo');
             $table->uuid('user_cadastro_id')->nullable();
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
