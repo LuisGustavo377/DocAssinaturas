@@ -87,18 +87,11 @@ class PessoaFisicaController extends Controller
                     ]);
 
                     $requestImage = $request->imagem;
-                    $extension = $requestImage->extension();
+                    $extension = $requestImage->getClientOriginalExtension();
                     $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
-
-                    // Salva a imagem original
                     $requestImage->move(public_path('img/pessoaFisica'), $imageName);
-
-                    // Redimensiona a imagem para um tamanho específico
-                    $resizedImage = Image::make(public_path('img/pessoaFisica') . '/' . $imageName)
-                        ->fit(100, 100) // Tamanho desejado
-                        ->save();
-
                     $pessoa->imagem = $imageName;
+
                 } else {
                     $pessoa->imagem = 'imagem_padrao';
                 }
@@ -176,7 +169,37 @@ class PessoaFisicaController extends Controller
                 'bairro',
             ]; 
 
-            $pessoa->fill($request->all());
+            //Preenche a nova instancia com os dados do request
+            $pessoa->fill($request->all()); 
+
+            // Atualiza o campo cpf se fornecido e diferente do cpf atual
+            if ($request->has('cpf') && $request->input('cpf') !== $pessoa->cpf) {
+                $pessoa->cpf = $request->input('cpf');
+                $validator = (new PessoaFisicaRequest)->getValidatorInstance();
+                $validator->validate();        
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->withInput();
+                }     
+                
+            }
+            else{
+
+                // Obter regras e mensagens do PessoaFisicaRequest
+                $rules = (new PessoaFisicaRequest)->rules();
+                $messages = (new PessoaFisicaRequest)->messages();
+
+                // Remover a regra unique do campo cpf
+                unset($rules['cpf']);
+                unset($messages['cpf.unique']);
+
+                // Validar todos os campos, exceto o campo cpf
+                $validator = Validator::make($request->all(), $rules, $messages);
+
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator)->withInput();
+                }
+            }
+
             $pessoa->user_ultima_atualizacao_id = auth()->id();
             $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
 
@@ -191,9 +214,6 @@ class PessoaFisicaController extends Controller
                 $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
                 $requestImage->move(public_path('img/pessoaFisica'), $imageName);
                 $pessoa->imagem = $imageName;
-            }
-            else{
-                $pessoa->imagem = 'imagem_padrao';
             }
 
             $pessoa->save();

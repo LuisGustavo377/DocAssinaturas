@@ -47,8 +47,8 @@ class PessoaFisicaRequest extends FormRequest
 
             'cpf.required' => 'O campo CPF é obrigatório.',
             'cpf.unique' => 'Este CPF já está em uso.',
-            'cpf.min' => 'O campo CPf deve ter 11 dígitos.',
-            'cpf.max' => 'O campo CPf deve ter 11 dígitos.',
+            'cpf.min' => 'O campo CPF deve ter 11 dígitos.',
+            'cpf.max' => 'O campo CPF deve ter 11 dígitos.',
 
             'email.email' => 'O campo email deve ser um endereço de e-mail válido.',
             'email.max' => 'O campo email não deve ultrapassar 255 caracteres.',
