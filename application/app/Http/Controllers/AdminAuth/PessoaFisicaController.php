@@ -9,6 +9,8 @@ use App\Models\Cidade;
 use App\Models\Admin;
 use App\Models\TipoDeRelacionamento;
 use App\Models\TipoDeLogradouro;
+use App\Models\PessoaFisicaTelefone;
+use App\Models\PessoaFisicaEndereco;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -59,12 +61,12 @@ class PessoaFisicaController extends Controller
      */
     public function store(PessoaFisicaRequest $request)
     {
+
         try {
             if (Auth::check()) {
 
                 DB::beginTransaction();
-    
-                $pessoa = new PessoaFisica;
+                   
     
                 $atributosParaMaiusculas = [
                     'nome', 
@@ -72,37 +74,69 @@ class PessoaFisicaController extends Controller
                     'logradouro',
                     'complemento',
                     'bairro',
-                ];              
-    
-                $pessoa->fill($request->all());
-                $pessoa->id = Str::uuid();                
-                $pessoa->user_cadastro_id = Auth::id();
-                $pessoa->user_ultima_atualizacao_id = Auth::id();
-                $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
-    
-                // Inicio - Upload de Imagem
-                if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-                    $request->validate([
-                        'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
-                    ]);
-
-                    $requestImage = $request->imagem;
-                    $extension = $requestImage->getClientOriginalExtension();
-                    $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
-                    $requestImage->move(public_path('img/pessoaFisica'), $imageName);
-                    $pessoa->imagem = $imageName;
-
-                } else {
-                    $pessoa->imagem = 'imagem_padrao';
-                }
+                ];    
                 
-                // Fim - Upload de Imagem
+                //-- Inicio - Salvar na Pessoa Física
+                    $pessoa = new PessoaFisica;
+                    $pessoa->id = Str::uuid();
+                    $pessoa->nome =  $request->nome;
+                    $pessoa->cpf =  $request->cpf;
+                    $pessoa->email =  $request->email;
+                    $pessoa->user_cadastro_id = Auth::id();
+                    $pessoa->user_ultima_atualizacao_id = Auth::id();                          
+                    $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
+        
+                    // Inicio - Upload de Imagem
+                    if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+                        $request->validate([
+                            'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
+                        ]);
 
+                        $requestImage = $request->imagem;
+                        $extension = $requestImage->getClientOriginalExtension();
+                        $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+                        $requestImage->move(public_path('img/pessoaFisica'), $imageName);
+                        $pessoa->imagem = $imageName;
 
-                $pessoa->save();   
-    
-                // Salva telefone na tabela PessoaFisica telefones
-                // $pessoa_telefone->telefone = $request->telefone; 
+                    } else {
+                        $pessoa->imagem = 'imagem_padrao';
+                    }// Fim - Upload de Imagem                   
+                    
+                    $pessoa->save();//Salva no banco PessoaFisica
+
+                //-- Fim - Salvar na Pessoa Física
+
+                //-- Inicio - Salvar telefone na tabela pessoa_fisica_telefones
+                    $telefone = new PessoaFisicaTelefone;
+                    $telefone->id = Str::uuid();
+                    $telefone->pessoa_fisica_id = $pessoa->id;
+                    $telefone->telefone = $request->telefone;                                
+                    $telefone->user_cadastro_id = Auth::id();
+                    $telefone->user_ultima_atualizacao_id = Auth::id();
+                    
+                    $telefone->save();
+                //-- Fim - Salvar telefone na tabela pessoa_fisica_telefones
+
+                //-- Inicio - Salvar telefone na tabela pessoa_fisica_enderecos
+                    $endereco = new PessoaFisicaEndereco;
+                    $endereco->id = Str::uuid();
+                    $endereco->tipo_de_logradouro_id = $request->tipo_de_logradouro_id;
+                    $endereco->logradouro = $request->logradouro;
+                    $endereco->numero = $request->numero;
+                    $endereco->complemento = $request->complemento;
+                    $endereco->bairro = $request->bairro;
+                    $endereco->estado_id = $request->estado_id;
+                    $endereco->cidade_id = $request->cidade_id;
+                    $endereco->pessoa_fisica_id = $pessoa->id;                                                    
+                    $endereco->user_cadastro_id = Auth::id();
+                    $endereco->user_ultima_atualizacao_id = Auth::id();
+                    $endereco->salvarComAtributosMaiusculos($atributosParaMaiusculas);
+                    
+                    $endereco->save();
+                //-- Inicio - Salvar telefone na tabela pessoa_fisica_enderecos
+                
+
+   
     
                 DB::commit();
     

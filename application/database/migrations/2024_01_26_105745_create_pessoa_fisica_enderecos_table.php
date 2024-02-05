@@ -11,15 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pessoa_fisica_telefones', function (Blueprint $table) {
+        Schema::create('pessoa_fisica_enderecos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('telefone');
+            $table->string('logradouro')->nullable();
+            $table->string('numero')->nullable();
+            $table->string('complemento')->nullable();
+            $table->string('bairro')->nullable();
+            $table->integer('estado_id');
+            $table->integer('cidade_id');
+            $table->uuid('tipo_de_logradouro_id');
             $table->uuid('pessoa_fisica_id');
             $table->uuid('user_cadastro_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
             
             $table->foreign('pessoa_fisica_id')->references('id')->on('pessoa_fisica');
+            $table->foreign('estado_id')->references('id')->on('estados');
+            $table->foreign('cidade_id')->references('id')->on('cidades');
         });
     }
 
@@ -28,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pessoa_fisica_telefones');
+        Schema::dropIfExists('pessoa_fisica_enderecos');
     }
 };

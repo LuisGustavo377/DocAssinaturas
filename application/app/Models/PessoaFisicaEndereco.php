@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PessoaFisica extends Model
+class PessoaFisicaEndereco extends Model
 {
     use HasFactory;
 
-    protected $table = 'pessoa_fisica';
+    protected $table = 'pessoa_fisica_enderecos';
 
     //Inicio Configuração UUID
     protected $primaryKey = 'id'; // Nome da coluna UUID
@@ -19,19 +19,18 @@ class PessoaFisica extends Model
 
 
     protected $fillable = [
-        'nome', 
-        'cpf', 
-        'email',
-        'senha',
-        'senha_temporaria',
-        'status',
-        'imagem',
-        'unidade_negocio_id',
+        'tipo_de_logradouro_id',
+        'logradouro',
+        'numero',
+        'complemento',
+        'bairro',
+        'estado_id',
+        'cidade_id',
+        'pessoa_fisica_id',
         'user_cadastro_id',
-        'user_ultima_atualizacao_id',
-        'tipo_de_logradouro_id'
- 
+        'user_ultima_atualizacao_id'
     ];
+
 
     public function cidade()
     {
@@ -43,28 +42,10 @@ class PessoaFisica extends Model
         return $this->belongsTo(Estado::class, 'estado_id');
     }
 
-    public function unidadeDeNegocio()
-    {
-        return $this->belongsTo(UnidadeDeNegocio::class);
-    }
 
-    public function tipoDeRelacionamento()
-    {
-        return $this->HasMany(TipoDeRelacionamento::class);
-    }
     public function tipoDeLogradouro()
     {
         return $this->belongsTo(TipoDeLogradouro::class, 'tipo_de_logradouro_id');
-    }
-
-    public function pessoaFisicaContaBancaria()
-    {
-        return $this->hasMany(PessoaFisicaContaBancaria::class);
-    }
-
-    public function pessoaJuridicaContaBancaria()
-    {
-        return $this->hasMany(PessoaJuridicaContaBancaria::class);
     }
 
     public function salvarComAtributosMaiusculos(array $atributos)
@@ -76,6 +57,5 @@ class PessoaFisica extends Model
         }
         $this->save();
     }
-
 
 }

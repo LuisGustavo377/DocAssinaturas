@@ -19,7 +19,7 @@ class PessoaFisicaTelefone extends Model
 
    protected $fillable = [
     'telefone',
-    'pessoa_id',
+    'pessoa_fisica_id',
     'user_cadastro_id',
     'user_ultima_atualizacao_id',
 ];
