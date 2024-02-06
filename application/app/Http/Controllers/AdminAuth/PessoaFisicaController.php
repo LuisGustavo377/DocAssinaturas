@@ -196,15 +196,12 @@ class PessoaFisicaController extends Controller
                 DB::beginTransaction();
                 
                 // Define os atributos que devem ser convertidos para maiúsculas
-                $atributosParaMaiusculasPessoa = [
+                $atributosParaMaiusculas = [
                     'nome', 
-                ];    
-
-                $atributosParaMaiusculasEndereco = [
                     'logradouro',
                     'complemento',
                     'bairro',
-                ];
+                ];    
                 
                 // Encontra a pessoa física pelo ID fornecido
                 $pessoa = PessoaFisica::findOrFail($id);            
@@ -232,6 +229,7 @@ class PessoaFisicaController extends Controller
                 } 
                         
                 // Salva as alterações na pessoa física
+                $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
                 $pessoa->save();
     
                 //-- Fim - Salvar na Pessoa Física
@@ -288,6 +286,7 @@ class PessoaFisicaController extends Controller
                     $endereco->status = 'ativo'; 
                     $endereco->user_cadastro_id = Auth::id();                                                
                     $endereco->user_ultima_atualizacao_id = Auth::id();
+                    $endereco->salvarComAtributosMaiusculos($atributosParaMaiusculas);
                     
                     $endereco->save();
                 }
