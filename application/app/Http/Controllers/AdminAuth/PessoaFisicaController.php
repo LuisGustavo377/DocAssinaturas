@@ -25,6 +25,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class PessoaFisicaController extends Controller
@@ -49,7 +50,6 @@ class PessoaFisicaController extends Controller
      * Show the form for creating a new resource.
      */
     public function create(): View
-    
     {        
         $estados = Estado::all();
         $cidades = Cidade::all();
@@ -63,7 +63,6 @@ class PessoaFisicaController extends Controller
      */
     public function store(PessoaFisicaRequest $request)
     {
-
         try {
             if (Auth::check()) {
 
@@ -112,6 +111,7 @@ class PessoaFisicaController extends Controller
                     $telefone = new PessoaFisicaTelefone;
                     $telefone->id = Str::uuid();
                     $telefone->pessoa_fisica_id = $pessoa->id;
+                    $telefone->status = 'ativo'; 
                     $telefone->telefone = $request->telefone;                                
                     $telefone->user_cadastro_id = Auth::id();
                     $telefone->user_ultima_atualizacao_id = Auth::id();
@@ -127,6 +127,7 @@ class PessoaFisicaController extends Controller
                     $endereco->numero = $request->numero;
                     $endereco->complemento = $request->complemento;
                     $endereco->bairro = $request->bairro;
+                    $endereco->status = 'ativo'; 
                     $endereco->estado_id = $request->estado_id;
                     $endereco->cidade_id = $request->cidade_id;
                     $endereco->pessoa_fisica_id = $pessoa->id;                                                    
@@ -153,30 +154,29 @@ class PessoaFisicaController extends Controller
      */
     public function show($id)
     {
-        $pessoa = PessoaFisica::with('telefones', 'enderecos')->findOrFail($id);
+        $pessoa = PessoaFisica::with(['telefones' => function ($query) {
+            $query->where('status', 'ativo');
+        }, 'enderecos' => function ($query) {
+            $query->where('status', 'ativo');
+        }])->findOrFail($id);
+               
+        return view('admin.pessoa-fisica.show', compact('pessoa'));
+    }
+    
+    
+    public function edit($id)
+    {
+        $pessoa = PessoaFisica::with(['telefones' => function ($query) {
+            $query->where('status', 'ativo');
+        }, 'enderecos' => function ($query) {
+            $query->where('status', 'ativo');
+        }])->findOrFail($id);
+    
         $estados = Estado::all();
         $cidades = Cidade::all();
         $tiposDeLogradouro = TipoDeLogradouro::all();
-        return view('admin.pessoa-fisica.show', compact('pessoa', 'estados', 'cidades', 'tiposDeLogradouro'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        try {
-            $pessoa = PessoaFisica::with('telefones', 'enderecos')->findOrFail($id);
-            $estados = Estado::all();
-            $cidades = Cidade::all();
-            $tipos_de_logradouro = TipoDeLogradouro::all();
-
-        } catch (ModelNotFoundException $e) {
-            // Tratamento de exceção
-            abort(404, 'Pessoa não encontrada.');
-        }
-
-        return view('admin.pessoa-fisica.edit', compact('pessoa', 'estados', 'cidades', 'tipos_de_logradouro'));
+               
+        return view('admin.pessoa-fisica.edit', compact('pessoa', 'estados', 'cidades', 'tiposDeLogradouro'));
     }
     
 
@@ -186,9 +186,6 @@ class PessoaFisicaController extends Controller
             if (Auth::check()) {
                 DB::beginTransaction();
     
-                // Recupere a pessoa que você deseja atualizar
-                $pessoa = PessoaFisica::findOrFail($id);                   
-        
                 $atributosParaMaiusculasPessoa = [
                     'nome', 
                 ];    
@@ -200,59 +197,85 @@ class PessoaFisicaController extends Controller
                 ];
                 
                 //-- Inicio - Salvar na Pessoa Física
+                
+                $pessoa = PessoaFisica::findOrFail($id); 
                 $pessoa->nome =  $request->nome;
                 $pessoa->cpf =  $request->cpf;
                 $pessoa->email =  $request->email;
                 $pessoa->user_ultima_atualizacao_id = Auth::id();                          
                     
-                // Inicio - Upload de Imagem
-                if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-                    $request->validate([
-                        'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
-                    ]);
-    
-                    $requestImage = $request->imagem;
-                    $extension = $requestImage->getClientOriginalExtension();
-                    $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
-                    $requestImage->move(public_path('img/pessoaFisica'), $imageName);
-                    $pessoa->imagem = $imageName;
-    
-                } else {
-                    $pessoa->imagem = 'imagem_padrao';
-                }// Fim - Upload de Imagem                   
+                    // Inicio - Upload de Imagem
+                    if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+                        $request->validate([
+                            'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
+                        ]);
+        
+                        $requestImage = $request->imagem;
+                        $extension = $requestImage->getClientOriginalExtension();
+                        $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+                        $requestImage->move(public_path('img/pessoaFisica'), $imageName);
+                        $pessoa->imagem = $imageName;
+        
+                    } 
+                    // Fim - Upload de Imagem                   
                         
-                $pessoa->save();//Salva no banco PessoaFisica
+                $pessoa->save();
     
                 //-- Fim - Salvar na Pessoa Física
+
+                //-- Inicio - Verificar se o telefone já existe
+                $telefoneExistente = PessoaFisicaTelefone::where('pessoa_fisica_id', $pessoa->id)
+                    ->where('telefone', $request->telefone)
+                    ->first();
+
+                if (!$telefoneExistente) {
+                    // O telefone não existe, então crie um novo registro
+
+                    $pessoa->telefones()->update(['status' => 'inativo']);
+
+                    $telefone = new PessoaFisicaTelefone;
+                    $telefone->id = Str::uuid();
+                    $telefone->pessoa_fisica_id = $pessoa->id;
+                    $telefone->telefone = $request->telefone; 
+                    $telefone->status = 'ativo';       
+                    $telefone->user_cadastro_id = Auth::id();                         
+                    $telefone->user_ultima_atualizacao_id = Auth::id();
+                    $telefone->save();
+                }
+                //-- Fim - Verificar se o telefone já existe
     
-                //-- Inicio - Salvar telefone na tabela pessoa_fisica_telefones
-                $telefone = new PessoaFisicaTelefone;
-                $telefone->id = Str::uuid();
-                $telefone->pessoa_fisica_id = $pessoa->id;
-                $telefone->telefone = $request->telefone; 
-                $telefone->status = 'ativo';       
-                $telefone->user_cadastro_id = Auth::id();                         
-                $telefone->user_ultima_atualizacao_id = Auth::id();
-                $telefone->save();
-            //-- Fim - Salvar telefone na tabela pessoa_fisica_telefones
-    
-                //-- Inicio - Salvar telefone na tabela pessoa_fisica_enderecos
-                $endereco = new PessoaFisicaEndereco;
-                $endereco->id = Str::uuid();
-                $endereco->tipo_de_logradouro_id = $request->tipo_de_logradouro_id;
-                $endereco->logradouro = $request->logradouro;
-                $endereco->numero = $request->numero;
-                $endereco->complemento = $request->complemento;
-                $endereco->bairro = $request->bairro;
-                $endereco->status = 'ativo'; 
-                $endereco->estado_id = $request->estado_id;
-                $endereco->cidade_id = $request->cidade_id;
-                $endereco->pessoa_fisica_id = $pessoa->id;    
-                $endereco->user_cadastro_id = Auth::id();                                                
-                $endereco->user_ultima_atualizacao_id = Auth::id();
-                
-                $endereco->save();
-                //-- Inicio - Salvar telefone na tabela pessoa_fisica_endereco   
+                //-- Inicio - Verificar se o endereço já existe
+                $enderecoExistente = PessoaFisicaEndereco::where('pessoa_fisica_id', $pessoa->id)
+                    ->where('tipo_de_logradouro_id', $request->tipo_de_logradouro_id)
+                    ->where('logradouro', $request->logradouro)
+                    ->where('numero', $request->numero)
+                    ->where('complemento', $request->complemento)
+                    ->where('bairro', $request->bairro)
+                    ->where('estado_id', $request->estado_id)
+                    ->where('cidade_id', $request->cidade_id)
+                    ->first();
+
+                if (!$enderecoExistente) {
+                    $pessoa->enderecos()->update(['status' => 'inativo']);
+
+
+                    $endereco = new PessoaFisicaEndereco;
+                    $endereco->id = Str::uuid();
+                    $endereco->tipo_de_logradouro_id = $request->tipo_de_logradouro_id;
+                    $endereco->logradouro = $request->logradouro;
+                    $endereco->numero = $request->numero;
+                    $endereco->complemento = $request->complemento;
+                    $endereco->bairro = $request->bairro;
+                    $endereco->estado_id = $request->estado_id;
+                    $endereco->cidade_id = $request->cidade_id;
+                    $endereco->pessoa_fisica_id = $pessoa->id;    
+                    $endereco->status = 'ativo'; 
+                    $endereco->user_cadastro_id = Auth::id();                                                
+                    $endereco->user_ultima_atualizacao_id = Auth::id();
+                    
+                    $endereco->save();
+                }
+                //-- Fim - Verificar se o endereço já existe
         
                 DB::commit();
         

@@ -41,19 +41,21 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
-                                <label for="cpfInput" class="form-label">CPF</label>
-                                <input type="text" class="form-control @error('cpf') is-invalid @enderror" id="cpfInput"
-                                    name="cpf" placeholder="CPF" value="{{ $pessoa->cpf }}" maxLength='11'>
-                                @error('cpf')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-
                             <div class="row">
-                                <div class="col-md-6 mb-3">
+                                <div class="mb-3 col-md-4">
+                                    <label for="cpfInput" class="form-label">CPF</label>
+                                    <input type="text" class="form-control @error('cpf') is-invalid @enderror"
+                                        id="cpfInput" name="cpf" placeholder="CPF" value="{{ $pessoa->cpf }}"
+                                        maxLength='11'>
+                                    @error('cpf')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
+
+                                <div class="mb-3 col-md-4">
                                     <label for="telefoneInput" class="form-label">Telefone</label>
                                     <input type="tel" oninput="mascaraTelefone(this)" maxlength="15"
                                         class="form-control telefone @error('telefone') is-invalid @enderror"
@@ -66,7 +68,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6 mb-3">
+                                <div class="mb-3 col-md-4">
                                     <label for="emailInput" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         id="emailInput" name="email" placeholder="Email"
@@ -89,20 +91,24 @@
 
                             <div class="row">
                                 <div class="col-md-3 mb-3">
-                                    <label id="logradouroLabel" class="form-label">Tipo de Logradouro</label>
+                                    <label for="tipoDeLogradouroSelect" class="form-label">Tipo de Logradouro</label>
                                     <select class="form-select @error('tipo_de_logradouro_id') is-invalid @enderror"
                                         id="tipoDeLogradouroSelect" name="tipo_de_logradouro_id">
                                         <option value="" selected disabled> -- Selecione o tipo de logradouro --
                                         </option>
-                                        @foreach($tipos_de_logradouro as $tipo)
+                                        @foreach($tiposDeLogradouro as $tipo)
                                         <option value="{{ $tipo->id }}"
-                                            {{ old('tipo_de_logradouro_id') == $tipo->id ? 'selected' : '' }}>
+                                            {{ old('tipo_de_logradouro_id', optional($pessoa->enderecos->first())->tipo_de_logradouro_id) == $tipo->id ? 'selected' : '' }}>
                                             {{ $tipo->descricao }}
                                         </option>
                                         @endforeach
                                     </select>
+                                    @error('tipo_de_logradouro_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-
 
                                 <div class="col-md-9 mb-3">
                                     <label id="logradouroLabel" class="form-label">Logradouro</label>

@@ -29,27 +29,31 @@
                                 name="nome" placeholder="Nome" value="{{ $pessoa->nome  }}" disabled>
                         </div>
 
-                        <div class="mb-3">
-                            <label id="cpfLabel" class="form-label">CPF</label>
-                            <input type="text" class="form-control @error('cpf') is-invalid @enderror" id="cpfInput"
-                                name="cpf" placeholder="CPF" value="{{ $pessoa->cpf }}" disabled>
-                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-4">
+                                <label id="cpfLabel" class="form-label">CPF</label>
+                                <input type="text" class="form-control @error('cpf') is-invalid @enderror" id="cpfInput"
+                                    name="cpf" placeholder="CPF" value="{{ $pessoa->cpf }}" disabled>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Telefone</label>
-                            @foreach ($pessoa->telefones as $telefone)
-                            <input type="tel" oninput="mascaraTelefone(this)" maxlength="15"
-                                class="form-control telefone" id="telefoneInput" name="telefone" placeholder="Telefone"
-                                value="{{ $telefone->telefone }}" disabled>
-                            @endforeach
-                        </div>
+                            <div class="mb-3 col-md-4">
+                                <label class="form-label">Telefone</label>
+                                @foreach ($pessoa->telefones as $telefone)
+                                <input type="tel" oninput="mascaraTelefone(this)" maxlength="15"
+                                    class="form-control telefone" id="telefoneInput" name="telefone"
+                                    placeholder="Telefone" value="{{ $telefone->telefone }}" disabled>
+                                @endforeach
+                            </div>
 
-                        <div class="mb-3">
-                            <label id="emailLabel" class="form-label">Email</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                id="emailInput" name="email" placeholder="Email" value="{{ $pessoa->email  }}" disabled>
+                            <div class="mb-3 col-md-4">
+                                <label id="emailLabel" class="form-label">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    id="emailInput" name="email" placeholder="Email" value="{{ $pessoa->email  }}"
+                                    disabled>
+                            </div>
                         </div>
                     </div>
+
 
                     <div class="alert alert-light">
                         <i class="ti ti-address-book" style="color: #13deb9"></i>
@@ -64,36 +68,39 @@
                                 value="{{ $pessoa->enderecos->first()->tipoDeLogradouro->descricao . ' ' . $pessoa->enderecos->first()->logradouro }}"
                                 disabled>
                         </div>
+                        <div class="row">
+                            <div class="mb-3 col-md-4">
+                                <label id="numeroLabel" class="form-label">Número</label>
+                                <input type="text" class="form-control" id="numeroInput" name="numero"
+                                    placeholder="Número" value="{{ $pessoa->enderecos->first()->numero }}" disabled>
+                            </div>
 
-                        <div class="mb-3">
-                            <label id="numeroLabel" class="form-label">Número</label>
-                            <input type="text" class="form-control" id="numeroInput" name="numero" placeholder="Número"
-                                value="{{ $pessoa->enderecos->first()->numero }}" disabled>
+                            <div class="mb-3 col-md-4">
+                                <label id="complementoLabel" class="form-label">Complemento</label>
+                                <input type="text" class="form-control" id="complementoInput" name="complemento"
+                                    placeholder="Complemento" value="{{ $pessoa->enderecos->first()->complemento }}"
+                                    disabled>
+                            </div>
+
+                            <div class="mb-3 col-md-4">
+                                <label id="bairroLabel" class="form-label">Bairro</label>
+                                <input type="text" class="form-control" id="bairroInput" name="bairro"
+                                    placeholder="Bairro" value="{{ $pessoa->enderecos->first()->bairro }}" disabled>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label id="complementoLabel" class="form-label">Complemento</label>
-                            <input type="text" class="form-control" id="complementoInput" name="complemento"
-                                placeholder="Complemento" value="{{ $pessoa->enderecos->first()->complemento }}"
-                                disabled>
-                        </div>
+                        <div class="row">
+                        <div class="mb-3 col-md-6">
+                                <label for="estadoSelect" class="form-label">Estado</label>
+                                <input type="text" class="form-control"
+                                    value="{{ $pessoa->enderecos->first()->estado->nome }}" disabled>
+                            </div>
 
-                        <div class="mb-3">
-                            <label id="bairroLabel" class="form-label">Bairro</label>
-                            <input type="text" class="form-control" id="bairroInput" name="bairro" placeholder="Bairro"
-                                value="{{ $pessoa->enderecos->first()->bairro }}" disabled>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="estadoSelect" class="form-label">Estado</label>
-                            <input type="text" class="form-control"
-                                value="{{ $pessoa->enderecos->first()->estado->nome }}" disabled>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="cidadeSelect" class="form-label">Cidade</label>
-                            <input type="text" class="form-control"
-                                value="{{ $pessoa->enderecos->first()->cidade->nome }}" disabled>
+                            <div class="mb-3 col-md-6">
+                                <label for="cidadeSelect" class="form-label">Cidade</label>
+                                <input type="text" class="form-control"
+                                    value="{{ $pessoa->enderecos->first()->cidade->nome }}" disabled>
+                            </div>
                         </div>
                     </div>
 
@@ -107,11 +114,11 @@
                         <div class="card">
                             <div class="card-body text-left">
                                 @if ($pessoa->imagem === 'imagem_padrao')
-                                <img src="{{ asset('assets/images/profile/imagem_user.svg') }}" width="500" height="500"
+                                <img src="{{ asset('assets/images/profile/imagem_user.svg') }}" width="200" height="200"
                                     class="img-fluid rounded" alt="Imagem Padrão">
                                 @else
                                 <img src="{{ asset('img/pessoaFisica/' . $pessoa->imagem) }}" class="img-fluid rounded"
-                                    width="500" height="500">
+                                    width="200" height="200">
                                 @endif
                             </div>
                         </div>

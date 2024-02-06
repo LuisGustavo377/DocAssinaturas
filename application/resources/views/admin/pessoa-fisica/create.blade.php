@@ -29,7 +29,6 @@
                             </div>
 
                             <div class="card-body">
-
                                 <div class="mb-3">
                                     <label id="nomeLabel" class="form-label">Nome Completo</label>
                                     <input type="text" class="form-control @error('nome') is-invalid @enderror"
@@ -41,21 +40,19 @@
                                     </div>
                                     @enderror
                                 </div>
-
-                                <div class="mb-3">
-                                    <label id="cpfLabel" class="form-label">CPF</label>
-                                    <input type="text" class="form-control @error('cpf') is-invalid @enderror"
-                                        id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}"
-                                        maxLength='11'>
-                                    @error('cpf')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
+                                    <div class="mb-3 col-md-4">
+                                        <label id="cpfLabel" class="form-label">CPF</label>
+                                        <input type="text" class="form-control @error('cpf') is-invalid @enderror"
+                                            id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}"
+                                            maxlength="11">
+                                        @error('cpf')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-4">
                                         <label class="form-label">Telefone</label>
                                         <input type="tel" oninput="mascaraTelefone(this)" maxlength="15"
                                             class="form-control telefone @error('telefone') is-invalid @enderror"
@@ -67,8 +64,7 @@
                                         </div>
                                         @enderror
                                     </div>
-
-                                    <div class="col-md-6 mb-3">
+                                    <div class="mb-3 col-md-4">
                                         <label id="emailLabel" class="form-label">Email</label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror"
                                             id="emailInput" name="email" placeholder="Email" value="{{ old('email') }}">
@@ -79,8 +75,8 @@
                                         @enderror
                                     </div>
                                 </div>
-
                             </div>
+
 
                             <div class="alert alert-light">
                                 <i class="ti ti-address-book" style="color: #13deb9"></i>
@@ -88,7 +84,6 @@
                             </div>
 
                             <div class="card-body">
-
                                 <div class="row">
                                     <div class="col-md-3 mb-3">
                                         <label class="form-label">Tipo de Logradouro</label>
@@ -201,8 +196,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
-
 
                                 <div class="mb-3">
                                     <label id="imagemLabel" class="form-label">Imagem</label>
