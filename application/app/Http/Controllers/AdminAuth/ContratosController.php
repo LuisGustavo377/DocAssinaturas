@@ -10,9 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class ContratosController extends Controller
@@ -38,7 +39,7 @@ class ContratosController extends Controller
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
 
                 DB::beginTransaction();
-
+                
                 // Início - Salvar Contrato no Banco
                 $contrato = new Contrato();
 
@@ -51,10 +52,6 @@ class ContratosController extends Controller
 
                 // Verificar se o arquivo está presente no formulário
                 if ($request->hasFile('arquivo')) {
-                    // Verificar se o arquivo é válido
-                    $request->validate([
-                        'arquivo' => 'file|mimes:pdf|max:20480',
-                    ]);
 
                     // Gerar um nome de arquivo único
                     $nameFile = $this->generateUniqueFileName($request->name, $request->file('arquivo')->extension());
@@ -131,6 +128,17 @@ class ContratosController extends Controller
                 throw new \Exception('Contrato não encontrado');
             }
 
+            // Validar os campos do formulário
+            $request->validate([
+                'numero_contrato' => ['required', Rule::unique('contratos')->ignore($contrato->id)],
+                'arquivo' => 'nullable|file|mimes:pdf|max:20480',
+            ], [
+                'numero_contrato.required' => 'O campo número do contrato é obrigatório.',
+                'numero_contrato.unique' => 'O número do contrato já está em uso.',
+                'arquivo.file' => 'O arquivo deve ser um arquivo válido.',
+                'arquivo.mimes' => 'O arquivo deve ser do tipo PDF.',
+                'arquivo.max' => 'O tamanho máximo do arquivo é de 20MB.',
+            ]);
             // Armazenar o nome do arquivo original
             $nameFile = $contrato->arquivo;
 
@@ -138,11 +146,7 @@ class ContratosController extends Controller
 
             // Verificar se um novo arquivo foi enviado
             if ($request->hasFile('arquivo')) {
-                // Verificar se o arquivo é válido
-                $request->validate([
-                    'arquivo' => 'file|mimes:pdf|max:20480',
-                ]);
-
+                
                 // Gerar um nome de arquivo único
                 $nameFile = $this->generateUniqueFileName($request->name, $request->file('arquivo')->extension());
 

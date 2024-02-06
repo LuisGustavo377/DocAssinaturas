@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contratos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('numero_contrato');
+            $table->string('numero_contrato')->unique();
             $table->enum('status', ['ativo', 'inativo']);
             $table->uuid('user_cadastro_id')->nullable();
             $table->timestamps();

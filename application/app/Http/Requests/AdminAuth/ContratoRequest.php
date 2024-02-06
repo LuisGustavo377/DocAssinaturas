@@ -22,16 +22,21 @@ class ContratoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'numero_contrato' => 'required',              
-        
+            'numero_contrato' => 'required|unique:contratos',
+            'arquivo' => 'nullable|file|mimes:pdf|max:20480',
+
         ];
     }
 
     public function messages(): array
     {
         return [
+            'numero_contrato.required' => 'O campo número do contrato é obrigatório.',
+            'numero_contrato.unique' => 'O número do contrato já está em uso.',
+            'arquivo.file' => 'O arquivo deve ser um arquivo válido.',
+            'arquivo.mimes' => 'O arquivo deve ser do tipo PDF.',
+            'arquivo.max' => 'O tamanho máximo do arquivo é de 20MB.',
 
-            'numero_contrato.required' => 'O número do contrato é obrigatório.',
         ];
     }
 }
