@@ -256,4 +256,5 @@ class ContratosController extends Controller
 
         return $uniqueName;
     }
+
 }
