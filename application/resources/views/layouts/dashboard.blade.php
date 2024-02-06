@@ -10,10 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <!-- Inclua o jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<!-- Inclua o jQuery Mask Plugin -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <!-- Inclua o jQuery Mask Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
 
 
@@ -36,6 +36,17 @@
             <!-- Container principal Start -->
             @yield('content')
 
+            <!-- Caixa mensagens -->
+            <div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+                @if(session('msg'))
+                <div id="alert-message" class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('msg') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                </div>
+                @endif
+            </div>
+
+
             <!-- Container principal End -->
         </div>
     </div>
@@ -47,11 +58,20 @@
     <script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    
 
-    {{-- Validador Telefone --}}
+
+    <!-- Validador Telefone -->
 
     <script src="{{asset('assets/js/funcoes.js')}}"></script>
+
+    <!-- Script esconder notificação -->
+
+    <script>
+    // Esconder a mensagem após 2 segundos
+    setTimeout(function() {
+        $('#alert-message').fadeOut('slow');
+    }, 2000);
+    </script>
 
 </body>
 

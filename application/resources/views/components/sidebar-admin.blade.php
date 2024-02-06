@@ -59,7 +59,7 @@
                         <span>
                             <i class="ti ti-file-certificate"></i>
                         </span>
-                        <span class="hide-menu">Contratos   </span>
+                        <span class="hide-menu">Contratos </span>
                     </a>
                 </li>
 
@@ -74,7 +74,7 @@
                         <!-- Submenu for Pessoa Fisica -->
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/pessoa-fisica">
-                                <span class="hide-menu">
+                                <span class="hide-menu ml-auto">
                                     Pessoa Física
                                 </span>
                             </a>
@@ -82,7 +82,7 @@
                         <!-- Submenu for Pessoa Juridica -->
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/pessoa-juridica">
-                                <span class="hide-menu">
+                                <span class="hide-menu ml-auto">
                                     Pessoa Jurídica
                                 </span>
                             </a>
