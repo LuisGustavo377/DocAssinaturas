@@ -45,11 +45,14 @@
                                         <input type="text" class="form-control" id="statusInput" name="status"
                                             value="{{ ucfirst($contrato->status) }}" disabled>
                                     </div>
-                                    <div class="mb-3 col-md-6">
+                                    <div class="mb-3 col-md-6 position-relative">
                                         <label id="arquivoLabel" class="form-label">Contrato</label>
-                                        <input type="text" class="form-control" id="arquivoInput" name="arquivo"
+                                        <input type="text" class="form-control" id="arquivoInput" name="arquivo" 
                                             value="{{ optional($contrato->contratoArquivo()->latest()->first())->arquivo ?? 'Não possui anexo' }}"
                                             disabled>
+                                            <a href="#" title="Abrir Contrato">
+                                            <i class="ti ti-file-text" style="position: absolute; bottom: 10px; right: 23px; font-size:20px;"></i>
+                                            </a>
                                     </div>
                                 </div>
                             </div>
@@ -77,4 +80,5 @@
             </div>
         </div>
     </div>
+
 @endsection

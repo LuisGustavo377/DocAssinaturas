@@ -17,7 +17,7 @@ Route::middleware('guest:proprietario')->prefix('proprietario')->group(function 
     ->name('proprietario.register');
 
     Route::post('register', [RegisteredUserController::class, 'store'])
-    ->name('proprietario.register');
+    ->name('proprietario.register.store');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('proprietario.login');
