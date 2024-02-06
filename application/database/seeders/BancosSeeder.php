@@ -112,3 +112,5 @@ class BancosSeeder extends Seeder
         DB::table('bancos')->insert($bancos);
     }
 }
+
+

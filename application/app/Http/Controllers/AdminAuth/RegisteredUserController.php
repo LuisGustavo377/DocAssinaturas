@@ -21,7 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('admin.auth.register');
     }
 
     /**
@@ -31,22 +31,24 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Admin::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = new Admin;
+   
+       $administrador = new Admin;
 
-        $user->id = Str::uuid();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->save();
+        $administrador->id = Str::uuid();
+        $administrador->name = $request->name;
+        $administrador->email = $request->email;
+        $administrador->password = $request->password;
+        $administrador->save();
 
-        Auth::login($user);
+        Auth::login($administrador);
 
-        return redirect(RouteServiceProvider::ADMIN_DASHBOARD);
+        return redirect('/admin/login');
     }
 }

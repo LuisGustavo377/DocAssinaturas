@@ -32,22 +32,13 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
 
+        dd($request);
+
 
         $request->validate([
-            'name' => ['required' => 'O campo nome é obrigatório.', 'string', 'max:255'],
-            'email' => [
-                'required' => 'O campo email é obrigatório.',
-                'string',
-                'lowercase',
-                'email' => 'Por favor, insira um endereço de e-mail válido.',
-                'max:255',
-                'unique' => 'Este endereço de e-mail já está em uso.',
-            ],
-            'password' => [
-                'required' => 'O campo senha é obrigatório.',
-                'confirmed' => 'A confirmação da senha não corresponde.',
-                Rules\Password::defaults(),
-            ],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = new User;
@@ -60,6 +51,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect('/login');
     }
 }

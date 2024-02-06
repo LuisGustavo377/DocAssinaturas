@@ -9,14 +9,30 @@ class Banco extends Model
 {
     use HasFactory;
 
-    // Início Configuração UUID
+    protected $table = 'bancos';
+
+    //Inicio Configuração UUID
     protected $primaryKey = 'id'; // Nome da coluna UUID
     public $incrementing = false; // Desativar autoincremento
     protected $keyType = 'string'; // Tipo da chave primária
-    // Fim Configuração UUID
+   //Fim Configuração UUID
 
-    public function contasEstabelecimento()
+    protected $fillable = [
+        'nome',
+        'status',
+        'observacao',
+        'user_cadastro_id',
+        'user_ultima_atualizacao_id',
+
+    ];
+
+    public function pessoaJuridicaContaBancaria()
     {
-        return $this->hasMany(ContasEstabelecimento::class, 'codigo_banco');
+        return $this->hasMany(PessoaJuridicaContaBancaria::class, 'codigo_banco');
+    }
+
+    public function pessoaFisicaContaBancaria()
+    {
+        return $this->hasMany(PessoaFisicaContaBancaria::class, 'codigo_banco');
     }
 }

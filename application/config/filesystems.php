@@ -44,6 +44,14 @@ return [
             'throw' => false,
         ],
 
+        'contratos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/contratos'),
+            'url' => env('APP_URL').'/contratos',
+            'visibility' => 'private', // Defina como 'private' para não ser acessível publicamente
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

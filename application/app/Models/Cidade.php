@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Cidade extends Model
 {
 
-  
-
     /**
      * The attributes that are mass assignable.
      *
@@ -51,9 +49,17 @@ class Cidade extends Model
      */
     public function estado()
     {
-
         return $this->belongsTo(Estado::class, 'estado_id');
+    }
 
+    public function pessoaFisica()
+    {
+        return $this->HasMany(PessoaFisica::class, 'cidade_id');
+    }
+
+    public function pessoaJuridica()
+    {
+        return $this->HasMany(PessoaJuridica::class, 'cidade_id');
     }
 
 }   

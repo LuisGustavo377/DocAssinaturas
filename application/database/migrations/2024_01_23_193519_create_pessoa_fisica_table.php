@@ -11,24 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estabelecimentos', function (Blueprint $table) {
+        Schema::create('pessoa_fisica', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('regime', ['PJ', 'PF']);
             $table->string('nome');
-            $table->string('cpf', 11)->nullable()->unique();
-            $table->string('cnpj', 14)->nullable()->unique();
-            $table->string('numero_telefone');
-            $table->string('email')->unique();
-            $table->string('senha')->nullable();
+            $table->string('cpf')->unique();
+            $table->string('email')->nullable();
+            $table->text('senha')->nullable();
             $table->enum('senha_temporaria', ['sim', 'nao'])->nullable();
-            $table->string('logo')->nullable();
             $table->enum('status', ['ativo', 'inativo', 'pendente-pagamento'])->default('ativo');
-            $table->uuid('user_id');
-            
+            $table->string('imagem')->nullable();
+            $table->uuid('unidade_negocio_id')->nullable();
+            $table->uuid('user_cadastro_id')->nullable();
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
+                
+            $table->foreign('unidade_negocio_id')->references('id')->on('unidades_de_negocio');
 
-            $table->foreign('user_id')->references('id')->on('users');
-
+            
         });
     }
 
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estabelecimentos');
+        Schema::dropIfExists('pessoa_fisica');
     }
 };
