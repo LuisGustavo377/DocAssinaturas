@@ -211,7 +211,7 @@
 
                         <div class="card-body">
                             <div class="mb-3">
-                                <label id="imagemLabel" class="form-label">Imagem</label>
+                                <label id="imagemLabel" class="form-label">Nova Imagem</label>
                                 <input type="file" class="form-control @error('imagem') is-invalid @enderror"
                                     id="imagemInput" name="imagem">
                                 @error('imagem')

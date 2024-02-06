@@ -320,5 +320,35 @@ class PessoaFisicaController extends Controller
         return view('admin.pessoa-fisica.search', compact('resultados', 'termoPesquisa'));
     }
 
+    public function inativar($id)
+    {
+
+        $pessoa = PessoaFisica::findOrFail($id);
+
+        if ($pessoa) {
+            $pessoa->status = 'inativo';
+            $pessoa->save();
+
+            return redirect()->route('admin.pessoa-fisica.index')->with('msg', 'Pessoa Fisica inativado com sucesso.');
+        }
+
+        return redirect()->route('admin.pessoa-fisica.index')->with('msg', 'Pessoa não encontrado.');
+    }
+
+    public function reativar($id)
+    {
+
+        $pessoa = PessoaFisica::findOrFail($id);
+
+        if ($pessoa) {
+            $pessoa->status = 'ativo';
+            $pessoa->save();
+
+            return redirect()->route('admin.pessoa-fisica.index')->with('msg', 'Pessoa Fisica ativada com sucesso.');
+        }
+
+        return redirect()->route('admin.pessoa-fisica.index')->with('msg', 'Pessoa não encontrado.');
+    }
+
     
 }
