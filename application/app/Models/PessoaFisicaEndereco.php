@@ -32,6 +32,11 @@ class PessoaFisicaEndereco extends Model
     ];
 
 
+    public function pessoa()
+    {
+        return $this->belongsTo(PessoaFisica::class);
+    }
+
     public function cidade()
     {
         return $this->belongsTo(Cidade::class, 'cidade_id');

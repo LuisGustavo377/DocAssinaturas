@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pessoa_fisica_enderecos', function (Blueprint $table) {
+        Schema::create('pessoa_juridica_enderecos', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('logradouro')->nullable();
             $table->string('numero')->nullable();
@@ -21,12 +21,12 @@ return new class extends Migration
             $table->integer('estado_id');
             $table->integer('cidade_id');
             $table->uuid('tipo_de_logradouro_id');
-            $table->uuid('pessoa_fisica_id');
+            $table->uuid('pessoa_juridica_id');
             $table->uuid('user_cadastro_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
             
-            $table->foreign('pessoa_fisica_id')->references('id')->on('pessoa_fisica');
+            $table->foreign('pessoa_juridica_id')->references('id')->on('pessoa_juridica');
             $table->foreign('estado_id')->references('id')->on('estados');
             $table->foreign('cidade_id')->references('id')->on('cidades');
         });

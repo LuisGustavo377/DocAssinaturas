@@ -33,28 +33,20 @@ class PessoaFisica extends Model
  
     ];
 
-    public function cidade()
+
+    public function telefones()
     {
-        return $this->belongsTo(Cidade::class, 'cidade_id');
+        return $this->hasMany(PessoaFisicaTelefone::class);
     }
 
-    public function estado()
+    public function enderecos()
     {
-        return $this->belongsTo(Estado::class, 'estado_id');
+        return $this->hasMany(PessoaFisicaEndereco::class);
     }
 
     public function unidadeDeNegocio()
     {
         return $this->belongsTo(UnidadeDeNegocio::class);
-    }
-
-    public function tipoDeRelacionamento()
-    {
-        return $this->HasMany(TipoDeRelacionamento::class);
-    }
-    public function tipoDeLogradouro()
-    {
-        return $this->belongsTo(TipoDeLogradouro::class, 'tipo_de_logradouro_id');
     }
 
     public function pessoaFisicaContaBancaria()

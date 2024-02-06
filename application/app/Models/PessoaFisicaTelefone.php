@@ -24,8 +24,8 @@ class PessoaFisicaTelefone extends Model
     'user_ultima_atualizacao_id',
 ];
 
-public function pessoaFisica()
-{
-    return $this->belongsTo(PessoaFisica::class);
-}
+    public function pessoa()
+    {
+        return $this->belongsTo(PessoaFisica::class);
+    }
 }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pessoa_fisica_telefones', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('telefone');
+            $table->enum('status', ['ativo', 'inativo']);
             $table->uuid('pessoa_fisica_id');
             $table->uuid('user_cadastro_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
