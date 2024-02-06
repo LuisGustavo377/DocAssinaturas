@@ -306,5 +306,20 @@ class PessoaFisicaController extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        $termoPesquisa = $request->input('search');
+
+        if (Auth::check()) {
+            $resultados = PessoaFisica::where('nome', 'ILIKE', "%$termoPesquisa%")
+            ->orWhere('cpf', 'ILIKE', "%$termoPesquisa%")
+            ->get();
+        } else {
+            $resultados = [];
+        }
+
+        return view('admin.pessoa-fisica.search', compact('resultados', 'termoPesquisa'));
+    }
+
     
 }

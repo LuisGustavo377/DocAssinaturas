@@ -19,14 +19,12 @@
         <div class="card w-100">
             <div class="card-body p-4">
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="card-title fw-semibold">Resultados da Pesquisa: {{$termoPesquisa}}</h5>
-
-                    <!-- Button to Create Establishment -->
-                    <a href="javascript:history.back()" class="btn btn-outline-success">
-                    <i class="ti ti-arrow-left me-1"></i>
-                    Limpar Pesquisa
-                </a>
+                <div class="alert alert-light d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="ti ti-search" style="color: #13deb9"></i>
+                        <label class="form-label" style="color: #13deb9">Resultados da Pesquisa:
+                            {{$termoPesquisa}}</label>
+                    </div>
                 </div>
 
                 @if ($resultados->isEmpty())
@@ -46,6 +44,10 @@
                                 </th>
 
                                 <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">CPF</h6>
+                                </th>
+
+                                <th class="border-bottom-0">
                                     <h6 class="fw-semibold mb-0">Status</h6>
                                 </th>
                                 <th class="border-bottom-0">
@@ -54,10 +56,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($resultados as $resultado)
+                        <tbody>
+                            @if(count($resultados) > 0)
+                            @foreach($resultados as $resultado)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">{{ $resultado->nome }}</h6>
+                                    <h6 class="mb-0">{{ $resultado->nome }}</h6>
+                                </td>
+
+                                <td class="border-bottom-0">
+                                    <h6 class="mb-0">{{ $resultado->cpf }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">
@@ -67,35 +75,59 @@
                                     </span>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $resultado->id) }}"
+                                    <a href="{{ url('admin/pessoa-fisica/' . $resultado->id) }}"
                                         class="btn btn-primary m-1" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $resultado->id . '/edit') }}"
+                                    <a href="{{ url('admin/pessoa-fisica/' . $resultado->id . '/edit') }}"
                                         class="btn btn-success m-1" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
 
-                                    <button class="btn btn-danger m-1" title="Inativar">
+                                    @if($resultado->status==='ativo')
+                                    <a href="{{ url('admin/pessoa-fisica/inativar/' . $resultado->id) }}"
+                                        class="btn btn-danger m-1" title="Inativar">
                                         <i class="ti ti-lock"></i>
-                                    </button>
+                                    </a>
+                                    @elseif ($resultado->status==='inativo')
+                                    <a href="{{ url('admin/pessoa-fisica/reativar/' . $resultado->id) }}"
+                                        class="btn btn-warning m-1" title="Reativar">
+                                        <i class="ti ti-lock-off"></i>
+                                    </a>
+                                    @endif
                                 </td>
                             </tr>
-                            @empty
+                            @endforeach
+                            @else
                             <tr>
                                 <td colspan="3">Nenhum resultado encontrado.</td>
                             </tr>
-                            @endforelse
+                            @endif
+                        </tbody>
                         </tbody>
                     </table>
                 </div>
-
                 @endif
+
+                <div class="mb-3 d-flex justify-content-end">
+                    <div class="mb-3">
+                        <div class="text-center my-4">
+                            <a href="javascript:history.back()" class="btn btn-light me-2">
+                                <i class="ti ti-arrow-left me-1"></i>
+                                Voltar
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
+
+
     </div>
+
 </div>
 
 @endsection
