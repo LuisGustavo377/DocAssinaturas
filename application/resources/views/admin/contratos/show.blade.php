@@ -48,7 +48,7 @@
                                     <div class="mb-3 col-md-6">
                                         <label id="arquivoLabel" class="form-label">Contrato</label>
                                         <input type="text" class="form-control" id="arquivoInput" name="arquivo"
-                                            value="{{ optional($contrato->contratoArquivo->first())->arquivo ?? 'Não possui anexo' }}"
+                                            value="{{ optional($contrato->contratoArquivo()->latest()->first())->arquivo ?? 'Não possui anexo' }}"
                                             disabled>
                                     </div>
                                 </div>

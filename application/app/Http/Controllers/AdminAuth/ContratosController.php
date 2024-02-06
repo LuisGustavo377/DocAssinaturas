@@ -75,7 +75,7 @@ class ContratosController extends Controller
                 $arquivo_contrato = new ContratoArquivo();
 
                 $arquivo_contrato->id = Str::uuid();
-                $arquivo_contrato->numero_contrato = $contrato->numero_contrato; 
+                $arquivo_contrato->numero_contrato = $contrato->numero_contrato;
                 $arquivo_contrato->arquivo = $nameFile;
                 $arquivo_contrato->contrato_id = $contrato->id;
                 $arquivo_contrato->user_cadastro_id = Auth::id();
@@ -122,7 +122,7 @@ class ContratosController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $user_ultima_atualizacao = auth()->id(); 
+            $user_ultima_atualizacao = auth()->id();
             DB::beginTransaction();
 
             $contrato = Contrato::findOrFail($id);
@@ -148,44 +148,44 @@ class ContratosController extends Controller
 
                 // Salvar o arquivo no disk 'contratos'
                 $path = $request->file('arquivo')->storeAs('contratos', $nameFile);
-            }
 
-            // Manter o nome do arquivo original se nenhum novo arquivo for enviado
-            $nameFile = $nameFile ?: $contrato->arquivo;
-
-            $contrato->save();
-            // Fim - Atualizar Contrato
-
-            // Verificar se um novo número de contrato foi enviado
-            if ($request->has('numero_contrato')) {
-                // Atualizar o número de contrato na tabela ContratosArquivos
-                ContratoArquivo::where('contrato_id', $contrato->id)->update(['numero_contrato' => $request->numero_contrato]);
-            }
-
-            // -- Início -- Atualizar tabela ContratosArquivos --
-            
-            // Obtenha o registro da tabela ContratosArquivos associado a este contrato
-            $arquivo_contrato = ContratoArquivo::where('contrato_id', $contrato->id)->first();
-
-            if ($arquivo_contrato) {
-                // Atualizar o nome do arquivo apenas se um novo arquivo foi enviado
-                if ($request->hasFile('arquivo')) {
-                    $arquivo_contrato->arquivo = $nameFile;
-                    $arquivo_contrato->save();
-                }
-            } else {
-                // Caso não exista um registro na tabela ContratosArquivos, crie um novo
+                // Criar um novo registro na tabela ContratosArquivos
                 $arquivo_contrato = new ContratoArquivo();
                 $arquivo_contrato->id = Str::uuid();
-                $arquivo_contrato->numero_contrato = $contrato->numero_contrato;  
+                $arquivo_contrato->numero_contrato = $contrato->numero_contrato;
                 $arquivo_contrato->arquivo = $nameFile;
                 $arquivo_contrato->contrato_id = $contrato->id;
                 $arquivo_contrato->user_cadastro_id = Auth::id();
                 $arquivo_contrato->user_ultima_atualizacao_id = Auth::id();
                 $arquivo_contrato->save();
+            } else {
+                // Verificar se já existe um registro na tabela ContratosArquivos
+                $arquivo_contrato = ContratoArquivo::where('contrato_id', $contrato->id)->first();
+
+                if ($arquivo_contrato) {
+                    // Atualizar o nome do arquivo apenas se um novo arquivo foi enviado
+                    $arquivo_contrato->arquivo = $nameFile;
+                    $arquivo_contrato->save();
+                } else {
+                    // Caso não exista um registro na tabela ContratosArquivos, criar um novo
+                    $arquivo_contrato = new ContratoArquivo();
+                    $arquivo_contrato->id = Str::uuid();
+                    $arquivo_contrato->numero_contrato = $contrato->numero_contrato;
+                    $arquivo_contrato->arquivo = $nameFile;
+                    $arquivo_contrato->contrato_id = $contrato->id;
+                    $arquivo_contrato->user_cadastro_id = Auth::id();
+                    $arquivo_contrato->user_ultima_atualizacao_id = Auth::id();
+                    $arquivo_contrato->save();
+                }
             }
 
-            // -- Fim -- Atualizar arquivos na tabela ContratosArquivos --
+            // Atualizar o número de contrato na tabela ContratosArquivos
+            if ($request->has('numero_contrato')) {
+                ContratoArquivo::where('contrato_id', $contrato->id)->update(['numero_contrato' => $request->numero_contrato]);
+            }
+
+            $contrato->save();
+            // Fim - Atualizar Contrato
 
             DB::commit();
 
