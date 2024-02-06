@@ -19,13 +19,13 @@ class PessoaFisicaTelefone extends Model
 
    protected $fillable = [
     'telefone',
-    'pessoa_id',
+    'pessoa_fisica_id',
     'user_cadastro_id',
     'user_ultima_atualizacao_id',
 ];
 
-public function pessoaFisica()
-{
-    return $this->belongsTo(PessoaFisica::class);
-}
+    public function pessoa()
+    {
+        return $this->belongsTo(PessoaFisica::class);
+    }
 }

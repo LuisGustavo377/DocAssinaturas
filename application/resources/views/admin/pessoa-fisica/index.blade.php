@@ -30,7 +30,7 @@
                 <form action="{{ route('admin.pessoa-fisica.search') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search" placeholder="Buscar...">
+                        <input type="text" class="form-control" name="search" placeholder="Buscar por nome ou CPF...">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
                             Pesquisar
@@ -48,6 +48,10 @@
                                 </th>
 
                                 <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">CPF</h6>
+                                </th>
+
+                                <th class="border-bottom-0">
                                     <h6 class="fw-semibold mb-0">Status</h6>
                                 </th>
                                 <th class="border-bottom-0">
@@ -60,7 +64,10 @@
                             @foreach($pessoas as $pessoa)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">{{ $pessoa->nome }}</h6>
+                                    <h6 class="mb-0">{{ $pessoa->nome }}</h6>
+                                </td>
+                                <td class="border-bottom-0">
+                                    <h6 class="mb-0">{{ $pessoa->cpf }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">

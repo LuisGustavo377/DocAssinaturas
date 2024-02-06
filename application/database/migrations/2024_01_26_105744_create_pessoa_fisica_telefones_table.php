@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('pessoa_fisica_telefones', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('telefone');
-            $table->uuid('pessoa_id');
-            $table->uuid('user_cadastro_id');
+            $table->enum('status', ['ativo', 'inativo']);
+            $table->uuid('pessoa_fisica_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
             
-            $table->foreign('pessoa_id')->references('id')->on('pessoa_fisica');
+            $table->foreign('pessoa_fisica_id')->references('id')->on('pessoa_fisica');
         });
     }
 

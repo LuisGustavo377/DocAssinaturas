@@ -4,7 +4,7 @@ namespace App\Http\Requests\AdminAuth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PessoaFisicaRequest extends FormRequest
+class PessoaFisicaEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class PessoaFisicaRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:255',
-            'cpf' => 'required|unique:pessoa_fisica,cpf|min:11|max:11',
+            'cpf' => 'required|min:11|max:11',
             'email' => 'required|email|max:255',
             'telefone' => 'required|string|max:20',
             'tipo_de_logradouro_id' => 'required|exists:tipos_de_logradouro,id',
@@ -46,7 +46,6 @@ class PessoaFisicaRequest extends FormRequest
             'nome.max' => 'O campo nome não deve ultrapassar 255 caracteres.',
 
             'cpf.required' => 'O campo CPF é obrigatório.',
-            'cpf.unique' => 'Este CPF já está em uso.',
             'cpf.min' => 'O campo CPF deve ter 11 dígitos.',
             'cpf.max' => 'O campo CPF deve ter 11 dígitos.',
 

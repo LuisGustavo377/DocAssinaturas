@@ -21,8 +21,9 @@ class TipoDeLogradouro extends Model
     'descricao',
    ];
 
-     public function pessoaFisica()
-   {
-       return $this->hasMany(PessoaFisica::class, 'tipo_de_logradouro_id');
-   }
+
+   public function enderecos()
+{
+    return $this->hasMany(PessoaFisicaEndereco::class, 'tipo_de_logradouro_id');
+}
 }

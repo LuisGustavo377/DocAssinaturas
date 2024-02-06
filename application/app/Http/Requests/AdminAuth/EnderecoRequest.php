@@ -4,7 +4,7 @@ namespace App\Http\Requests\AdminAuth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PessoaFisicaRequest extends FormRequest
+class EnderecoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,41 +22,19 @@ class PessoaFisicaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:255',
-            'cpf' => 'required|unique:pessoa_fisica,cpf|min:11|max:11',
-            'email' => 'required|email|max:255',
-            'telefone' => 'required|string|max:20',
             'tipo_de_logradouro_id' => 'required|exists:tipos_de_logradouro,id',
             'logradouro' => 'required|string|max:255',
             'numero' => 'required|string|max:20',
             'complemento' => 'nullable|string|max:255',
             'bairro' => 'required|string|max:255',
             'estado_id' => 'required|exists:estados,id',
-            'cidade_id' => 'required|exists:cidades,id',
-            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',      
+            'cidade_id' => 'required|exists:cidades,id',    
         ];
     }
 
     public function messages(): array
     {
         return [
-
-            'nome.required' => 'O campo nome é obrigatório.',
-            'nome.string' => 'O campo nome deve ser uma string.',
-            'nome.max' => 'O campo nome não deve ultrapassar 255 caracteres.',
-
-            'cpf.required' => 'O campo CPF é obrigatório.',
-            'cpf.unique' => 'Este CPF já está em uso.',
-            'cpf.min' => 'O campo CPF deve ter 11 dígitos.',
-            'cpf.max' => 'O campo CPF deve ter 11 dígitos.',
-
-            'email.email' => 'O campo email deve ser um endereço de e-mail válido.',
-            'email.max' => 'O campo email não deve ultrapassar 255 caracteres.',
-            'email.required' => 'O campo email é obrigatório.',
-
-            'telefone.required' => 'O campo telefone é obrigatório.',
-            'telefone.string' => 'O campo telefone deve ser uma string.',
-            'telefone.max' => 'O campo telefone não deve ultrapassar 255 caracteres.',
 
             'tipo_de_logradouro_id.required' => 'O campo tipo de logradouro é obrigatório.',
             'tipo_de_logradouro_id.exists' => 'O tipo de logradouro selecionado é inválido.',
@@ -81,12 +59,6 @@ class PessoaFisicaRequest extends FormRequest
 
             'cidade_id.required' => 'O campo cidade é obrigatório.',
             'cidade_id.exists' => 'A cidade selecionada é inválida.',
-
-            'imagem.image' => 'O arquivo deve ser uma imagem válida.',
-            'imagem.mimes' => 'A imagem deve ter um formato válido (jpeg, png, jpg, gif).',
-            'imagem.max' => 'A imagem não deve ultrapassar 255 kilobytes.',
-
-
         ];
     }
 }

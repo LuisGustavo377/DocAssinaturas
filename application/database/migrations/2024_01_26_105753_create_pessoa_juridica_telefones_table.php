@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('telefone');
             $table->uuid('pessoa_id');
             $table->uuid('user_cadastro_id');
+            $table->enum('status', ['ativo', 'inativo']);
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
 
