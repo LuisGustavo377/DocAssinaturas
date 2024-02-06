@@ -27,6 +27,7 @@ class Licenca extends Model
         'user_cadastro_id',
         'user_ultima_atualizacao_id',
         'grupos_de_negocio_id',
+        'contrato_id'
 
     ];
 
@@ -39,4 +40,10 @@ public function tipoDeRenovacao()
 {
     return $this->hasOne(TipoDeRenovacao::class, 'id', 'tipo_de_renovacao_id');
 }
+
+public function contrato()
+{
+    return $this->belongsTo(Contrato::class);
+}
+
 }

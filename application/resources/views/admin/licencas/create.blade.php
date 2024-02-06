@@ -35,7 +35,7 @@
                                     <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
                                     <select class="form-select @error('grupos_de_negocio_id') is-invalid @enderror"
                                         id="grupoInput" name="grupos_de_negocio_id">
-                                        <option value="" disabled selected>Selecione um grupo de negócio</option>
+                                        <option value="" disabled selected>--Selecione um grupo de negócio--</option>
                                         @foreach ($gruposDeNegocios as $grupo)
                                             <option value="{{ $grupo->id }}"
                                                 {{ old('grupos_de_negocio_id') == $grupo->id ? 'selected' : '' }}>
@@ -53,16 +53,27 @@
                                 <div class="row">
                                     <div class="mb-3 col-md-6">
                                         <label id="numeroContratoLabel" class="form-label">Número Contrato</label>
-                                        <input type="text"
-                                            class="form-control @error('numero_contrato') is-invalid @enderror"
-                                            id="numeroContratoInput" name="numero_contrato" placeholder="Número Contrato"
-                                            value="{{ old('numero_contrato') }}">
-                                        @error('numero_contrato')
+                                        <select class="form-select @error('contrato_id') is-invalid @enderror"
+                                            id="numeroContratoInput" name="contrato_id">
+                                            <option value="" disabled selected>--Selecione um contrato--</option>
+                                            @foreach ($contratos as $contrato)
+                                                <option value="{{ $contrato->id }}"
+                                                    {{ old('contrato_id') == $contrato->id ? 'selected' : '' }}>
+                                                    {{ $contrato->numero_contrato }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <!-- Adicionando o campo oculto para numero_contrato -->
+                                        <input type="hidden" id="numeroContratoHidden" name="numero_contrato"
+                                            value="">
+
+                                        @error('contrato_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
+
                                     <div class="mb-3 col-md-6">
                                         <label id="tipoDeRenovacaoLabel" class="form-label">Tipo de Renovação</label>
                                         <select class="form-select @error('tipo_de_renovacao') is-invalid @enderror"
@@ -153,5 +164,14 @@
 
     </div>
     </div>
+
+{{--  Sempre que o usuário selecionar um contrato no campo de seleção,
+ o valor do campo oculto numero_contrato será atualizado com o número do contrato selecionado.--}}
+<script>
+    document.getElementById('numeroContratoInput').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        document.getElementById('numeroContratoHidden').value = selectedOption.innerText;
+    });
+</script>
 
 @endsection

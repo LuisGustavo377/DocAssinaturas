@@ -43,7 +43,7 @@
                                         <input type="text"
                                             class="form-control @error('numero_contrato') is-invalid @enderror"
                                             id="numeroContratoInput" name="numero_contrato" placeholder="Número Contrato"
-                                            value="{{ $licenca->numero_contrato }}">
+                                            value="{{ $licenca->numero_contrato }}" disabled>
                                         @error('numero_contrato')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

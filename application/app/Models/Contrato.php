@@ -28,4 +28,8 @@ class Contrato extends Model
         return $this->hasMany(ContratoArquivo::class);
     }
 
+    public function licenca()
+    {
+        return $this->hasMany(Licenca::class);
+    }
 }

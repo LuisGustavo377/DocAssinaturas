@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('numero_contrato');
             $table->enum('status', ['ativo', 'inativo']);
-            $table->uuid('user_ultima_atualizacao_id')->nullable();
+            $table->uuid('user_cadastro_id')->nullable();
             $table->timestamps();
         });
     }

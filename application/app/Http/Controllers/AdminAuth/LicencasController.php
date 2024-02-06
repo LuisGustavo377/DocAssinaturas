@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminAuth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminAuth\LicencaRequest as AdminAuthLicencaRequest;
 use App\Http\Requests\LicencaRequest;
+use App\Models\Contrato;
 use App\Models\GrupoDeNegocios;
 use App\Models\UnidadeDeNegocio;
 use App\Models\Licenca;
@@ -37,10 +38,11 @@ class LicencasController extends Controller
         $unidades = UnidadeDeNegocio::orderBy('id')->get(); // talvez ainda nem precise 
         $licencas = Licenca::orderBy('id')->get();
         $tiposDeRenovacao = TipoDeRenovacao::all();
+        $contratos = Contrato::all();
 
         // $pessoas = $gruposDeNegocios->merge($unidades); utilizar na unidade de negócio
 
-        return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas', 'tiposDeRenovacao'));
+        return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas', 'tiposDeRenovacao', 'contratos'));
     }
 
     public function store(AdminAuthLicencaRequest $request)

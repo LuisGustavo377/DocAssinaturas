@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminAuth\ContratoRequest;
 use App\Models\Contrato;
 use App\Models\ContratoArquivo;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class ContratosController extends Controller
         return view('admin.contratos.create');
     }
 
-    public function store(Request $request)
+    public function store(ContratoRequest $request)
     {
         try {
             if (auth()->check()) {
@@ -44,10 +45,13 @@ class ContratosController extends Controller
                 $contrato->fill($request->all());
                 $contrato->status = 'ativo';
                 $contrato->id = Str::uuid();
+                $contrato->user_cadastro_id = auth()->id();
 
-                // Verificar se o arquivo é válido antes de tentar armazenar
-                if ($request->hasFile('arquivo') && $request->file('arquivo')->isValid()) {
-                    // Validar tipo de arquivo e tamanho
+                $nameFile = null;
+
+                // Verificar se o arquivo está presente no formulário
+                if ($request->hasFile('arquivo')) {
+                    // Verificar se o arquivo é válido
                     $request->validate([
                         'arquivo' => 'file|mimes:pdf|max:20480',
                     ]);
@@ -55,14 +59,12 @@ class ContratosController extends Controller
                     // Gerar um nome de arquivo único
                     $nameFile = $this->generateUniqueFileName($request->name, $request->file('arquivo')->extension());
 
-                    // Salvar o arquivo no disco 'contratos'
+                    // Salvar o arquivo no disk 'contratos'
                     $path = $request->file('arquivo')->storeAs('contratos', $nameFile);
 
-                    // // Salvar o nome do arquivo no banco de dados
+                    // Salvar o nome do arquivo no objeto de contrato/ caso haja futura mudança...Não descomentar
                     // $contrato->arquivo = $nameFile;
-                } else {
-                    // Adicione uma lógica para lidar com o arquivo não sendo válido
-                    return redirect()->back()->withErrors(['arquivo' => 'O arquivo não é válido.']);
+
                 }
 
                 $contrato->save();
@@ -73,7 +75,7 @@ class ContratosController extends Controller
                 $arquivo_contrato = new ContratoArquivo();
 
                 $arquivo_contrato->id = Str::uuid();
-                $arquivo_contrato->numero_contrato = $contrato->numero_contrato; // Substitua pelo campo correto
+                $arquivo_contrato->numero_contrato = $contrato->numero_contrato; 
                 $arquivo_contrato->arquivo = $nameFile;
                 $arquivo_contrato->contrato_id = $contrato->id;
                 $arquivo_contrato->user_cadastro_id = Auth::id();
@@ -93,6 +95,7 @@ class ContratosController extends Controller
             throw $e;
         }
     }
+
 
 
 
@@ -119,7 +122,7 @@ class ContratosController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
+            $user_ultima_atualizacao = auth()->id(); 
             DB::beginTransaction();
 
             $contrato = Contrato::findOrFail($id);
@@ -128,13 +131,14 @@ class ContratosController extends Controller
                 throw new \Exception('Contrato não encontrado');
             }
 
-            $contrato->fill($request->all());
-            $contrato->status = 'ativo';
-            $contrato->id = Str::uuid();
+            // Armazenar o nome do arquivo original
+            $nameFile = $contrato->arquivo;
 
-            // Verificar se o arquivo é válido antes de tentar armazenar
-            if ($request->hasFile('arquivo') && $request->file('arquivo')->isValid()) {
-                // Validar tipo de arquivo e tamanho
+            $contrato->fill($request->all());
+
+            // Verificar se um novo arquivo foi enviado
+            if ($request->hasFile('arquivo')) {
+                // Verificar se o arquivo é válido
                 $request->validate([
                     'arquivo' => 'file|mimes:pdf|max:20480',
                 ]);
@@ -142,17 +146,46 @@ class ContratosController extends Controller
                 // Gerar um nome de arquivo único
                 $nameFile = $this->generateUniqueFileName($request->name, $request->file('arquivo')->extension());
 
-                // Salvar o arquivo no disco 'contratos'
-                $path = $request->file('arquivo')->store($nameFile, 'contratos');
-
-                // Salvar o nome do arquivo no banco de dados
-                $contrato->arquivo = $nameFile;
-            } else {
-                // Adicione uma lógica para lidar com o arquivo não sendo válido
-                return redirect()->back()->withErrors(['arquivo' => 'O arquivo não é válido.']);
+                // Salvar o arquivo no disk 'contratos'
+                $path = $request->file('arquivo')->storeAs('contratos', $nameFile);
             }
 
+            // Manter o nome do arquivo original se nenhum novo arquivo for enviado
+            $nameFile = $nameFile ?: $contrato->arquivo;
+
             $contrato->save();
+            // Fim - Atualizar Contrato
+
+            // Verificar se um novo número de contrato foi enviado
+            if ($request->has('numero_contrato')) {
+                // Atualizar o número de contrato na tabela ContratosArquivos
+                ContratoArquivo::where('contrato_id', $contrato->id)->update(['numero_contrato' => $request->numero_contrato]);
+            }
+
+            // -- Início -- Atualizar tabela ContratosArquivos --
+            
+            // Obtenha o registro da tabela ContratosArquivos associado a este contrato
+            $arquivo_contrato = ContratoArquivo::where('contrato_id', $contrato->id)->first();
+
+            if ($arquivo_contrato) {
+                // Atualizar o nome do arquivo apenas se um novo arquivo foi enviado
+                if ($request->hasFile('arquivo')) {
+                    $arquivo_contrato->arquivo = $nameFile;
+                    $arquivo_contrato->save();
+                }
+            } else {
+                // Caso não exista um registro na tabela ContratosArquivos, crie um novo
+                $arquivo_contrato = new ContratoArquivo();
+                $arquivo_contrato->id = Str::uuid();
+                $arquivo_contrato->numero_contrato = $contrato->numero_contrato;  
+                $arquivo_contrato->arquivo = $nameFile;
+                $arquivo_contrato->contrato_id = $contrato->id;
+                $arquivo_contrato->user_cadastro_id = Auth::id();
+                $arquivo_contrato->user_ultima_atualizacao_id = Auth::id();
+                $arquivo_contrato->save();
+            }
+
+            // -- Fim -- Atualizar arquivos na tabela ContratosArquivos --
 
             DB::commit();
 
@@ -168,7 +201,7 @@ class ContratosController extends Controller
         $termoPesquisa = $request->input('search');
 
         if (Auth::check()) {
-            $resultados = Contrato::where('nome', 'ILIKE', "%$termoPesquisa%")->get();
+            $resultados = Contrato::where('numero_contrato', 'ILIKE', "%$termoPesquisa%")->get();
         } else {
             $resultados = [];
         }
