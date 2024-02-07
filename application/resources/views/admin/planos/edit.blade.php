@@ -1,6 +1,6 @@
 @extends ('layouts.dashboard')
 
-@section('title', 'Alterar Contrato')
+@section('title', 'Alterar Plano')
 
 @section('sidebar')
     <x-sidebar-admin></x-sidebar-admin>
@@ -20,8 +20,7 @@
                     <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
                     <div class="card">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('admin.contratos.update', $contrato->id) }}"
-                                enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('admin.planos.update', $plano->id) }}">
 
                                 @csrf {{-- Prevenção do laravel de ataques a formularios --}}
                                 @method('PUT')
@@ -33,68 +32,42 @@
 
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="mb-3 col-md-6">
-                                            <label id="numero_contratoLabel" class="form-label">Número Contrato</label>
-                                            <input type="text"
-                                                class="form-control @error('numero_contrato') is-invalid @enderror"
-                                                id="numero_contratoInput" name="numero_contrato"
-                                                value="{{ $contrato->numero_contrato }}">
-                                            @error('numero_contrato')
+                                        <div class="mb-3 col-md-4">
+                                            <label id="nomeLabel" class="form-label">Nome</label>
+                                            <input type="text" class="form-control @error('nome') is-invalid @enderror"
+                                                id="nomeInput" name="nome" value="{{ $plano->nome }}">
+                                            @error('nome')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label id="planoLabel" class="form-label">Planos</label>
-                                            <select class="form-select @error('plano_id') is-invalid @enderror"
-                                                id="planoSelect" name="plano_id">
-                                                <option value="" selected disabled> -- Selecione o plano -- </option>
-                                                @foreach ($planos as $plano)
-                                                    <option value="{{ $plano->id }}"
-                                                        {{ old('plano_id', $contrato->plano_id) == $plano->id ? 'selected' : '' }}>
-                                                        {{ $plano->nome }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('plano_id')
+                                        <div class="mb-3 col-md-4">
+                                            <label id="valorlabel" class="form-label">Valor</label>
+                                            <input type="text" class="form-control @error('valor') is-invalid @enderror"
+                                                id="valorInput" name="valor" value="{{ $plano->valor }}">
+                                            @error('valor')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div>
 
-                                    <div class="row">
-                                        <div class="mb-3 col-md-6">
+                                        <div class="mb-3 col-md-4">
                                             <label id="statusLabel" class="form-label">Status</label>
                                             <select class="form-select @error('status') is-invalid @enderror"
                                                 id="statusInput" name="status">
                                                 <option value="" disabled>-- Altere o Status --</option>
                                                 @foreach (['ativo', 'inativo'] as $opcao)
                                                     <option value="{{ $opcao }}"
-                                                        {{ old('status', $contrato->status) == $opcao ? 'selected' : '' }}>
+                                                        {{ old('status', $plano->status) == $opcao ? 'selected' : '' }}>
                                                         {{ ucfirst($opcao) }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-
-                                        <div class="mb-3 col-md-6">
-                                            <label id="arquivoLabel" class="form-label">Contrato</label>
-                                            <input type="file"
-                                                class="form-control @error('arquivo') is-invalid @enderror"
-                                                id="arquivoInput" name="arquivo">
-                                            @error('arquivo')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
                                     </div>
-
                                 </div>
-
 
 
                                 <div class="mb-3 d-flex justify-content-end">

@@ -24,6 +24,7 @@ class ContratoRequest extends FormRequest
         return [
             'numero_contrato' => 'required|unique:contratos',
             'arquivo' => 'nullable|file|mimes:pdf|max:20480',
+            'plano_id' => 'required',
 
         ];
     }
@@ -36,6 +37,7 @@ class ContratoRequest extends FormRequest
             'arquivo.file' => 'O arquivo deve ser um arquivo válido.',
             'arquivo.mimes' => 'O arquivo deve ser do tipo PDF.',
             'arquivo.max' => 'O tamanho máximo do arquivo é de 20MB.',
+            'plano_id' => 'Selecione um plano',
 
         ];
     }

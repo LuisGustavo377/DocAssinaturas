@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminAuth\ContratoRequest;
 use App\Models\Contrato;
 use App\Models\ContratoArquivo;
+use App\Models\Plano;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -21,15 +22,18 @@ class ContratosController extends Controller
     public function index(): View
     {
         $contratos = Contrato::orderBy('numero_contrato')->get();
+        $planos = Plano::all();
 
-        return view('admin.contratos.index', compact('contratos'));
+        return view('admin.contratos.index', compact('contratos', 'planos'));
     }
 
 
     public function create(): View
 
-    {
-        return view('admin.contratos.create');
+    {   
+        $planos = Plano::orderBy('nome')->get();
+
+        return view('admin.contratos.create', compact('planos'));
     }
 
     public function store(ContratoRequest $request)
@@ -101,7 +105,9 @@ class ContratosController extends Controller
     public function show($id)
     {
         $contrato = Contrato::findOrFail($id);
-        return view('admin.contratos.show', compact('contrato'));
+        $planos = Plano::orderBy('nome')->get();
+        
+        return view('admin.contratos.show', compact('contrato','planos'));
     }
 
     public function edit($id)
@@ -113,7 +119,9 @@ class ContratosController extends Controller
             abort(404, 'Contrato não encontrado.');
         }
 
-        return view('admin.contratos.edit', compact('contrato'));
+        $planos = Plano::all();
+
+        return view('admin.contratos.edit', compact('contrato', 'planos'));
     }
 
     public function update(Request $request, $id)

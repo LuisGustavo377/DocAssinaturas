@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             TiposDeRenovacaoSeeder::class,
             GrupoNegocioSeeder::class,
             CargosSeeder::class,
-            AdminSeeder::class
+            AdminSeeder::class,
+            PlanosSeeder::class
         ]);
     }
 }

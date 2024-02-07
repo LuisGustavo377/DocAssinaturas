@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('planos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('user_cadastro_id');
+            $table->string('nome');
+            $table->string('valor');
+            $table->enum('status', ['ativo', 'inativo']);
+            $table->uuid('user_cadastro_id')->nullable();
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
         });

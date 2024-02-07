@@ -17,6 +17,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Termwind\Components\Dd;
 
 class LicencasController extends Controller

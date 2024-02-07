@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('contratos', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('numero_contrato')->unique();
+            $table->uuid('plano_id');
             $table->enum('status', ['ativo', 'inativo']);
             $table->uuid('user_cadastro_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('plano_id')->references('id')->on('planos');
         });
     }
 

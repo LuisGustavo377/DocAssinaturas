@@ -16,6 +16,7 @@ use App\Http\Controllers\AdminAuth\PessoaJuridicaController;
 use App\Http\Controllers\AdminAuth\UnidadeDeNegocioController;
 use App\Http\Controllers\AdminAuth\CargoController;
 use App\Http\Controllers\AdminAuth\ContratosController;
+use App\Http\Controllers\AdminAuth\PlanosController;
 use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
 use App\Http\Controllers\CidadesController;
 
@@ -146,6 +147,18 @@ Route::put('/contrato/{id}', [ContratosController::class, 'update'])->name('admi
 Route::post('/contrato/search', [ContratosController::class, 'search'])->name('admin.contratos.search');
 Route::get('/contrato/inativar/{id}', [ContratosController::class, 'inativar'])->name('admin.contratos.inativar');
 Route::get('/contrato/reativar/{id}', [ContratosController::class, 'reativar'])->name('admin.contratos.reativar');
+
+
+
+//PLANOS
+Route::get('/planos', [PlanosController::class, 'index'])->name('admin.planos.index');
+Route::get('/plano/create', [PlanosController::class, 'create'])->name('admin.planos.create');
+Route::post('/plano', [PlanosController::class, 'store'])->name('admin.planos.store');
+Route::get('/plano/{id}', [PlanosController::class, 'show'])->name('admin.planos.show');
+Route::get('/plano/{id}/edit', [PlanosController::class, 'edit'])->name('admin.planos.edit');
+Route::put('/plano/{id}', [PlanosController::class, 'update'])->name('admin.planos.update');
+Route::get('/plano/inativar/{id}', [PlanosController::class, 'inativar'])->name('admin.planos.inativar');
+Route::get('/plano/reativar/{id}', [PlanosController::class, 'reativar'])->name('admin.planos.reativar');
 
 });
 
