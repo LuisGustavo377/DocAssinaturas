@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Estado;
+use App\Models\Cidade;
+use App\Models\TipoDeLogradouro;
 use App\Models\PessoaJuridica;
-use App\Models\Admin;
+use App\Models\PessoaJuridicaTelefone;
+use App\Models\PessoaJuridicaEndereco;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\EstabelecimentoRequest;
+use App\Http\Requests\AdminAuth\PessoaFisicaRequest;
+use App\Http\Requests\AdminAuth\PessoaFisicaEditRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class PessoaJuridicaController extends Controller
 {
@@ -40,7 +40,13 @@ class PessoaJuridicaController extends Controller
      */
     public function create()
     {
-        //
+        // Obtém todos os estados, cidades e tipos de logradouro do banco de dados
+        $estados = Estado::all();
+        $cidades = Cidade::all();
+        $tipos_de_logradouro = TipoDeLogradouro::all();
+        
+        // Retorna a view de criação com os dados dos estados, cidades e tipos de logradouro
+        return view('admin.pessoa-juridica.create', compact('estados', 'cidades', 'tipos_de_logradouro'));
     }
 
     /**
@@ -48,7 +54,7 @@ class PessoaJuridicaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
     }
 
     /**

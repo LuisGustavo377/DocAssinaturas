@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('numero')->nullable();
             $table->string('complemento')->nullable();
             $table->string('bairro')->nullable();
-            $table->enum('status', ['ativo', 'inativo']);
+            $table->enum('status', ['ativo','inativo']);
             $table->integer('estado_id');
             $table->integer('cidade_id');
             $table->uuid('tipo_de_logradouro_id');
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pessoa_fisica_enderecos');
+        Schema::dropIfExists('pessoa_juridica_enderecos');
     }
 };

@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('pessoa_juridica_telefones', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('telefone');
-            $table->uuid('pessoa_id');
-            $table->uuid('user_cadastro_id');
             $table->enum('status', ['ativo', 'inativo']);
+            $table->uuid('pessoa_juridica_id');
+            $table->uuid('user_cadastro_id')->nullable();
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
-
-            $table->foreign('pessoa_id')->references('id')->on('pessoa_juridica');
+            
+            $table->foreign('pessoa_juridica_id')->references('id')->on('pessoa_juridica');
         });
     }
 
