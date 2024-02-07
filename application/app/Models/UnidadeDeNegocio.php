@@ -27,6 +27,10 @@ public function grupoDeNegocios()
 {
     return $this->belongsTo(GrupoDeNegocios::class);
 }
+public function licenca()
+{
+    return $this->belongsTo(licenca::class);
+}
 
 public function carteira()
 {

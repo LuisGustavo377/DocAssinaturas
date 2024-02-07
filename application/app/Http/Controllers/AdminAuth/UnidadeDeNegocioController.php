@@ -5,30 +5,24 @@ namespace App\Http\Controllers\AdminAuth;
 use App\Http\Controllers\Controller;
 use App\Models\GrupoDeNegocios;
 use App\Models\UnidadeDeNegocio;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\EstabelecimentoRequest;
 use App\Models\Licenca;
 use App\Models\PessoaFisica;
 use App\Models\PessoaJuridica;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UnidadeDeNegocioController extends Controller
 {
     public function index(): View
     {
         $unidades = UnidadeDeNegocio::orderBy('id')->get();
+        $grupos = GrupoDeNegocios::orderBy('id')->get();
               
-        return view('admin.unidade-de-negocio.index', compact('unidades'));
+        return view('admin.unidade-de-negocio.index', compact('unidades', 'grupos'));
     }
 
 

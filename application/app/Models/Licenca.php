@@ -45,5 +45,9 @@ public function contrato()
 {
     return $this->belongsTo(Contrato::class);
 }
+public function unidadeDeNegocio()
+{
+    return $this->hasMany(UnidadeDeNegocio::class);
+}
 
 }
