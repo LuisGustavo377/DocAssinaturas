@@ -286,45 +286,15 @@
                         </form>
                     </div>
 
-                    <!--  inicio - Script para Buscar Cidade dinamicamente de acordo com o Estado -->
-                    <script>
-                    $(document).ready(function() {
-                        // Desabilitar o campo de cidade inicialmente
-                        $('#cidadeSelect').prop('disabled', true);
+                    <!--  Mascara CNPJ -->
+                    <script src="{{ asset('assets/js/mascaraCNPJ.js') }}"></script>
 
-                        $('#estadoSelect').change(function() {
-                            var estado_id = $(this).val();
+                    <!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
+                    <script src="{{ asset('assets/js/buscarCidade.js') }}"></script>
+                    
+                    <!-- Validação Formulario Preenchimento de formulario -->
+                    <script src="{{ asset('assets/js/validacaoPreenchimentoFormularioPessoaJuridica.js') }}"></script>
 
-                            // Limpar o dropdown de cidades
-                            $('#cidadeSelect').empty();
-
-                            if (estado_id) {
-                                // Remover o atributo disabled quando um estado for selecionado
-                                $('#cidadeSelect').prop('disabled', false);
-
-                                // Fazer a solicitação AJAX para obter as cidades do estado selecionado
-                                $.ajax({
-                                    url: '/api/cidades/' + estado_id,
-                                    type: 'GET',
-                                    success: function(data) {
-                                        // Adicionar as opções de cidades ao dropdown
-                                        $.each(data, function(key, value) {
-                                            $('#cidadeSelect').append(
-                                                '<option value="' + value
-                                                .id + '">' +
-                                                value.nome + '</option>');
-                                        });
-                                    }
-                                });
-                            } else {
-                                // Se nenhum estado for selecionado, desabilitar novamente o campo de cidade
-                                $('#cidadeSelect').prop('disabled', true);
-                            }
-                        });
-                    });
-                    </script>
-
-                    <!--  Fim - Script para Buscar Cidade dinamicamente de acordo com o Estado -->
                 </div>
             </div>
         </div>

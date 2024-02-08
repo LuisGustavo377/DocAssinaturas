@@ -35,7 +35,7 @@
                                     <label id="razaoSocialLabel" class="form-label">Razão Social</label>
                                     <input type="text" class="form-control @error('razao_social') is-invalid @enderror"
                                         id="razaoSocialInput" name="razao_social" placeholder="Razão Social"
-                                        value="{{ old('razap_social', $pessoa->razao_social)}}">
+                                        value="{{ old('razao_social', $pessoa->razao_social) }}">
                                     @error('razao_social')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -46,7 +46,7 @@
                                     <label id="nomeFantasiaLabel" class="form-label">Nome Fantasia</label>
                                     <input type="text" class="form-control @error('nome_fantasia') is-invalid @enderror"
                                         id="nomeFantasiaInput" name="nome_fantasia" placeholder="Nome Fantasia"
-                                        value="{{ old('nome_fantasia', $pessoa->nome_fantasia)}}">
+                                        value="{{ old('nome_fantasia', $pessoa->nome_fantasia) }}">
                                     @error('nome_fantasia')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -58,8 +58,8 @@
                                 <div class="mb-3 col-md-4">
                                     <label id="cnpjLabel" class="form-label">CNPJ</label>
                                     <input type="text" class="form-control @error('cnpj') is-invalid @enderror"
-                                        id="cnpjInput" name="cnpj" placeholder="CNPJ" value="{{ old('cnpj', $pessoa->cnpj)}}"
-                                        maxlength="14">
+                                        id="cnpjInput" name="cnpj" placeholder="CNPJ"
+                                        value="{{ old('cnpj', $pessoa->cnpj)}}" maxlength="14">
                                     @error('cnpj')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -67,23 +67,26 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3 col-md-4">
-                                    <label class="form-label">Inscrição Estadual</label>
-                                    <input type="tel"
+                                    <label id="inscricaoEstadualLabel" class="form-label">Inscrição Estadual</label>
+                                    <input type="text"
                                         class="form-control telefone @error('inscricao_estadual') is-invalid @enderror"
-                                        id="inscricaoEstadualInput" name="inscricao_estadual"
-                                        placeholder="Inscrição Estadual" value="{{ old('inscricao_estadual', $pessoa->inscricao_estadual)}}">
+                                        id="inscricaoEstadualInput" name="inscricao_estadual" maxlength="9"
+                                        placeholder="Inscrição Estadual"
+                                        value="{{ old('inscricao_estadual', $pessoa->inscricao_estadual) }}">
                                     @error('inscricao_estadual')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                     @enderror
                                 </div>
+
                                 <div class="mb-3 col-md-4">
-                                    <label class="form-label">Inscrição Municipal</label>
-                                    <input type="tel"
+                                    <label id="inscricaoMunicipalLabel" class="form-label">Inscrição Municipal</label>
+                                    <input type="text"
                                         class="form-control telefone @error('inscricao_municipal') is-invalid @enderror"
                                         id="inscricaoMunicipalInput" name="inscricao_municipal"
-                                        placeholder="Inscrição Municipal" value="{{ old('inscricao_municipal', $pessoa->inscricao_municipal)}}">
+                                        placeholder="Inscrição Municipal"
+                                        value="{{ old('inscricao_municipal', $pessoa->inscricao_municipal)}}">
                                     @error('inscricao_municipal')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -281,48 +284,21 @@
                         </div>
                     </form>
 
+
                     <!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
-                    <script>
-                    $(document).ready(function() {
+                    <script src="{{ asset('assets/js/buscarCidade.js') }}"></script>
 
-                        $('#estadoSelect').change(function() {
-                            var estado_id = $(this).val();
+                    <!-- Validação Formulario Preenchimento de formulario -->
+                    <script src="{{ asset('assets/js/validacaoPreenchimentoFormularioPessoaJuridica.js') }}"></script>
+                    
+                    <!--  Mascara CNPJ -->
+                    <script src="{{ asset('assets/js/mascaraCNPJ.js') }}"></script>
 
-                            // Limpar o dropdown de cidades
-                            $('#cidadeSelect').empty();
-
-                            if (estado_id) {
-                                // Remover o atributo disabled quando um estado for selecionado
-                                $('#cidadeSelect').prop('disabled', false);
-
-                                // Fazer a solicitação AJAX para obter as cidades do estado selecionado
-                                $.ajax({
-                                    url: '/api/cidades/' + estado_id,
-                                    type: 'GET',
-                                    success: function(data) {
-                                        // Adicionar as opções de cidades ao dropdown
-                                        $.each(data, function(key, value) {
-                                            $('#cidadeSelect').append(
-                                                '<option value="' + value
-                                                .id +
-                                                '">' +
-                                                value.nome + '</option>'
-                                            );
-                                        });
-                                    }
-                                });
-                            } else {
-                                // Se nenhum estado for selecionado, desabilitar novamente o campo de cidade
-                                $('#cidadeSelect').prop('disabled', true);
-                            }
-                        });
-                    });
-                    </script>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+
 
 @endsection

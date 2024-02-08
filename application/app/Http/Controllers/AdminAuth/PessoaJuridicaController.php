@@ -52,7 +52,7 @@ class PessoaJuridicaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PessoaJuridicaRequest $request)
     {
         try {
             // Verifica se o usuário está autenticado
@@ -202,10 +202,130 @@ class PessoaJuridicaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PessoaJuridica $pessoaJuridica)
+    public function update(PessoaJuridicaEditRequest $request, $id)
     {
-        //
+        try {
+            // Verifica se o usuário está autenticado
+            if (Auth::check()) {
+                // Inicia uma transação de banco de dados
+                DB::beginTransaction();
+                
+                // Define os atributos que devem ser convertidos para maiúsculas
+                $atributosParaMaiusculas = [
+                    'razao_social', 
+                    'nome_fantasia', 
+                    'tipo_de_logradouro',
+                    'logradouro',
+                    'complemento',
+                    'bairro',
+                    'numero',
+                ];    
+                
+                // Encontra a pessoa física pelo ID fornecido
+                $pessoa = PessoaJuridica::findOrFail($id);            
+              
+                //-- Inicio - Salvar na Pessoa Física
+                
+                // Atualiza os campos da pessoa física com os dados fornecidos no formulário
+                $pessoa->razao_social =  $request->razao_social;
+                $pessoa->nome_fantasia =  $request->nome_fantasia;
+                $pessoa->cnpj =  $request->cnpj;
+                $pessoa->inscricao_estadual =  $request->inscricao_estadual;
+                $pessoa->inscricao_municipal =  $request->inscricao_municipal;
+                $pessoa->email =  $request->email;
+                $pessoa->user_ultima_atualizacao_id = Auth::id();              
+                    
+                // Verifica se uma nova imagem foi enviada e a processa
+                if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+                    $request->validate([
+                        'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
+                    ]);
+        
+                    $requestImage = $request->imagem;
+                    $extension = $requestImage->getClientOriginalExtension();
+                    $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+                    $requestImage->move(public_path('img/pessoaJuridica'), $imageName);
+                    $pessoa->imagem = $imageName;
+        
+                } 
+                        
+                // Salva as alterações na pessoa física
+                $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
+                $pessoa->save();
+    
+                //-- Fim - Salvar na Pessoa Física
+
+                //-- Inicio - Verificar se o telefone já existe
+                $telefoneExistente = PessoaJuridicaTelefone::where('pessoa_juridica_id', $pessoa->id)
+                    ->where('telefone', $request->telefone)
+                    ->first();
+
+                if (!$telefoneExistente) {
+                    // O telefone não existe, então crie um novo registro
+
+                    // Define o status dos telefones existentes como 'inativo'
+                    $pessoa->telefones()->update(['status' => 'inativo']);
+
+                    // Cria um novo registro de telefone
+                    $telefone = new PessoaJuridicaTelefone;
+                    $telefone->id = Str::uuid();
+                    $telefone->pessoa_juridica_id = $pessoa->id;
+                    $telefone->telefone = $request->telefone; 
+                    $telefone->status = 'ativo';       
+                    $telefone->user_cadastro_id = Auth::id();                         
+                    $telefone->user_ultima_atualizacao_id = Auth::id();
+                    $telefone->save();
+                }
+                //-- Fim - Verificar se o telefone já existe
+    
+                //-- Inicio - Verificar se o endereço já existe
+                $enderecoExistente = PessoaJuridicaEndereco::where('pessoa_juridica_id', $pessoa->id)
+                    ->where('tipo_de_logradouro_id', $request->tipo_de_logradouro_id)
+                    ->where('logradouro', $request->logradouro)
+                    ->where('numero', $request->numero)
+                    ->where('complemento', $request->complemento)
+                    ->where('bairro', $request->bairro)
+                    ->where('estado_id', $request->estado_id)
+                    ->where('cidade_id', $request->cidade_id)
+                    ->first();
+
+                if (!$enderecoExistente) {
+                    // Define o status dos endereços existentes como 'inativo'
+                    $pessoa->enderecos()->update(['status' => 'inativo']);
+
+                    // Cria um novo registro de endereço
+                    $endereco = new PessoaJuridicaEndereco;
+                    $endereco->id = Str::uuid();
+                    $endereco->tipo_de_logradouro_id = $request->tipo_de_logradouro_id;
+                    $endereco->logradouro = $request->logradouro;
+                    $endereco->numero = $request->numero;
+                    $endereco->complemento = $request->complemento;
+                    $endereco->bairro = $request->bairro;
+                    $endereco->estado_id = $request->estado_id;
+                    $endereco->cidade_id = $request->cidade_id;
+                    $endereco->pessoa_juridica_id = $pessoa->id;    
+                    $endereco->status = 'ativo'; 
+                    $endereco->user_cadastro_id = Auth::id();                                                
+                    $endereco->user_ultima_atualizacao_id = Auth::id();
+                    $endereco->salvarComAtributosMaiusculos($atributosParaMaiusculas);
+                    
+                    $endereco->save();
+                }
+                //-- Fim - Verificar se o endereço já existe
+        
+                // Confirma a transação
+                DB::commit();
+        
+                // Redireciona de volta à página de índice com uma mensagem de sucesso
+                return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa Física alterada com sucesso!');
+            }
+        } catch (\Exception $e) {
+            // Em caso de erro, reverte a transação e lança a exceção novamente.
+            DB::rollback();
+            throw $e;
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.

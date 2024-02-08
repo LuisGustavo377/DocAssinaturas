@@ -24,11 +24,11 @@ class PessoaJuridicaRequest extends FormRequest
         return [
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'required|string|max:255',
-            'cnpj' => 'required|numeric| unique:pessoa_fisica,cpf|min:14|max:14',
+            'cnpj' => ['required', 'unique:pessoa_juridica','regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/'],
             'inscricao_estadual' => 'nullable|numeric|max:9',
             'inscricao_municipal' => 'nullable|numeric',
             'email' => 'required|email|max:255',
-            'telefone' => 'required|numeric|string|max:20',
+            'telefone' => 'required|string|max:20',
             'tipo_de_logradouro_id' => 'required|exists:tipos_de_logradouro,id',
             'logradouro' => 'required|string|max:255',
             'numero' => 'required|string|max:20',
@@ -54,9 +54,7 @@ class PessoaJuridicaRequest extends FormRequest
                 
                 'cnpj.required' => 'O campo CNPJ é obrigatório.',
                 'cnpj.unique' => 'O CNPJ informado já está em uso.',
-                'cnpj.numeric' => 'O CNPJ deve conter apenas números.',
-                'cnpj.min' => 'O CNPJ deve ter no mínimo 11 caracteres.',
-                'cnpj.max' => 'O CNPJ deve ter no máximo 11 caracteres.',
+                'cnpj.regex' => 'O CNPJ deve estar no formato xx.xxx.xxx/xxxx-xx.',
                 
                 'inscricao_estadual.max' => 'A inscrição estadual não pode ter mais de 9 caracteres.',
                 'inscricao_estadual.numeric' => 'A inscrição estadual deve conter apenas números.',
@@ -67,7 +65,6 @@ class PessoaJuridicaRequest extends FormRequest
                 
                 'telefone.required' => 'O campo telefone é obrigatório.',
                 'telefone.string' => 'O campo telefone deve ser uma string.',
-                'telefone.numeric' => 'O campo telefone deve conter apenas números.',
                 'telefone.max' => 'O campo telefone não pode ter mais de 20 caracteres.',
                 
                 'tipo_de_logradouro_id.required' => 'O campo tipo de logradouro é obrigatório.',

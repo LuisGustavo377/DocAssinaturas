@@ -7,16 +7,6 @@
     <title>@yield('title')</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <!-- Inclua o jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-    <!-- Inclua o jQuery Mask Plugin -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
-
-
 </head>
 
 <body>
@@ -24,7 +14,6 @@
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
         <!-- Sidebar Start -->
-
         @yield('sidebar')
         <!--  Sidebar End -->
         <!--  Main wrapper -->
@@ -45,34 +34,30 @@
                 </div>
                 @endif
             </div>
-
-
             <!-- Container principal End -->
         </div>
     </div>
-    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{ asset('assets/js/funcoes.js') }}"></script>
 
-
-    <!-- Validador Telefone -->
-
-    <script src="{{asset('assets/js/funcoes.js')}}"></script>
-
-    <!-- Script esconder notificação -->
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js">
+    // <!--Script para esconder notificação-->
     <script>
     // Esconder a mensagem após 2 segundos
     setTimeout(function() {
         $('#alert-message').fadeOut('slow');
     }, 2000);
     </script>
-
 </body>
 
 </html>

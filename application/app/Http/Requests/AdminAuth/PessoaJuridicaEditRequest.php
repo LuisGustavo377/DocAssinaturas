@@ -22,8 +22,10 @@ class PessoaJuridicaEditRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:255',
-            'cpf' => 'required|min:11|max:11',
+            'razao_social' => 'required|string|max:255',
+            'nome_fantasia' => 'required|string|max:255',
+            'cnpj' => ['required', 'regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/'],
+            'inscricao_estadual' => ['nullable', 'regex:/^\d{9}$/'],
             'email' => 'required|email|max:255',
             'telefone' => 'required|string|max:20',
             'tipo_de_logradouro_id' => 'required|exists:tipos_de_logradouro,id',
@@ -40,52 +42,50 @@ class PessoaJuridicaEditRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'razao_social.required' => 'O campo razão social é obrigatório.',
+            'razao_social.string' => 'O campo razão social deve ser uma string.',
+            'razao_social.max' => 'O campo razão social não pode ter mais de 255 caracteres.',
+            
+            'nome_fantasia.required' => 'O campo nome fantasia é obrigatório.',
+            'nome_fantasia.string' => 'O campo nome fantasia deve ser uma string.',
+            'nome_fantasia.max' => 'O campo nome fantasia não pode ter mais de 255 caracteres.',
+            
+            'cnpj.required' => 'O campo CNPJ é obrigatório.',
+            'cnpj.regex' => 'O CNPJ deve estar no formato xx.xxx.xxx/xxxx-xx.',
 
-            'nome.required' => 'O campo nome é obrigatório.',
-            'nome.string' => 'O campo nome deve ser uma string.',
-            'nome.max' => 'O campo nome não deve ultrapassar 255 caracteres.',
-
-            'cpf.required' => 'O campo CPF é obrigatório.',
-            'cpf.min' => 'O campo CPF deve ter 11 dígitos.',
-            'cpf.max' => 'O campo CPF deve ter 11 dígitos.',
-
-            'email.email' => 'O campo email deve ser um endereço de e-mail válido.',
-            'email.max' => 'O campo email não deve ultrapassar 255 caracteres.',
+            'inscricao_estadual.regex' => 'A Inscrição Estadual deve conter exatamente 9 dígitos.',
+            
             'email.required' => 'O campo email é obrigatório.',
-
+            'email.email' => 'O email deve ser um endereço de email válido.',
+            'email.max' => 'O campo email não pode ter mais de 255 caracteres.',
+            
             'telefone.required' => 'O campo telefone é obrigatório.',
             'telefone.string' => 'O campo telefone deve ser uma string.',
-            'telefone.max' => 'O campo telefone não deve ultrapassar 255 caracteres.',
-
+            'telefone.max' => 'O campo telefone não pode ter mais de 20 caracteres.',
+            
             'tipo_de_logradouro_id.required' => 'O campo tipo de logradouro é obrigatório.',
             'tipo_de_logradouro_id.exists' => 'O tipo de logradouro selecionado é inválido.',
-
-            'logradouro.string' => 'O campo logradouro deve ser uma string.',
-            'logradouro.max' => 'O campo logradouro não deve ultrapassar 255 caracteres.',
+            
             'logradouro.required' => 'O campo logradouro é obrigatório.',
-
-            'numero.string' => 'O campo número deve ser uma string.',
-            'numero.max' => 'O campo número não deve ultrapassar 255 caracteres.',
+            'logradouro.string' => 'O campo logradouro deve ser uma string.',
+            'logradouro.max' => 'O campo logradouro não pode ter mais de 255 caracteres.',
+            
             'numero.required' => 'O campo número é obrigatório.',
-
-            'complemento.string' => 'O campo complemento deve ser uma string.',
-            'complemento.max' => 'O campo complemento não deve ultrapassar 255 caracteres.',
-
+            'numero.string' => 'O campo número deve ser uma string.',
+            'numero.max' => 'O campo número não pode ter mais de 20 caracteres.',
+            
+            'bairro.required' => 'O campo bairro é obrigatório.',
             'bairro.string' => 'O campo bairro deve ser uma string.',
-            'bairro.max' => 'O campo bairro não deve ultrapassar 255 caracteres.',
-            'bairro.required' => 'O campo bairro é obrigatório.',            
-
+            'bairro.max' => 'O campo bairro não pode ter mais de 255 caracteres.',
+            
             'estado_id.required' => 'O campo estado é obrigatório.',
             'estado_id.exists' => 'O estado selecionado é inválido.',
-
             'cidade_id.required' => 'O campo cidade é obrigatório.',
             'cidade_id.exists' => 'A cidade selecionada é inválida.',
-
-            'imagem.image' => 'O arquivo deve ser uma imagem válida.',
-            'imagem.mimes' => 'A imagem deve ter um formato válido (jpeg, png, jpg, gif).',
-            'imagem.max' => 'A imagem não deve ultrapassar 255 kilobytes.',
-
-
+            
+            'imagem.image' => 'O arquivo deve ser uma imagem.',
+            'imagem.mimes' => 'A imagem deve ser dos tipos: jpeg, png, jpg ou gif.',
+            'imagem.max' => 'A imagem não pode ter mais de 2MB.',        
         ];
     }
 }
