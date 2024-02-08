@@ -23,6 +23,7 @@ class GrupoDeNegocios extends Model
         'observacao',
         'user_cadastro_id',
         'user_ultima_atualizacao_id',
+        'grupo_de_negocio_id',
 
     ];
 
