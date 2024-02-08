@@ -64,7 +64,7 @@
                             @foreach($pessoas as $pessoa)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0">{{ $pessoa->razaoSocial }}</h6>
+                                    <h6 class="mb-0">{{ $pessoa->razao_social }}</h6>
                                 </td>
                                 <td class="border-bottom-0">
                                     <h6 class="mb-0">{{ $pessoa->cnpj }}</h6>

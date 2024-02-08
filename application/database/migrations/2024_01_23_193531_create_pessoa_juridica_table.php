@@ -23,8 +23,8 @@ return new class extends Migration
             $table->enum('senha_temporaria', ['sim', 'nao'])->nullable();
             $table->enum('status', ['ativo', 'inativo', 'pendente-pagamento'])->default('ativo');
             $table->string('imagem')->nullable();
-            $table->uuid('unidade_negocio_id');
-            $table->uuid('user_cadastro_id');
+            $table->uuid('unidade_negocio_id')->nullable();
+            $table->uuid('user_cadastro_id')->nullable();
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
 

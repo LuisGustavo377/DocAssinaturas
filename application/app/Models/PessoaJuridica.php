@@ -25,28 +25,23 @@ class PessoaJuridica extends Model
         'inscricao_estadual',
         'inscricao_municipal',
         'email',
-        'tipo_logradouro',
-        'logradouro',
-        'numero',
-        'complemento',
-        'bairro',
-        'estado_id',
-        'cidade_id',
+        'imagem',
         'senha',
         'senha_temporaria',
-        'status',
-        'imagem',
+        'unidade_negocio_id',
+        'user_cadastro_id',
+        'user_ultima_atualizacao',
     ];
 
 
-    public function estado()
+    public function telefones()
     {
-        return $this->belongsTo(Estado::class, 'estado_id');
+        return $this->hasMany(PessoaJuridicaTelefone::class);
     }
 
-    public function cidade()
+    public function enderecos()
     {
-        return $this->belongsTo(Cidade::class, 'cidade_id');
+        return $this->hasMany(PessoaJuridicaEndereco::class);
     }
 
     public function unidadeDeNegocio()
@@ -54,19 +49,18 @@ class PessoaJuridica extends Model
         return $this->belongsTo(UnidadeDeNegocio::class);
     }
 
-    public function tipoDeRelacionamento()
-    {
-        return $this->HasMany(TipoDeRelacionamento::class);
-    }
-
     public function pessoaJuridicaContaBancaria()
     {
-        return $this->HasMany(PessoaJuridicaContaBancaria::class);
+        return $this->hasMany(PessoaJuridicaContaBancaria::class);
     }
 
-    public function pessoaJuridicaTelefone()
+    public function salvarComAtributosMaiusculos(array $atributos)
     {
-        return $this->HasMany(PessoaJuridicaTelefone::class);
+        foreach ($atributos as $atributo) {
+            if (isset($this->$atributo)) {
+                $this->$atributo = ucwords(strtolower($this->$atributo));
+            }
+        }
+        $this->save();
     }
-
 }
