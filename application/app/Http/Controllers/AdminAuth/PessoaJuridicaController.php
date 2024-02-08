@@ -78,7 +78,7 @@ class PessoaJuridicaController extends Controller
                 $pessoa->id = Str::uuid();
                 $pessoa->razao_social =  $request->razao_social;
                 $pessoa->nome_fantasia =  $request->nome_fantasia;
-                $pessoa->cnpj =  $request->cnpj;
+                $pessoa->cnpj = str_replace(['.', '/', '-'], '', $request->cnpj);
                 $pessoa->inscricao_estadual =  $request->inscricao_estadual;
                 $pessoa->inscricao_municipal =  $request->inscricao_municipal;
                 $pessoa->senha =  $request->senha;
@@ -229,7 +229,7 @@ class PessoaJuridicaController extends Controller
                 // Atualiza os campos da pessoa física com os dados fornecidos no formulário
                 $pessoa->razao_social =  $request->razao_social;
                 $pessoa->nome_fantasia =  $request->nome_fantasia;
-                $pessoa->cnpj =  $request->cnpj;
+                $pessoa->cnpj = str_replace(['.', '/', '-'], '', $request->cnpj);
                 $pessoa->inscricao_estadual =  $request->inscricao_estadual;
                 $pessoa->inscricao_municipal =  $request->inscricao_municipal;
                 $pessoa->email =  $request->email;
@@ -327,11 +327,18 @@ class PessoaJuridicaController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PessoaJuridica $pessoaJuridica)
+    public function search(Request $request)
     {
-        //
+        $termoPesquisa = $request->input('search');
+
+        if (Auth::check()) {
+            $resultados = PessoaJuridica::where('nome', 'ILIKE', "%$termoPesquisa%")
+            ->orWhere('cpf', 'ILIKE', "%$termoPesquisa%")
+            ->get();
+        } else {
+            $resultados = [];
+        }
+
+        return view('admin.pessoa-fisica.search', compact('resultados', 'termoPesquisa'));
     }
 }

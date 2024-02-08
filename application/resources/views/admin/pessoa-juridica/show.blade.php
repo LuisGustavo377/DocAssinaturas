@@ -50,7 +50,7 @@
                                     <div class="mb-3 col-md-4">
                                         <label id="cnpjLabel" class="form-label">CNPJ</label>
                                         <input type="text" class="form-control @error('cnpj') is-invalid @enderror"
-                                            id="cnpjInput" name="cnpj" placeholder="CNPJ" value="{{ $pessoa->cnpj }}"
+                                            id="cnpjInput" name="cnpj" placeholder="CNPJ" value="{{ substr($pessoa->cnpj, 0, 2) }}.{{ substr($pessoa->cnpj, 2, 3) }}.{{ substr($pessoa->cnpj, 5, 3) }}/{{ substr($pessoa->cnpj, 8, 4) }}-{{ substr($pessoa->cnpj, 12, 2) }}"
                                             maxlength="14" disabled>
                                     </div>
                                     <div class="mb-3 col-md-4">

@@ -30,7 +30,8 @@
                 <form action="{{ route('admin.pessoa-juridica.search') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search" placeholder="Buscar por Razão Social ou CNPJ...">
+                        <input type="text" class="form-control" name="search"
+                            placeholder="Buscar por Razão Social ou CNPJ...">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
                             Pesquisar
@@ -67,8 +68,11 @@
                                     <h6 class="mb-0">{{ $pessoa->razao_social }}</h6>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0">{{ $pessoa->cnpj }}</h6>
+                                    <h6 class="mb-0">
+                                        {{ substr($pessoa->cnpj, 0, 2) }}.{{ substr($pessoa->cnpj, 2, 3) }}.{{ substr($pessoa->cnpj, 5, 3) }}/{{ substr($pessoa->cnpj, 8, 4) }}-{{ substr($pessoa->cnpj, 12, 2) }}
+                                    </h6>
                                 </td>
+
 
                                 <td class="border-bottom-0">
                                     <span
