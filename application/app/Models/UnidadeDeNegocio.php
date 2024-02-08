@@ -46,4 +46,6 @@ public function pessoaJuridica()
 {
     return $this->hasOne(PessoaJuridica::class);
 }
+
+
 }

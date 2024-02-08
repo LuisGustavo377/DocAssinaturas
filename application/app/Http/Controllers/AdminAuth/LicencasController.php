@@ -169,4 +169,12 @@ class LicencasController extends Controller
 
         return redirect()->route('admin.licencas.index')->with('msg', 'Licença não encontrada.');
     }
+
+    public function licencasPorGrupo(Request $request)
+    {
+        $grupo_id = $request->input('grupo_id');
+        $licencas = Licenca::where('grupo_id', $grupo_id)->get();
+        return response()->json($licencas);
+    }
+    
 }

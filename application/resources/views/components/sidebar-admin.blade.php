@@ -37,7 +37,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="/admin/unidade-de-negocio">
+                    <a class="sidebar-link" href="/admin/unidade-de-negocios">
                         <span>
                             <i class="ti ti-brand-unity"></i>
                         </span>

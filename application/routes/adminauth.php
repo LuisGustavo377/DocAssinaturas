@@ -91,7 +91,7 @@ Route::get('/grupo-de-negocios/inativar/{id}', [GrupoDeNegociosController::class
 Route::get('/grupo-de-negocios/reativar/{id}', [GrupoDeNegociosController::class, 'reativar'])->name('admin.grupo-de-negocios.reativar');
 
 //UNIDADE DE NEGOCIOS
-Route::get('/unidade-de-negocio', [UnidadeDeNegocioController::class, 'index'])->name('admin.unidade-de-negocio.index');
+Route::get('/unidade-de-negocios', [UnidadeDeNegocioController::class, 'index'])->name('admin.unidade-de-negocios.index');
 Route::get('/unidade-de-negocio/create', [UnidadeDeNegocioController::class, 'create'])->name('admin.unidade-de-negocio.create');
 Route::post('/unidade-de-negocio', [UnidadeDeNegocioController::class, 'store'])->name('admin.unidade-de-negocio.store');
 Route::get('/unidade-de-negocio/{id}', [UnidadeDeNegocioController::class, 'show'])->name('admin.unidade-de-negocio.show');
@@ -134,6 +134,8 @@ Route::put('/licenca/{id}', [LicencasController::class, 'update'])->name('admin.
 Route::post('/licenca/search', [LicencasController::class, 'search'])->name('admin.licencas.search');
 Route::get('/licenca/inativar/{id}', [LicencasController::class, 'inativar'])->name('admin.licencas.inativar');
 Route::get('/licenca/reativar/{id}', [LicencasController::class, 'reativar'])->name('admin.licencas.reativar');
+Route::get('/licencas-por-grupo', [LicencasController::class, 'licencasPorGrupo'])->name('admin.licencas.licencasPorGrupo');
+
 
 
 

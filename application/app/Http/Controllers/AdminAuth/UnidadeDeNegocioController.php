@@ -159,5 +159,6 @@ class UnidadeDeNegocioController extends Controller
 
         return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade não encontrado.');
     }
+
 }
 
