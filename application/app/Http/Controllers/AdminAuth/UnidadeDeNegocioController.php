@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 
 class UnidadeDeNegocioController extends Controller
 {
@@ -21,29 +22,27 @@ class UnidadeDeNegocioController extends Controller
     {
         $unidades = UnidadeDeNegocio::orderBy('id')->get();
         $grupos = GrupoDeNegocios::orderBy('id')->get();
-              
+
         return view('admin.unidade-de-negocio.index', compact('unidades', 'grupos'));
     }
 
 
     public function create(): View
-    
     {
         $gruposDeNegocios = GrupoDeNegocios::orderBy('nome')->get();
         $unidades = UnidadeDeNegocio::orderBy('id')->get();
         $licenca = Licenca::orderBy('id')->get();
-        $pessoaFisica = PessoaFisica::orderBy('nome')->get();
-        $pessoaJuridica = PessoaJuridica::orderBy('razao_social')->get();
+        $pessoaF = PessoaFisica::all();
 
-        $pessoas = $pessoaFisica->merge($pessoaJuridica);
-
-        return view('admin.unidade-de-negocio.create', compact('unidades', 'gruposDeNegocios','pessoas'));
+        return view('admin.unidade-de-negocio.create', compact('unidades', 'gruposDeNegocios', 'pessoaF'));
     }
 
+
+
     public function store(Request $request)
-    {       
-     
-       try {
+    {
+
+        try {
 
             if (auth()->check()) {
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
@@ -53,17 +52,15 @@ class UnidadeDeNegocioController extends Controller
                 // Inicio - Salvar Grupo no Banco
 
                 $unidade = new UnidadeDeNegocio();
-
+                $unidade->fill($request->all());
                 $unidade->id = Str::uuid();
-                $unidade->nome = $request->name;
-                $unidade->observacao = $request->observacao;
-                $unidade->user_cadastro_id = $user_id;    
-                $unidade->save();     
+                $unidade->user_cadastro_id = $user_id;
+                $unidade->save();
 
 
                 DB::commit();
 
-                return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade de Negócio criado com sucesso!');
+                return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade de Negócio criado com sucesso!');
             }
         } catch (\Exception $e) {
             // Em caso de erro, reverta a transação e lance a exceção novamente.
@@ -72,7 +69,7 @@ class UnidadeDeNegocioController extends Controller
         }
     }
 
-    
+
     public function show($id)
     {
         $unidade = UnidadeDeNegocio::findOrFail($id);
@@ -87,7 +84,7 @@ class UnidadeDeNegocioController extends Controller
             // Tratamento de exceção: Grupo não encontrado
             abort(404, 'Grupo não encontrado.');
         }
-    
+
         return view('admin.unidade-de-negocio.edit', compact('unidade'));
     }
 
@@ -160,5 +157,17 @@ class UnidadeDeNegocioController extends Controller
         return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade não encontrado.');
     }
 
-}
+    public function pesquisarPessoas(Request $request)
+    {
+        $termoPesquisa = $request->input('termo_pesquisa');
+        Log::info('Termo de pesquisa: ' . $termoPesquisa); // Linha corrigida para registrar o termo de pesquisa
 
+        // Realize a consulta no banco de dados para buscar pessoas físicas
+        $pessoas = PessoaFisica::where('nome', 'LIKE', "%$termoPesquisa%")
+            ->orWhere('cpf', 'LIKE', "%$termoPesquisa%")
+            ->get();
+
+        // Retorne os resultados em formato JSON
+        return response()->json($pessoas);
+    }
+}

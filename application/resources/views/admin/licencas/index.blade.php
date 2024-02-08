@@ -45,7 +45,7 @@
                             <thead class="text-dark fs-4">
                                 <tr>
                                     <th class="border-bottom-0">
-                                        <h6 class="mb-0 fw-semibold">Nome</h6>
+                                        <h6 class="mb-0 fw-semibold">Descrição</h6>
                                     </th>
 
                                     <th class="border-bottom-0">
@@ -69,7 +69,7 @@
                                             <h6 class="mb-0 fw-semibold">
                                                 @if ($licenca->grupoDeNegocios)
                                                     <!-- Verifica se o relacionamento existe -->
-                                                    {{ $licenca->grupoDeNegocios->nome }}
+                                                    {{ $licenca->descricao }}
                                                 @else
                                                     N/A <!-- ou outra mensagem se o relacionamento não existir -->
                                                 @endif

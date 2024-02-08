@@ -18,7 +18,7 @@ class UnidadeDeNegocio extends Model
    //Fim Configuração UUID
 
    protected $fillable = [
-    'natureza',
+    'grupo_negocio_id',
     'user_cadastro_id',
     'user_ultima_atualizacao_id',
 ];

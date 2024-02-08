@@ -100,6 +100,8 @@ Route::put('/unidade-de-negocio/{id}', [UnidadeDeNegocioController::class, 'upda
 Route::post('/unidade-de-negocio/search', [UnidadeDeNegocioController::class, 'search'])->name('admin.unidade-de-negocio.search');
 Route::get('/unidade-de-negocio/inativar/{id}', [UnidadeDeNegocioController::class, 'inativar'])->name('admin.unidade-de-negocio.inativar');
 Route::get('/unidade-de-negocio/reativar/{id}', [UnidadeDeNegocioController::class, 'reativar'])->name('admin.unidade-de-negocio.reativar');
+Route::get('/unidade-de-negocio/pesquisar', [UnidadeDeNegocioController::class, 'pesquisarPessoas'])->name('admin.unidade-de-negocio.pesquisar');
+
 
 
 //PESSOA FISICA

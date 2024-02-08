@@ -172,8 +172,8 @@ class LicencasController extends Controller
 
     public function licencasPorGrupo(Request $request)
     {
-        $grupo_id = $request->input('grupo_id');
-        $licencas = Licenca::where('grupo_id', $grupo_id)->get();
+        $grupos_de_negocio_id = $request->grupos_de_negocio_id;
+        $licencas = Licenca::where('grupos_de_negocio_id', $grupos_de_negocio_id)->get();
         return response()->json($licencas);
     }
     
