@@ -23,20 +23,30 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="mb-3">
-                            <label id="nomeLabel" class="form-label">Nome</label>
-                            <input type="text" class="form-control @error('nome') is-invalid @enderror" id="nomeInput"
-                                name="nome" placeholder="Nome" value="{{ $pessoa->nome  }}" disabled>
-                        </div>
-
                         <div class="row">
-                            <div class="mb-3 col-md-4">
+                            <div class="mb-6 col-md-6">
+                                <label id="nomeLabel" class="form-label">Nome Completo</label>
+                                <input type="text" class="form-control @error('nome') is-invalid @enderror"
+                                    id="nomeInput" name="nome" placeholder="Nome" value="{{ $pessoa->nome  }}" disabled>
+                            </div>
+                            <div class="mb-6 col-md-6">
                                 <label id="cpfLabel" class="form-label">CPF</label>
                                 <input type="text" class="form-control @error('cpf') is-invalid @enderror" id="cpfInput"
-                                    name="cpf" placeholder="CPF" value="{{ $pessoa->cpf }}" disabled>
+                                    name="cpf" placeholder="CPF"
+                                    value="{{ sprintf("%s.%s.%s-%s", substr($pessoa->cpf, 0, 3), substr($pessoa->cpf, 3, 3), substr($pessoa->cpf, 6, 3), substr($pessoa->cpf, 9, 2)) }}"
+                                    disabled>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="mb-3 col-md-4">
+                    <div class="alert alert-light">
+                        <i class="ti ti-message" style="color: #13deb9"></i>
+                        <label class="form-label" style="color: #13deb9">Contato</label>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="mb-6 col-md-6">
                                 <label class="form-label">Telefone</label>
                                 @foreach ($pessoa->telefones as $telefone)
                                 <input type="tel" oninput="mascaraTelefone(this)" maxlength="15"
@@ -45,7 +55,8 @@
                                 @endforeach
                             </div>
 
-                            <div class="mb-3 col-md-4">
+                            <div class="mb-6 col-md-6">
+
                                 <label id="emailLabel" class="form-label">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
                                     id="emailInput" name="email" placeholder="Email" value="{{ $pessoa->email  }}"
@@ -90,7 +101,7 @@
                         </div>
 
                         <div class="row">
-                        <div class="mb-3 col-md-6">
+                            <div class="mb-3 col-md-6">
                                 <label for="estadoSelect" class="form-label">Estado</label>
                                 <input type="text" class="form-control"
                                     value="{{ $pessoa->enderecos->first()->estado->nome }}" disabled>

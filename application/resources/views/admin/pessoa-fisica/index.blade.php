@@ -67,7 +67,7 @@
                                     <h6 class="mb-0">{{ $pessoa->nome }}</h6>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0">{{ $pessoa->cpf }}</h6>
+                                    <h6 class="mb-0">{{ sprintf("%s.%s.%s-%s", substr($pessoa->cpf, 0, 3), substr($pessoa->cpf, 3, 3), substr($pessoa->cpf, 6, 3), substr($pessoa->cpf, 9, 2)) }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">

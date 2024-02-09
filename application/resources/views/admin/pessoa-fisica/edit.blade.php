@@ -29,20 +29,21 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="mb-3">
-                                <label for="nomeInput" class="form-label">Nome Completo </label>
-                                <input type="text" class="form-control @error('nome') is-invalid @enderror"
-                                    id="nomeInput" name="nome" placeholder="Nome"
-                                    value="{{ old('nome', $pessoa->nome) }}">
-                                @error('nome')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-
                             <div class="row">
-                                <div class="mb-3 col-md-4">
+                                <div class="mb-6 col-md-6">
+                                    <label for="nomeInput" class="form-label">Nome Completo </label>
+                                    <input type="text" class="form-control @error('nome') is-invalid @enderror"
+                                        id="nomeInput" name="nome" placeholder="Nome"
+                                        value="{{ old('nome', $pessoa->nome) }}">
+                                    @error('nome')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
+
+                                <div class="mb-6 col-md-6">
                                     <label for="cpfInput" class="form-label">CPF</label>
                                     <input type="text" class="form-control @error('cpf') is-invalid @enderror"
                                         id="cpfInput" name="cpf" placeholder="CPF" value="{{ $pessoa->cpf }}"
@@ -53,9 +54,17 @@
                                     </div>
                                     @enderror
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="alert alert-light">
+                            <i class="ti ti-message" style="color: #13deb9"></i>
+                            <label class="form-label" style="color: #13deb9">Contato</label>
+                        </div>
 
-                                <div class="mb-3 col-md-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="mb-6 col-md-6">
                                     <label for="telefoneInput" class="form-label">Telefone</label>
                                     <input type="tel" oninput="mascaraTelefone(this)" maxlength="15"
                                         class="form-control telefone @error('telefone') is-invalid @enderror"
@@ -68,7 +77,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3 col-md-4">
+                                <div class="mb-6 col-md-6">
                                     <label for="emailInput" class="form-label">Email</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         id="emailInput" name="email" placeholder="Email"
@@ -79,9 +88,11 @@
                                     </div>
                                     @enderror
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
+
+
 
                         <div class="alert alert-light">
                             <i class="ti ti-address-book" style="color: #13deb9"></i>
@@ -239,42 +250,13 @@
                     </form>
 
                     <!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
-                    <script>
-                    $(document).ready(function() {
+                    <script src="{{ asset('assets/js/buscarCidade.js') }}"></script>
 
-                        $('#estadoSelect').change(function() {
-                            var estado_id = $(this).val();
+                    <!-- Validação Formulario Preenchimento de formulario -->
+                    <script src="{{ asset('assets/js/validacaoPreenchimentoFormularioPessoaFisica.js') }}"></script>
 
-                            // Limpar o dropdown de cidades
-                            $('#cidadeSelect').empty();
-
-                            if (estado_id) {
-                                // Remover o atributo disabled quando um estado for selecionado
-                                $('#cidadeSelect').prop('disabled', false);
-
-                                // Fazer a solicitação AJAX para obter as cidades do estado selecionado
-                                $.ajax({
-                                    url: '/api/cidades/' + estado_id,
-                                    type: 'GET',
-                                    success: function(data) {
-                                        // Adicionar as opções de cidades ao dropdown
-                                        $.each(data, function(key, value) {
-                                            $('#cidadeSelect').append(
-                                                '<option value="' + value
-                                                .id +
-                                                '">' +
-                                                value.nome + '</option>'
-                                            );
-                                        });
-                                    }
-                                });
-                            } else {
-                                // Se nenhum estado for selecionado, desabilitar novamente o campo de cidade
-                                $('#cidadeSelect').prop('disabled', true);
-                            }
-                        });
-                    });
-                    </script>
+                    <!--  Mascara CNPJ -->
+                    <script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
                 </div>
             </div>
         </div>

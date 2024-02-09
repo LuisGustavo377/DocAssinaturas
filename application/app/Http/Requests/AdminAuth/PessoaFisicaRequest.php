@@ -23,7 +23,7 @@ class PessoaFisicaRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:255',
-            'cpf' => 'required|unique:pessoa_fisica,cpf|min:11|max:11',
+            'cpf' => ['required', 'unique:pessoa_fisica','regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/'],
             'email' => 'required|email|max:255',
             'telefone' => 'required|string|max:20',
             'tipo_de_logradouro_id' => 'required|exists:tipos_de_logradouro,id',
@@ -47,8 +47,7 @@ class PessoaFisicaRequest extends FormRequest
 
             'cpf.required' => 'O campo CPF é obrigatório.',
             'cpf.unique' => 'Este CPF já está em uso.',
-            'cpf.min' => 'O campo CPF deve ter 11 dígitos.',
-            'cpf.max' => 'O campo CPF deve ter 11 dígitos.',
+            'cpf.regex' => 'O CPF deve estar no formato XXX.XXX.XXX-XX.',
 
             'email.email' => 'O campo email deve ser um endereço de e-mail válido.',
             'email.max' => 'O campo email não deve ultrapassar 255 caracteres.',

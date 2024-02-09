@@ -20,10 +20,12 @@ $(document).ready(function() {
                     // Adicionar as opções de cidades ao dropdown
                     $.each(data, function(key, value) {
                         $('#cidadeSelect').append(
-                            '<option value="' + value
-                            .id + '">' +
-                            value.nome + '</option>');
+                            $('<option></option>').val(value.id).text(value.nome)
+                        );
                     });
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
                 }
             });
         } else {

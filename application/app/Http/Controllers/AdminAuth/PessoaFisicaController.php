@@ -74,7 +74,7 @@ class PessoaFisicaController extends Controller
                 $pessoa = new PessoaFisica;
                 $pessoa->id = Str::uuid();
                 $pessoa->nome =  $request->nome;
-                $pessoa->cpf =  $request->cpf;
+                $pessoa->cpf = str_replace(['.', '/', '-'], '', $request->cpf);
                 $pessoa->email =  $request->email;
                 $pessoa->user_cadastro_id = Auth::id();
                 $pessoa->user_ultima_atualizacao_id = Auth::id();                          
@@ -210,7 +210,7 @@ class PessoaFisicaController extends Controller
                 
                 // Atualiza os campos da pessoa física com os dados fornecidos no formulário
                 $pessoa->nome =  $request->nome;
-                $pessoa->cpf =  $request->cpf;
+                $pessoa->cpf = str_replace(['.', '/', '-'], '', $request->cpf);
                 $pessoa->email =  $request->email;
                 $pessoa->user_ultima_atualizacao_id = Auth::id();              
                     
