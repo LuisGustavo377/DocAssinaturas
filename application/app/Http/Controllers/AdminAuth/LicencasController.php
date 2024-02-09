@@ -17,6 +17,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Termwind\Components\Dd;
 
 class LicencasController extends Controller
@@ -168,4 +169,12 @@ class LicencasController extends Controller
 
         return redirect()->route('admin.licencas.index')->with('msg', 'Licença não encontrada.');
     }
+
+    public function licencasPorGrupo(Request $request)
+    {
+        $grupos_de_negocio_id = $request->grupos_de_negocio_id;
+        $licencas = Licenca::where('grupos_de_negocio_id', $grupos_de_negocio_id)->get();
+        return response()->json($licencas);
+    }
+    
 }

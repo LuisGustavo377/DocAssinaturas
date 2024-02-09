@@ -16,6 +16,7 @@ use App\Http\Controllers\AdminAuth\PessoaJuridicaController;
 use App\Http\Controllers\AdminAuth\UnidadeDeNegocioController;
 use App\Http\Controllers\AdminAuth\CargoController;
 use App\Http\Controllers\AdminAuth\ContratosController;
+use App\Http\Controllers\AdminAuth\PlanosController;
 use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
 use App\Http\Controllers\CidadesController;
 
@@ -90,7 +91,7 @@ Route::get('/grupo-de-negocios/inativar/{id}', [GrupoDeNegociosController::class
 Route::get('/grupo-de-negocios/reativar/{id}', [GrupoDeNegociosController::class, 'reativar'])->name('admin.grupo-de-negocios.reativar');
 
 //UNIDADE DE NEGOCIOS
-Route::get('/unidade-de-negocio', [UnidadeDeNegocioController::class, 'index'])->name('admin.unidade-de-negocio.index');
+Route::get('/unidade-de-negocios', [UnidadeDeNegocioController::class, 'index'])->name('admin.unidade-de-negocios.index');
 Route::get('/unidade-de-negocio/create', [UnidadeDeNegocioController::class, 'create'])->name('admin.unidade-de-negocio.create');
 Route::post('/unidade-de-negocio', [UnidadeDeNegocioController::class, 'store'])->name('admin.unidade-de-negocio.store');
 Route::get('/unidade-de-negocio/{id}', [UnidadeDeNegocioController::class, 'show'])->name('admin.unidade-de-negocio.show');
@@ -99,6 +100,8 @@ Route::put('/unidade-de-negocio/{id}', [UnidadeDeNegocioController::class, 'upda
 Route::post('/unidade-de-negocio/search', [UnidadeDeNegocioController::class, 'search'])->name('admin.unidade-de-negocio.search');
 Route::get('/unidade-de-negocio/inativar/{id}', [UnidadeDeNegocioController::class, 'inativar'])->name('admin.unidade-de-negocio.inativar');
 Route::get('/unidade-de-negocio/reativar/{id}', [UnidadeDeNegocioController::class, 'reativar'])->name('admin.unidade-de-negocio.reativar');
+Route::get('/unidade-de-negocio/pesquisar', [UnidadeDeNegocioController::class, 'pesquisarPessoas'])->name('admin.unidade-de-negocio.pesquisar');
+
 
 
 //PESSOA FISICA
@@ -133,6 +136,8 @@ Route::put('/licenca/{id}', [LicencasController::class, 'update'])->name('admin.
 Route::post('/licenca/search', [LicencasController::class, 'search'])->name('admin.licencas.search');
 Route::get('/licenca/inativar/{id}', [LicencasController::class, 'inativar'])->name('admin.licencas.inativar');
 Route::get('/licenca/reativar/{id}', [LicencasController::class, 'reativar'])->name('admin.licencas.reativar');
+Route::get('/licencas-por-grupo', [LicencasController::class, 'licencasPorGrupo'])->name('admin.licencas.licencasPorGrupo');
+
 
 
 
@@ -146,6 +151,18 @@ Route::put('/contrato/{id}', [ContratosController::class, 'update'])->name('admi
 Route::post('/contrato/search', [ContratosController::class, 'search'])->name('admin.contratos.search');
 Route::get('/contrato/inativar/{id}', [ContratosController::class, 'inativar'])->name('admin.contratos.inativar');
 Route::get('/contrato/reativar/{id}', [ContratosController::class, 'reativar'])->name('admin.contratos.reativar');
+
+
+
+//PLANOS
+Route::get('/planos', [PlanosController::class, 'index'])->name('admin.planos.index');
+Route::get('/plano/create', [PlanosController::class, 'create'])->name('admin.planos.create');
+Route::post('/plano', [PlanosController::class, 'store'])->name('admin.planos.store');
+Route::get('/plano/{id}', [PlanosController::class, 'show'])->name('admin.planos.show');
+Route::get('/plano/{id}/edit', [PlanosController::class, 'edit'])->name('admin.planos.edit');
+Route::put('/plano/{id}', [PlanosController::class, 'update'])->name('admin.planos.update');
+Route::get('/plano/inativar/{id}', [PlanosController::class, 'inativar'])->name('admin.planos.inativar');
+Route::get('/plano/reativar/{id}', [PlanosController::class, 'reativar'])->name('admin.planos.reativar');
 
 });
 

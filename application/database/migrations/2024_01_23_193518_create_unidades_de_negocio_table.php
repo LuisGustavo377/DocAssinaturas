@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('unidades_de_negocio', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('natureza', ['matriz', 'filial']);
+            $table->enum('tipo_pessoa', ['PF', 'PJ'])->nullable();
             $table->uuid('user_cadastro_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->uuid('grupo_negocio_id');

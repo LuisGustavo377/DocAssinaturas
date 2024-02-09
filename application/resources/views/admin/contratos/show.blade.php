@@ -26,17 +26,31 @@
                             </div>
 
                             <div class="card-body">
-                                <div class="mb-3">
-                                    <label id="numero_contratoLabel" class="form-label">Número Contrato</label>
-                                    <input type="text"
-                                        class="form-control @error('numero_contrato') is-invalid @enderror"
-                                        id="numero_contratoInput" name="numero_contrato" placeholder="Número Contrato"
-                                        value="{{ $contrato->numero_contrato }}" disabled>
-                                    @error('numero_contrato')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label id="numero_contratoLabel" class="form-label">Número Contrato</label>
+                                        <input type="text"
+                                            class="form-control @error('numero_contrato') is-invalid @enderror"
+                                            id="numero_contratoInput" name="numero_contrato" placeholder="Número Contrato"
+                                            value="{{ $contrato->numero_contrato }}" disabled>
+                                        @error('numero_contrato')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label id="planoLabel" class="form-label">Plano</label>
+                                        <input type="text"
+                                            class="form-control @error('plano') is-invalid @enderror"
+                                            id="planoInput" name="nome" 
+                                            value="{{ $contrato->planos->nome }}" disabled>
+                                        @error('plano')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -47,12 +61,13 @@
                                     </div>
                                     <div class="mb-3 col-md-6 position-relative">
                                         <label id="arquivoLabel" class="form-label">Contrato</label>
-                                        <input type="text" class="form-control" id="arquivoInput" name="arquivo" 
+                                        <input type="text" class="form-control" id="arquivoInput" name="arquivo"
                                             value="{{ optional($contrato->contratoArquivo()->latest()->first())->arquivo ?? 'Não possui anexo' }}"
                                             disabled>
-                                            <a href="#" title="Abrir Contrato">
-                                            <i class="ti ti-file-text" style="position: absolute; bottom: 10px; right: 23px; font-size:20px;"></i>
-                                            </a>
+                                        <a href="#" title="Abrir Contrato">
+                                            <i class="ti ti-file-text"
+                                                style="position: absolute; bottom: 10px; right: 23px; font-size:20px;"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

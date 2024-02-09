@@ -19,7 +19,8 @@ class Contrato extends Model
 
     protected $fillable = [
         'numero_contrato',
-        'status'
+        'status',
+        'plano_id'
 
     ];
 
@@ -31,5 +32,10 @@ class Contrato extends Model
     public function licenca()
     {
         return $this->hasMany(Licenca::class);
+    }
+
+    public function planos()
+    {
+        return $this->belongsTo(Plano::class, 'plano_id');
     }
 }

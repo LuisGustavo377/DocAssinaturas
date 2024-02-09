@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminAuth\GruposDeNegocioRequest;
 use App\Models\GrupoDeNegocios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,27 +11,28 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\Rule;
 
 class GrupoDeNegociosController extends Controller
 {
     public function index(): View
     {
         $grupos = GrupoDeNegocios::orderBy('nome')->get();
-              
+
         return view('admin.grupo-de-negocios.index', compact('grupos'));
     }
 
 
     public function create(): View
-    
+
     {
         return view('admin.grupo-de-negocios.create');
     }
 
-    public function store(Request $request)
-    {       
-     
-       try {
+    public function store(GruposDeNegocioRequest $request)
+    {
+
+        try {
 
             if (auth()->check()) {
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
@@ -41,11 +43,10 @@ class GrupoDeNegociosController extends Controller
 
                 $grupo = new GrupoDeNegocios;
 
+                $grupo->fill($request->all());
                 $grupo->id = Str::uuid();
-                $grupo->nome = $request->name;
-                $grupo->observacao = $request->observacao;
-                $grupo->user_cadastro_id = $user_id;    
-                $grupo->save();     
+                $grupo->user_cadastro_id = $user_id;
+                $grupo->save();
 
 
                 DB::commit();
@@ -59,7 +60,7 @@ class GrupoDeNegociosController extends Controller
         }
     }
 
-    
+
     public function show($id)
     {
         $grupo = GrupoDeNegocios::findOrFail($id);
@@ -74,7 +75,7 @@ class GrupoDeNegociosController extends Controller
             // Tratamento de exceção: Grupo não encontrado
             abort(404, 'Grupo não encontrado.');
         }
-    
+
         return view('admin.grupo-de-negocios.edit', compact('grupo'));
     }
 
@@ -90,8 +91,7 @@ class GrupoDeNegociosController extends Controller
                 throw new \Exception('Grupo não encontrado');
             }
 
-            $grupo->nome = $request->input('name');
-            $grupo->observacao = $request->input('observacao');
+            $grupo->fill($request->all());
             $grupo->user_ultima_atualizacao_id = $user_ultima_atualizacao;
             $grupo->save();
 
@@ -147,5 +147,3 @@ class GrupoDeNegociosController extends Controller
         return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo não encontrado.');
     }
 }
-
-
