@@ -330,15 +330,47 @@ class PessoaJuridicaController extends Controller
     public function search(Request $request)
     {
         $termoPesquisa = $request->input('search');
+        $termoPesquisaLimpo = preg_replace('/[^0-9]/', '', $termoPesquisa);
 
         if (Auth::check()) {
-            $resultados = PessoaJuridica::where('nome', 'ILIKE', "%$termoPesquisa%")
-            ->orWhere('cpf', 'ILIKE', "%$termoPesquisa%")
+            $resultados = PessoaJuridica::where('razao_social', 'ILIKE', "%$termoPesquisa%")
+            ->orWhere('cnpj', 'ILIKE', "%$termoPesquisaLimpo%")
             ->get();
         } else {
             $resultados = [];
         }
 
-        return view('admin.pessoa-fisica.search', compact('resultados', 'termoPesquisa'));
+        return view('admin.pessoa-juridica.search', compact('resultados', 'termoPesquisa'));
     }
+
+    public function inativar($id)
+    {
+
+        $pessoa = PessoaJuridica::findOrFail($id);
+
+        if ($pessoa) {
+            $pessoa->status = 'inativo';
+            $pessoa->save();
+
+            return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa Jurídica inativada com sucesso.');
+        }
+
+        return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa não encontrado.');
+    }
+
+    public function reativar($id)
+    {
+
+        $pessoa = PessoaJuridica::findOrFail($id);
+
+        if ($pessoa) {
+            $pessoa->status = 'ativo';
+            $pessoa->save();
+
+            return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa Jurídica ativada com sucesso.');
+        }
+
+        return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa não encontrado.');
+    }
+
 }

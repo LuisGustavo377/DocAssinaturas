@@ -25,7 +25,7 @@ class PessoaJuridicaEditRequest extends FormRequest
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'required|string|max:255',
             'cnpj' => ['required', 'regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/'],
-            'inscricao_estadual' => ['nullable', 'regex:/^\d{9}$/'],
+            'inscricao_estadual' => 'numeric',
             'email' => 'required|email|max:255',
             'telefone' => 'required|string|max:20',
             'tipo_de_logradouro_id' => 'required|exists:tipos_de_logradouro,id',
@@ -53,7 +53,7 @@ class PessoaJuridicaEditRequest extends FormRequest
             'cnpj.required' => 'O campo CNPJ é obrigatório.',
             'cnpj.regex' => 'O CNPJ deve estar no formato xx.xxx.xxx/xxxx-xx.',
 
-            'inscricao_estadual.regex' => 'A Inscrição Estadual deve conter exatamente 9 dígitos.',
+            'inscricao_estadual.numeric' => 'A inscrição estadual deve conter apenas números.',
             
             'email.required' => 'O campo email é obrigatório.',
             'email.email' => 'O email deve ser um endereço de email válido.',

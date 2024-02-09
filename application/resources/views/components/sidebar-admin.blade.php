@@ -104,7 +104,68 @@
                         </li>
                     </ul>
                 </li>
-                <!-- Restante do seu código continua aqui -->
+                
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-settings"></i>
+                        </span>
+                        <span class="hide-menu">Configurações</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <!-- Submenu for Planos -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/bancos">
+                                <span class="hide-menu">
+                                    > Bancos
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="">
+                                <span class="hide-menu">
+                                    > Cargos
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="">
+                                <span class="hide-menu">
+                                    > Contas Bancárias
+                                </span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="">
+                                <span class="hide-menu">
+                                     > Tipos de Logradouros
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="">
+                                <span class="hide-menu">
+                                     > Tipos de Relacionamento
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="">
+                                <span class="hide-menu">
+                                     > Tipos de Renovação
+                                </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="">
+                                <span class="hide-menu">
+                                     > Tipos de Relacionamento
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Desabilitar o campo de cidade inicialmente
-    $('#cidadeSelect').prop('disabled', true);
+    $('#cidadeSelect').prop('disabled', false);
 
     $('#estadoSelect').change(function() {
         var estado_id = $(this).val();

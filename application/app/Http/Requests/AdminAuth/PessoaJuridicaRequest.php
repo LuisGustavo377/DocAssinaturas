@@ -25,7 +25,7 @@ class PessoaJuridicaRequest extends FormRequest
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'required|string|max:255',
             'cnpj' => ['required', 'unique:pessoa_juridica','regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/'],
-            'inscricao_estadual' => 'nullable|numeric|max:9',
+            'inscricao_estadual' => 'nullable|numeric',
             'inscricao_municipal' => 'nullable|numeric',
             'email' => 'required|email|max:255',
             'telefone' => 'required|string|max:20',
@@ -56,7 +56,7 @@ class PessoaJuridicaRequest extends FormRequest
                 'cnpj.unique' => 'O CNPJ informado já está em uso.',
                 'cnpj.regex' => 'O CNPJ deve estar no formato xx.xxx.xxx/xxxx-xx.',
                 
-                'inscricao_estadual.max' => 'A inscrição estadual não pode ter mais de 9 caracteres.',
+
                 'inscricao_estadual.numeric' => 'A inscrição estadual deve conter apenas números.',
                 
                 'email.required' => 'O campo email é obrigatório.',

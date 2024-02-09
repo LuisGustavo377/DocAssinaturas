@@ -197,7 +197,7 @@
                                     <label for="cidadeSelect" class="form-label">Cidade</label>
                                     <select class="form-select @error('cidade_id') is-invalid @enderror"
                                         id="cidadeSelect" name="cidade_id">
-                                        <option value="" selected disabled> -- Selecione a cidade -- </option>
+                                        <option value="" selected> -- Selecione a cidade -- </option>
                                         @foreach($cidades as $cidade)
                                         <option value="{{ $cidade->id }}"
                                             {{ old('cidade_id', $pessoa->enderecos->first()->cidade_id) == $cidade->id ? 'selected' : '' }}>
