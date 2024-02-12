@@ -15,6 +15,8 @@ return new class extends Migration
         Schema::create('cargos', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nome');
+            $table->uuid('user_cadastro_id')->nullable();
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

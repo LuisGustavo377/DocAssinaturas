@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Resultados Pesquisa')
+@section('title', 'Bancos')
 
 @section('sidebar')
 <x-sidebar-admin></x-sidebar-admin>
@@ -13,26 +13,30 @@
 @section('content')
 
 <div class="container-fluid">
-
-
     <div class="col-lg-12 d-flex align-items-stretch">
         <div class="card w-100">
             <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="card-title fw-semibold">Banco</h5>
 
-                <div class="alert alert-light d-flex justify-content-between align-items-center">
-                    <div>
-                        <i class="ti ti-search" style="color: #13deb9"></i>
-                        <label class="form-label" style="color: #13deb9">Resultados da Pesquisa:
-                            {{$termoPesquisa}}</label>
-                    </div>
+                    <!-- Button to Create Establishment -->
+                    <a href="{{ route('admin.bancos.create') }}" class="btn btn-success float-end">
+                        <i class="ti ti-plus"></i>
+                        Novo
+                    </a>
                 </div>
 
-                @if ($resultados->isEmpty())
-
-                <p>Não encontramos nenhum resultado em sua pesquisa <b>{{$termoPesquisa}}</b>. Por favor, tente
-                    novamente.</p>
-
-                @else
+                <!-- Formulário da Barra de Pesquisa -->
+                <form action="{{ route('admin.bancos.search') }}" method="post">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="search" placeholder="Buscar por nome do banco ou código...">
+                        <button class="btn btn-outline-success" type="submit">
+                            <i class="ti ti-search"></i>
+                            Pesquisar
+                        </button>
+                    </div>
+                </form>
 
                 <!-- Tabela resultados -->
                 <div class="table-responsive">
@@ -105,26 +109,9 @@
                         </tbody>
                     </table>
                 </div>
-                @endif
-
-                <div class="mb-3 d-flex justify-content-end">
-                    <div class="mb-3">
-                        <div class="text-center my-4">
-                            <a href="javascript:history.back()" class="btn btn-light me-2">
-                                <i class="ti ti-arrow-left me-1"></i>
-                                Voltar
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
-
-
     </div>
-
 </div>
 
 @endsection

@@ -117,19 +117,19 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/bancos">
                                 <span class="hide-menu">
-                                    > Bancos
+                                   > Bancos
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="">
+                            <a class="sidebar-link" href="/admin/cargos">
                                 <span class="hide-menu">
                                     > Cargos
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="">
+                            <a class="sidebar-link" href="/admin/contas-bancarias">
                                 <span class="hide-menu">
                                     > Contas Bancárias
                                 </span>
@@ -137,33 +137,27 @@
                         </li>
                         
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="">
+                            <a class="sidebar-link" href="/admin/tipos-de-logradouros">
                                 <span class="hide-menu">
                                      > Tipos de Logradouros
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="">
+                            <a class="sidebar-link" href="/admin/tipos-de-relacionamento">
                                 <span class="hide-menu">
                                      > Tipos de Relacionamento
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="">
+                            <a class="sidebar-link" href="/admin/tipos-de-renovacao">
                                 <span class="hide-menu">
                                      > Tipos de Renovação
                                 </span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="">
-                                <span class="hide-menu">
-                                     > Tipos de Relacionamento
-                                </span>
-                            </a>
-                        </li>
+
                     </ul>
                 </li>
             </ul>

@@ -17,6 +17,7 @@ use App\Http\Controllers\AdminAuth\UnidadeDeNegocioController;
 use App\Http\Controllers\AdminAuth\CargoController;
 use App\Http\Controllers\AdminAuth\ContratosController;
 use App\Http\Controllers\AdminAuth\PlanosController;
+use App\Http\Controllers\AdminAuth\BancosController;
 use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
 use App\Http\Controllers\CidadesController;
 
@@ -163,6 +164,18 @@ Route::get('/plano/{id}/edit', [PlanosController::class, 'edit'])->name('admin.p
 Route::put('/plano/{id}', [PlanosController::class, 'update'])->name('admin.planos.update');
 Route::get('/plano/inativar/{id}', [PlanosController::class, 'inativar'])->name('admin.planos.inativar');
 Route::get('/plano/reativar/{id}', [PlanosController::class, 'reativar'])->name('admin.planos.reativar');
+
+
+//BANCOS
+Route::get('/bancos', [BancosController::class, 'index'])->name('admin.bancos.index');
+Route::get('/banco/create', [BancosController::class, 'create'])->name('admin.bancos.create');
+Route::post('/banco', [BancosController::class, 'store'])->name('admin.bancos.store');
+Route::get('/banco/{id}', [BancosController::class, 'show'])->name('admin.bancos.show');
+Route::get('/banco/{id}/edit', [BancosController::class, 'edit'])->name('admin.bancos.edit');
+Route::put('/banco/{id}', [BancosController::class, 'update'])->name('admin.bancos.update');
+Route::get('/banco/inativar/{id}', [BancosController::class, 'inativar'])->name('admin.bancos.inativar');
+Route::get('/banco/reativar/{id}', [BancosController::class, 'reativar'])->name('admin.bancos.reativar');
+Route::post('/bancos/search', [BancosController::class, 'search'])->name('admin.bancos.search');
 
 });
 

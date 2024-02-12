@@ -56,40 +56,42 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if(count($bancos) > 0)
-                            @foreach($bancos as $banco)
+                        <tbody>
+                            @if(count($resultados) > 0)
+                            @foreach($resultados as $resultado)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0">{{ $banco->nome }}</h6>
+                                    <h6 class="mb-0">{{ $resultado->nome }}</h6>
                                 </td>
+
                                 <td class="border-bottom-0">
-                                <h6 class="mb-0">{{ $banco->codigo }}</h6>
+                                    <h6 class="mb-0">{{ $resultado->codigo }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">
                                     <span
-                                        class="badge bg-{{ $banco->status === 'ativo' ? 'success' : ($banco->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
-                                        {{ ucfirst($banco->status) }}
+                                        class="badge bg-{{ $resultado->status === 'ativo' ? 'success' : ($resultado->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
+                                        {{ ucfirst($resultado->status) }}
                                     </span>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/banco/' . $banco->id) }}"
+                                    <a href="{{ url('admin/banco/' . $resultado->id) }}"
                                         class="btn btn-primary m-1" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/banco/' . $banco->id . '/edit') }}"
+                                    <a href="{{ url('admin/banco/' . $resultado->id . '/edit') }}"
                                         class="btn btn-success m-1" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
 
-                                    @if($banco->status==='ativo')
-                                    <a href="{{ url('admin/banco/inativar/' . $banco->id) }}"
+                                    @if($resultado->status==='ativo')
+                                    <a href="{{ url('admin/banco/inativar/' . $resultado->id) }}"
                                         class="btn btn-danger m-1" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </a>
-                                    @elseif ($banco->status==='inativo')
-                                    <a href="{{ url('admin/banco/reativar/' . $banco->id) }}"
+                                    @elseif ($resultado->status==='inativo')
+                                    <a href="{{ url('admin/banco/reativar/' . $resultado->id) }}"
                                         class="btn btn-warning m-1" title="Reativar">
                                         <i class="ti ti-lock-off"></i>
                                     </a>
@@ -103,6 +105,7 @@
                             </tr>
                             @endif
                         </tbody>
+                        </tbody>
                     </table>
                 </div>
                 @endif
@@ -114,17 +117,12 @@
                                 <i class="ti ti-arrow-left me-1"></i>
                                 Voltar
                             </a>
-
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
-
     </div>
-
 </div>
 
 @endsection

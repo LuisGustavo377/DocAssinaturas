@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('tipos_de_relacionamento', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('descricao')->nullable();
+            $table->uuid('user_cadastro_id')->nullable();
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
         });
     }

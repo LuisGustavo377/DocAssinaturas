@@ -1,4 +1,3 @@
-
 @extends('layouts.dashboard')
 
 @section('title', 'Resultados Pesquisa')
@@ -40,7 +39,7 @@
                     <table class="table text-nowrap mb-0 align-middle">
                         <thead class="text-dark fs-4">
                             <tr>
-                            <th class="border-bottom-0">
+                                <th class="border-bottom-0">
                                     <h6 class="fw-semibold mb-0">Razão Social</h6>
                                 </th>
 
@@ -56,7 +55,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+
                         <tbody>
                             @if(count($resultados) > 0)
                             @foreach($resultados as $resultado)
@@ -108,7 +107,7 @@
                             </tr>
                             @endif
                         </tbody>
-                        </tbody>
+
                     </table>
                 </div>
                 @endif
