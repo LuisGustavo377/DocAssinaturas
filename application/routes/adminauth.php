@@ -14,7 +14,7 @@ use App\Http\Controllers\AdminAuth\LicencasController;
 use App\Http\Controllers\AdminAuth\PessoaFisicaController;
 use App\Http\Controllers\AdminAuth\PessoaJuridicaController;
 use App\Http\Controllers\AdminAuth\UnidadeDeNegocioController;
-use App\Http\Controllers\AdminAuth\CargoController;
+use App\Http\Controllers\AdminAuth\CargosController;
 use App\Http\Controllers\AdminAuth\ContratosController;
 use App\Http\Controllers\AdminAuth\PlanosController;
 use App\Http\Controllers\AdminAuth\BancosController;
@@ -177,9 +177,9 @@ Route::get('/banco/inativar/{id}', [BancosController::class, 'inativar'])->name(
 Route::get('/banco/reativar/{id}', [BancosController::class, 'reativar'])->name('admin.bancos.reativar');
 Route::post('/bancos/search', [BancosController::class, 'search'])->name('admin.bancos.search');
 
+
+
 });
-
-
 
 //ROTAS PARA CIDADES
 Route::get('/api/cidades/{estado_id}', [CidadesController::class, 'getCidadesPorEstado']);

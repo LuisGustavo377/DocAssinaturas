@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminAuth\BancosRequest;
 use Illuminate\Http\Request;
 use App\Models\Banco;
 use Illuminate\View\View;
