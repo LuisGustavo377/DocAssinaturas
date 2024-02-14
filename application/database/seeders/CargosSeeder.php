@@ -16,8 +16,8 @@ class CargosSeeder extends Seeder
     public function run()
     {
         $cargos = [
-            ['id' => Str::uuid(), 'nome' => 'Gerente', 'created_at' => now(), 'updated_at' => now()],
-            ['id' => Str::uuid(), 'nome' => 'Auxiliar Administrativo', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => Str::uuid(), 'descricao' => 'Gerente', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => Str::uuid(), 'descricao' => 'Auxiliar Administrativo', 'created_at' => now(), 'updated_at' => now()],
 
         ];
 

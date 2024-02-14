@@ -19,6 +19,7 @@ use App\Http\Controllers\AdminAuth\PlanosController;
 use App\Http\Controllers\AdminAuth\BancosController;
 use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
 use App\Http\Controllers\AdminAuth\TiposDeLogradouroController;
+use App\Http\Controllers\AdminAuth\CargosController;
 use App\Http\Controllers\CidadesController;
 
 use Illuminate\Support\Facades\Route;
@@ -187,6 +188,18 @@ Route::put('/tipo-de-logradouro/{id}', [TiposDeLogradouroController::class, 'upd
 Route::post('/tipo-de-logradouro/search', [TiposDeLogradouroController::class, 'search'])->name('admin.tipos-de-logradouro.search');
 Route::get('/tipo-de-logradouro/inativar/{id}', [TiposDeLogradouroController::class, 'inativar'])->name('admin.tipos-de-logradouro.inativar');
 Route::get('/tipo-de-logradouro/reativar/{id}', [TiposDeLogradouroController::class, 'reativar'])->name('admin.tipos-de-logradouro.reativar');
+
+
+//CARGOS
+Route::get('/cargos', [CargosController::class, 'index'])->name('admin.cargos.index');
+Route::get('/cargo/create', [CargosController::class, 'create'])->name('admin.cargos.create');
+Route::post('/cargo', [CargosController::class, 'store'])->name('admin.cargos.store');
+Route::get('/cargo/{id}', [CargosController::class, 'show'])->name('admin.cargos.show');
+Route::get('/cargo/{id}/edit', [CargosController::class, 'edit'])->name('admin.cargos.edit');
+Route::put('/cargo/{id}', [CargosController::class, 'update'])->name('admin.cargos.update');
+Route::post('/cargo/search', [CargosController::class, 'search'])->name('admin.cargos.search');
+Route::get('/cargo/inativar/{id}', [CargosController::class, 'inativar'])->name('admin.cargos.inativar');
+Route::get('/cargo/reativar/{id}', [CargosController::class, 'reativar'])->name('admin.cargos.reativar');
 
 });
 
