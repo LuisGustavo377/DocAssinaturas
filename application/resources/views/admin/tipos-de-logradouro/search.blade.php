@@ -57,12 +57,12 @@
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/pessoa-fisica/' . $resultado->id) }}"
+                                    <a href="{{ url('admin/tipo-de-logradouro/' . $resultado->id) }}"
                                         class="btn btn-primary m-1" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/pessoa-fisica/' . $resultado->id . '/edit') }}"
+                                    <a href="{{ url('admin/tipo-de-logradouro/' . $resultado->id . '/edit') }}"
                                         class="btn btn-success m-1" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
