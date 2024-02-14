@@ -33,7 +33,7 @@ class PessoaFisicaRequest extends FormRequest
             'bairro' => 'required|string|max:255',
             'estado_id' => 'required|exists:estados,id',
             'cidade_id' => 'required|exists:cidades,id',
-            'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',      
+            'imagem' => 'nullable|uploaded|image|mimes:jpeg,png,jpg,gif|max:2048',      
         ];
     }
 
@@ -84,6 +84,7 @@ class PessoaFisicaRequest extends FormRequest
             'imagem.image' => 'O arquivo deve ser uma imagem válida.',
             'imagem.mimes' => 'A imagem deve ter um formato válido (jpeg, png, jpg, gif).',
             'imagem.max' => 'A imagem não deve ultrapassar 255 kilobytes.',
+            'uploaded' => 'O arquivo no campo imagem falhou ao ser enviado.',  
 
 
         ];

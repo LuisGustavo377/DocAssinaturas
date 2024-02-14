@@ -137,9 +137,9 @@
                         </li>
                         
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="/admin/tipos-de-logradouros">
+                            <a class="sidebar-link" href="/admin/tipos-de-logradouro">
                                 <span class="hide-menu">
-                                     > Tipos de Logradouros
+                                     > Tipos de Logradouro
                                 </span>
                             </a>
                         </li>

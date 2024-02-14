@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * 
      * Run the migrations.
      */
     public function up(): void
@@ -19,9 +18,7 @@ return new class extends Migration
             $table->uuid('user_cadastro_id')->nullable();
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
-            $table->softDeletes();
-
-       });
+        });
     }
 
     /**

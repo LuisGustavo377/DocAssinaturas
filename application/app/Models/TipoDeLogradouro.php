@@ -26,4 +26,14 @@ class TipoDeLogradouro extends Model
 {
     return $this->hasMany(PessoaFisicaEndereco::class, 'tipo_de_logradouro_id');
 }
+
+public function salvarComAtributosMaiusculos(array $atributos)
+{
+    foreach ($atributos as $atributo) {
+        if (isset($this->$atributo)) {
+            $this->$atributo = ucwords(strtolower($this->$atributo));
+        }
+    }
+    $this->save();
+}
 }

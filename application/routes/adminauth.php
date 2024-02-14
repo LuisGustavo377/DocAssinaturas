@@ -14,11 +14,11 @@ use App\Http\Controllers\AdminAuth\LicencasController;
 use App\Http\Controllers\AdminAuth\PessoaFisicaController;
 use App\Http\Controllers\AdminAuth\PessoaJuridicaController;
 use App\Http\Controllers\AdminAuth\UnidadeDeNegocioController;
-use App\Http\Controllers\AdminAuth\CargosController;
 use App\Http\Controllers\AdminAuth\ContratosController;
 use App\Http\Controllers\AdminAuth\PlanosController;
 use App\Http\Controllers\AdminAuth\BancosController;
 use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
+use App\Http\Controllers\AdminAuth\TiposDeLogradouroController;
 use App\Http\Controllers\CidadesController;
 
 use Illuminate\Support\Facades\Route;
@@ -177,7 +177,16 @@ Route::get('/banco/inativar/{id}', [BancosController::class, 'inativar'])->name(
 Route::get('/banco/reativar/{id}', [BancosController::class, 'reativar'])->name('admin.bancos.reativar');
 Route::post('/bancos/search', [BancosController::class, 'search'])->name('admin.bancos.search');
 
-
+//TIPOS-DE-LOGRADOURO
+Route::get('/tipos-de-logradouro', [TiposDeLogradouroController::class, 'index'])->name('admin.tipos-de-logradouro.index');
+Route::get('/tipo-de-logradouro/create', [TiposDeLogradouroController::class, 'create'])->name('admin.tipos-de-logradouro.create');
+Route::post('/tipo-de-logradouro', [TiposDeLogradouroController::class, 'store'])->name('admin.tipos-de-logradouro.store');
+Route::get('/tipo-de-logradouro/{id}', [TiposDeLogradouroController::class, 'show'])->name('admin.tipos-de-logradouro.show');
+Route::get('/tipo-de-logradouro/{id}/edit', [TiposDeLogradouroController::class, 'edit'])->name('admin.tipos-de-logradouro.edit');
+Route::put('/tipo-de-logradouro/{id}', [TiposDeLogradouroController::class, 'update'])->name('admin.tipos-de-logradouro.update');
+Route::post('/tipo-de-logradouro/search', [TiposDeLogradouroController::class, 'search'])->name('admin.tipos-de-logradouro.search');
+Route::get('/tipo-de-logradouro/inativar/{id}', [TiposDeLogradouroController::class, 'inativar'])->name('admin.tipos-de-logradouro.inativar');
+Route::get('/tipo-de-logradouro/reativar/{id}', [TiposDeLogradouroController::class, 'reativar'])->name('admin.tipos-de-logradouro.reativar');
 
 });
 

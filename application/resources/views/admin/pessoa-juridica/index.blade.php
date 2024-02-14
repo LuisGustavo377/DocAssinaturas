@@ -112,6 +112,7 @@
                             @endif
                         </tbody>
                     </table>
+                    {{ $pessoas->links() }}
                 </div>
             </div>
         </div>

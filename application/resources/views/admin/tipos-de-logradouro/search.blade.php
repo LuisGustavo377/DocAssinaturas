@@ -40,16 +40,9 @@
                         <thead class="text-dark fs-4">
                             <tr>
                                 <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Nome</h6>
+                                    <h6 class="fw-semibold mb-0">Descrição</h6>
                                 </th>
 
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Código</h6>
-                                </th>
-
-                                <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Status</h6>
-                                </th>
                                 <th class="border-bottom-0">
                                     <h6 class="fw-semibold mb-0">Ações</h6>
                                 </th>
@@ -60,18 +53,9 @@
                             @foreach($resultados as $resultado)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0">{{ $resultado->nome }}</h6>
-                                </td>
-                                <td class="border-bottom-0">
-                                    <h6 class="mb-0">{{ sprintf("%s.%s.%s-%s", substr($resultado->cpf, 0, 3), substr($resultado->cpf, 3, 3), substr($resultado->cpf, 6, 3), substr($resultado->cpf, 9, 2)) }}</h6>
+                                    <h6 class="mb-0">{{ $resultado->descricao }}</h6>
                                 </td>
 
-                                <td class="border-bottom-0">
-                                    <span
-                                        class="badge bg-{{ $resultado->status === 'ativo' ? 'success' : ($resultado->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
-                                        {{ ucfirst($resultado->status) }}
-                                    </span>
-                                </td>
                                 <td class="border-bottom-0">
                                     <a href="{{ url('admin/pessoa-fisica/' . $resultado->id) }}"
                                         class="btn btn-primary m-1" title="Detalhar">
@@ -82,18 +66,6 @@
                                         class="btn btn-success m-1" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
-
-                                    @if($resultado->status==='ativo')
-                                    <a href="{{ url('admin/pessoa-fisica/inativar/' . $resultado->id) }}"
-                                        class="btn btn-danger m-1" title="Inativar">
-                                        <i class="ti ti-lock"></i>
-                                    </a>
-                                    @elseif ($resultado->status==='inativo')
-                                    <a href="{{ url('admin/pessoa-fisica/reativar/' . $resultado->id) }}"
-                                        class="btn btn-warning m-1" title="Reativar">
-                                        <i class="ti ti-lock-off"></i>
-                                    </a>
-                                    @endif
                                 </td>
                             </tr>
                             @endforeach

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 class PessoaFisicaController extends Controller
@@ -28,7 +28,8 @@ class PessoaFisicaController extends Controller
     {     
         if (Auth::check()) {
             // Se o usuário estiver autenticado, recupere as pessoas físicas com seus telefones e endereços associados
-            $pessoas = PessoaFisica::with('telefones', 'enderecos')->orderBy('nome')->get();
+            $pessoas = PessoaFisica::with('telefones', 'enderecos')->orderBy('nome')->paginate(10);
+
         } else {
             // Se o usuário não estiver autenticado, defina $pessoas como uma array vazia
             $pessoas = [];
@@ -218,7 +219,7 @@ class PessoaFisicaController extends Controller
                 // Verifica se uma nova imagem foi enviada e a processa
                 if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
                     $request->validate([
-                        'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
+                        'imagem' => 'image|uploaded|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
                     ]);
         
                     $requestImage = $request->imagem;

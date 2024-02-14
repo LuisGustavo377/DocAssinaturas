@@ -1,6 +1,6 @@
 @extends ('layouts.dashboard')
 
-@section('title', 'Alterar Plano')
+@section('title', 'Alterar Tipo de Logradouro')
 
 @section('sidebar')
     <x-sidebar-admin></x-sidebar-admin>
@@ -13,14 +13,13 @@
 @section('content')
 
     <div class="container-fluid">
-
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
                     <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
                     <div class="card">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('admin.planos.update', $plano->id) }}">
+                            <form method="POST" action="{{ route('admin.tipos-de-logradouro.update', $tipo_de_logradouro->id) }}">
 
                                 @csrf {{-- Prevenção do laravel de ataques a formularios --}}
                                 @method('PUT')
@@ -33,39 +32,16 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="mb-12 col-md-12">
-                                            <label id="nomeLabel" class="form-label">Nome</label>
+                                            <label id="descricaoLabel" class="form-label">Descrição</label>
                                             <input type="text" class="form-control @error('nome') is-invalid @enderror"
-                                                id="nomeInput" name="nome" value="{{ $plano->nome }}">
-                                            @error('nome')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3 col-md-4">
-                                            <label id="valorlabel" class="form-label">Valor</label>
-                                            <input type="text" class="form-control @error('valor') is-invalid @enderror"
-                                                id="valorInput" name="valor" value="{{ $plano->valor }}">
-                                            @error('valor')
+                                                id="descricaoInput" name="descricao" value="{{ $tipo_de_logradouro->descricao }}">
+                                            @error('descricao')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
                                         </div>
 
-                                        <div class="mb-3 col-md-4">
-                                            <label id="statusLabel" class="form-label">Status</label>
-                                            <select class="form-select @error('status') is-invalid @enderror"
-                                                id="statusInput" name="status">
-                                                <option value="" disabled>-- Altere o Status --</option>
-                                                @foreach (['ativo', 'inativo'] as $opcao)
-                                                    <option value="{{ $opcao }}"
-                                                        {{ old('status', $plano->status) == $opcao ? 'selected' : '' }}>
-                                                        {{ ucfirst($opcao) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
                                     </div>
                                 </div>
 

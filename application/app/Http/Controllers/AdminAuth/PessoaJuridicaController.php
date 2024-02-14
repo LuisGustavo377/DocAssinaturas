@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PessoaJuridicaController extends Controller
 {
@@ -27,7 +28,7 @@ class PessoaJuridicaController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $pessoas = PessoaJuridica::orderBy('razao_social')->get();
+            $pessoas = PessoaJuridica::orderBy('razao_social')->paginate(10);
         } else {
             $pessoas = [];
         }
