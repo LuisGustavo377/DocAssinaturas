@@ -50,10 +50,28 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label class="form-label">Tipo de Pessoa:</label>
+                                        <select id="tipoPessoaSelect" class="form-select">
+                                            <option value="" selected disabled>Selecione o tipo de pessoa</option>
+                                            <option value="PF">Pessoa Física</option>
+                                            <option value="PJ">Pessoa Jurídica</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3" id="cpfInputDiv" style="display: none;">
                                         <label class="form-label">Pesquisar por CPF</label>
-                                        <input type="text" class="form-control" id="pessoaFisicaInput" name="pessoaFisicaInput" maxlength="11">
+                                        <input type="text" class="form-control" id="pessoaFisicaInput"
+                                            name="pessoaFisicaInput" maxlength="11">
                                         <div id="pessoaFisicaResult"></div>
                                     </div>
+
+                                    <div class="mb-3" id="cnpjInputDiv" style="display: none;">
+                                        <label class="form-label">Pesquisar por CNPJ</label>
+                                        <input type="text" class="form-control" id="pessoaJuridicaInput"
+                                            name="pessoaJuridicaInput" maxlength="14">
+                                        <div id="pessoaJuridicaResult"></div>
+                                    </div>
+
 
 
                                     <div class="mb-3">
@@ -170,4 +188,6 @@
 
     <!-- Script para Buscar Pessoa-->
     <script src="{{ asset('assets/js/buscarPessoaFisica.js') }}"></script>
+    <script src="{{ asset('assets/js/buscarPessoaJuridica.js') }}"></script>
+    <script src="{{ asset('assets/js/mostrarPessoas.js') }}"></script>
 @endsection

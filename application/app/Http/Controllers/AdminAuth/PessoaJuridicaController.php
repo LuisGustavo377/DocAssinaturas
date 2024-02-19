@@ -45,7 +45,7 @@ class PessoaJuridicaController extends Controller
         $estados = Estado::all();
         $cidades = Cidade::all();
         $tipos_de_logradouro = TipoDeLogradouro::all();
-        
+
         // Retorna a view de criação com os dados dos estados, cidades e tipos de logradouro
         return view('admin.pessoa-juridica.create', compact('estados', 'cidades', 'tipos_de_logradouro'));
     }
@@ -61,18 +61,18 @@ class PessoaJuridicaController extends Controller
 
                 // Inicia uma transação de banco de dados
                 DB::beginTransaction();
-                   
-    
+
+
                 // Define os atributos que devem ser convertidos para maiúsculas
                 $atributosParaMaiusculas = [
-                    'razao_social', 
-                    'nome_fantasia', 
+                    'razao_social',
+                    'nome_fantasia',
                     'tipo_de_logradouro',
                     'logradouro',
                     'complemento',
                     'bairro',
-                ];    
-                
+                ];
+
                 //-- Inicio - Salvar na Pessoa Jurídica
                 // Cria uma nova instância de PessoaJurídica
                 $pessoa = new PessoaJuridica;
@@ -86,10 +86,10 @@ class PessoaJuridicaController extends Controller
                 $pessoa->senha_temporaria =  $request->senha_temporaria;
                 $pessoa->email =  $request->email;
                 $pessoa->user_cadastro_id = Auth::id();
-                $pessoa->user_ultima_atualizacao_id = Auth::id();                          
+                $pessoa->user_ultima_atualizacao_id = Auth::id();
                 // Aplica a função que salva os atributos em maiúsculas
                 $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
-        
+
                 // Verifica se uma imagem foi enviada e a processa
                 if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
                     $request->validate([
@@ -101,11 +101,10 @@ class PessoaJuridicaController extends Controller
                     $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
                     $requestImage->move(public_path('img/pessoaJuridica'), $imageName);
                     $pessoa->imagem = $imageName;
-
                 } else {
                     $pessoa->imagem = 'imagem_padrao';
-                }// Fim - Upload de Imagem                   
-                    
+                } // Fim - Upload de Imagem                   
+
                 // Salva a pessoa física no banco de dados
                 $pessoa->save();
 
@@ -116,11 +115,11 @@ class PessoaJuridicaController extends Controller
                 $telefone = new PessoaJuridicaTelefone;
                 $telefone->id = Str::uuid();
                 $telefone->pessoa_juridica_id = $pessoa->id;
-                $telefone->status = 'ativo'; 
-                $telefone->telefone = $request->telefone;                                
+                $telefone->status = 'ativo';
+                $telefone->telefone = $request->telefone;
                 $telefone->user_cadastro_id = Auth::id();
                 $telefone->user_ultima_atualizacao_id = Auth::id();
-                    
+
                 // Salva o telefone no banco de dados
                 $telefone->save();
                 //-- Fim - Salvar telefone na tabela pessoa_juridica_telefones
@@ -134,22 +133,22 @@ class PessoaJuridicaController extends Controller
                 $endereco->numero = $request->numero;
                 $endereco->complemento = $request->complemento;
                 $endereco->bairro = $request->bairro;
-                $endereco->status = 'ativo'; 
+                $endereco->status = 'ativo';
                 $endereco->estado_id = $request->estado_id;
                 $endereco->cidade_id = $request->cidade_id;
-                $endereco->pessoa_juridica_id = $pessoa->id;                                                    
+                $endereco->pessoa_juridica_id = $pessoa->id;
                 $endereco->user_cadastro_id = Auth::id();
                 $endereco->user_ultima_atualizacao_id = Auth::id();
                 // Aplica a função que salva os atributos em maiúsculas
                 $endereco->salvarComAtributosMaiusculos($atributosParaMaiusculas);
-                    
+
                 // Salva o endereço no banco de dados
                 $endereco->save();
                 //-- Inicio - Salvar endereço na tabela pessoa_juridica_endereco   
-    
+
                 // Confirma a transação
                 DB::commit();
-    
+
                 // Redireciona de volta à página de índice com uma mensagem de sucesso
                 return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa Jurídica criada com sucesso!');
             }
@@ -175,7 +174,7 @@ class PessoaJuridicaController extends Controller
         $estados = Estado::all();
         $cidades = Cidade::all();
         $tipos_de_logradouro = TipoDeLogradouro::all();
-                
+
         // Retorna a view de show com os dados da pessoa física e as listas de estados, cidades e tipos de logradouro
         return view('admin.pessoa-juridica.show', compact('pessoa', 'tipos_de_logradouro', 'estados', 'cidades'));
     }
@@ -210,23 +209,23 @@ class PessoaJuridicaController extends Controller
             if (Auth::check()) {
                 // Inicia uma transação de banco de dados
                 DB::beginTransaction();
-                
+
                 // Define os atributos que devem ser convertidos para maiúsculas
                 $atributosParaMaiusculas = [
-                    'razao_social', 
-                    'nome_fantasia', 
+                    'razao_social',
+                    'nome_fantasia',
                     'tipo_de_logradouro',
                     'logradouro',
                     'complemento',
                     'bairro',
                     'numero',
-                ];    
-                
+                ];
+
                 // Encontra a pessoa física pelo ID fornecido
-                $pessoa = PessoaJuridica::findOrFail($id);            
-              
+                $pessoa = PessoaJuridica::findOrFail($id);
+
                 //-- Inicio - Salvar na Pessoa Física
-                
+
                 // Atualiza os campos da pessoa física com os dados fornecidos no formulário
                 $pessoa->razao_social =  $request->razao_social;
                 $pessoa->nome_fantasia =  $request->nome_fantasia;
@@ -234,26 +233,25 @@ class PessoaJuridicaController extends Controller
                 $pessoa->inscricao_estadual =  $request->inscricao_estadual;
                 $pessoa->inscricao_municipal =  $request->inscricao_municipal;
                 $pessoa->email =  $request->email;
-                $pessoa->user_ultima_atualizacao_id = Auth::id();              
-                    
+                $pessoa->user_ultima_atualizacao_id = Auth::id();
+
                 // Verifica se uma nova imagem foi enviada e a processa
                 if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
                     $request->validate([
                         'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adiciona validação de imagem
                     ]);
-        
+
                     $requestImage = $request->imagem;
                     $extension = $requestImage->getClientOriginalExtension();
                     $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
                     $requestImage->move(public_path('img/pessoaJuridica'), $imageName);
                     $pessoa->imagem = $imageName;
-        
-                } 
-                        
+                }
+
                 // Salva as alterações na pessoa física
                 $pessoa->salvarComAtributosMaiusculos($atributosParaMaiusculas);
                 $pessoa->save();
-    
+
                 //-- Fim - Salvar na Pessoa Física
 
                 //-- Inicio - Verificar se o telefone já existe
@@ -271,14 +269,14 @@ class PessoaJuridicaController extends Controller
                     $telefone = new PessoaJuridicaTelefone;
                     $telefone->id = Str::uuid();
                     $telefone->pessoa_juridica_id = $pessoa->id;
-                    $telefone->telefone = $request->telefone; 
-                    $telefone->status = 'ativo';       
-                    $telefone->user_cadastro_id = Auth::id();                         
+                    $telefone->telefone = $request->telefone;
+                    $telefone->status = 'ativo';
+                    $telefone->user_cadastro_id = Auth::id();
                     $telefone->user_ultima_atualizacao_id = Auth::id();
                     $telefone->save();
                 }
                 //-- Fim - Verificar se o telefone já existe
-    
+
                 //-- Inicio - Verificar se o endereço já existe
                 $enderecoExistente = PessoaJuridicaEndereco::where('pessoa_juridica_id', $pessoa->id)
                     ->where('tipo_de_logradouro_id', $request->tipo_de_logradouro_id)
@@ -304,19 +302,19 @@ class PessoaJuridicaController extends Controller
                     $endereco->bairro = $request->bairro;
                     $endereco->estado_id = $request->estado_id;
                     $endereco->cidade_id = $request->cidade_id;
-                    $endereco->pessoa_juridica_id = $pessoa->id;    
-                    $endereco->status = 'ativo'; 
-                    $endereco->user_cadastro_id = Auth::id();                                                
+                    $endereco->pessoa_juridica_id = $pessoa->id;
+                    $endereco->status = 'ativo';
+                    $endereco->user_cadastro_id = Auth::id();
                     $endereco->user_ultima_atualizacao_id = Auth::id();
                     $endereco->salvarComAtributosMaiusculos($atributosParaMaiusculas);
-                    
+
                     $endereco->save();
                 }
                 //-- Fim - Verificar se o endereço já existe
-        
+
                 // Confirma a transação
                 DB::commit();
-        
+
                 // Redireciona de volta à página de índice com uma mensagem de sucesso
                 return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa Física alterada com sucesso!');
             }
@@ -335,8 +333,8 @@ class PessoaJuridicaController extends Controller
 
         if (Auth::check()) {
             $resultados = PessoaJuridica::where('razao_social', 'ILIKE', "%$termoPesquisa%")
-            ->orWhere('cnpj', 'ILIKE', "%$termoPesquisaLimpo%")
-            ->get();
+                ->orWhere('cnpj', 'ILIKE', "%$termoPesquisaLimpo%")
+                ->get();
         } else {
             $resultados = [];
         }
@@ -374,4 +372,10 @@ class PessoaJuridicaController extends Controller
         return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa não encontrado.');
     }
 
+
+    public function getPessoaJuridica($pessoa_id)
+    {
+        $pessoa = PessoaJuridica::where('cnpj', $pessoa_id)->first();
+        return response()->json($pessoa);
+    }
 }

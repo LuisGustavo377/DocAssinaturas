@@ -7,7 +7,7 @@
                     type: 'GET',
                     success: function(response) {
                         if (response && response.nome) { // Verifica se a resposta não está vazia e se possui o nome
-                            $('#pessoaFisicaResult').html('Pessoa encontrada: ' + response.nome);
+                            $('#pessoaFisicaResult').html(response.nome);
                         } else {
                             $('#pessoaFisicaResult').html('Pessoa não encontrada.');
                         }
