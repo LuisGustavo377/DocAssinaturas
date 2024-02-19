@@ -1,6 +1,6 @@
     $(document).ready(function() {
-        $('#pessoaFisicaInput').on('input', function() {
-            var cpf = $(this).val();
+        $('#cpfInput').on('input', function() {
+            var cpf = $(this).val().replace(/[^\d]+/g,''); 
             if (cpf.length === 11) { // Assuming CPF has 11 digits
                 $.ajax({
                     url: '/api/pessoafisica/' + cpf,

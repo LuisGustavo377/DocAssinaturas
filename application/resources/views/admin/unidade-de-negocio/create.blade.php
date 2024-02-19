@@ -60,15 +60,15 @@
 
                                     <div class="mb-3" id="cpfInputDiv" style="display: none;">
                                         <label class="form-label">Pesquisar por CPF</label>
-                                        <input type="text" class="form-control" id="pessoaFisicaInput"
-                                            name="pessoaFisicaInput" maxlength="11">
+                                        <input type="text" class="form-control" id="cpfInput"
+                                            name="cpfInput" maxlength="11">
                                         <div id="pessoaFisicaResult"></div>
                                     </div>
 
                                     <div class="mb-3" id="cnpjInputDiv" style="display: none;">
                                         <label class="form-label">Pesquisar por CNPJ</label>
-                                        <input type="text" class="form-control" id="pessoaJuridicaInput"
-                                            name="pessoaJuridicaInput" maxlength="14">
+                                        <input type="text" class="form-control" id="cnpjInput"
+                                            name="cnpjInput" maxlength="14">
                                         <div id="pessoaJuridicaResult"></div>
                                     </div>
 
@@ -190,4 +190,8 @@
     <script src="{{ asset('assets/js/buscarPessoaFisica.js') }}"></script>
     <script src="{{ asset('assets/js/buscarPessoaJuridica.js') }}"></script>
     <script src="{{ asset('assets/js/mostrarPessoas.js') }}"></script>
+
+    <!--  Mascara CNPJ -->
+    <script src="{{ asset('assets/js/mascaraCNPJ.js') }}"></script>
+    <script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
 @endsection
