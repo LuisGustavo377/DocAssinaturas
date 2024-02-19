@@ -101,9 +101,9 @@
 
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-3 mb-3">
+                                    <div class="col-md-4 mb-4">
                                         <label class="form-label">Tipo de Logradouro</label>
-                                        <select class="form-select @error('tipo_logradouro') is-invalid @enderror"
+                                        <select class="form-select @error('tipo_de_logradouro_id') is-invalid @enderror"
                                             id="tipoLogradouroInput" name="tipo_de_logradouro_id">
                                             <option value="" selected disabled> -- Selecione o tipo de logradouro --
                                             </option>
@@ -114,14 +114,14 @@
                                             </option>
                                             @endforeach
                                         </select>
-                                        @error('tipo_logradouro')
+                                        @error('tipo_de_logradouro_id')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                         @enderror
                                     </div>
 
-                                    <div class="col-md-9 mb-3">
+                                    <div class="col-md-8 mb-8">
                                         <label id="logradouroLabel" class="form-label">Logradouro</label>
                                         <input type="text"
                                             class="form-control @error('logradouro') is-invalid @enderror"

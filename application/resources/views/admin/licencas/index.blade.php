@@ -76,11 +76,11 @@
                                             </h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">
+                                            <h6 class="mb-0">
                                                 {{ \Carbon\Carbon::parse($licenca->inicio)->format('d/m/Y') }}</h6>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">
+                                            <h6 class="mb-0">
                                                 {{ \Carbon\Carbon::parse($licenca->termino)->format('d/m/Y') }}</h6>
                                         </td>
 

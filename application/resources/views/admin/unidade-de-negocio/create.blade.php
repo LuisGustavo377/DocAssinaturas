@@ -34,7 +34,7 @@
                                         <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
                                         <select class="form-select @error('grupo_id') is-invalid @enderror" id="grupoInput"
                                             name="grupo_negocio_id">
-                                            <option value="" disabled selected>Selecione um grupo de negócio</option>
+                                            <option value="" disabled selected> -- Selecione um grupo de negócio -- </option>
                                             @foreach ($gruposDeNegocios as $grupo)
                                                 <option value="{{ $grupo->id }}"
                                                     {{ old('grupo_id') == $grupo->id ? 'selected' : '' }}>
@@ -52,7 +52,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Tipo de Pessoa:</label>
                                         <select id="tipoPessoaSelect" class="form-select">
-                                            <option value="" selected disabled>Selecione o tipo de pessoa</option>
+                                            <option value="" selected disabled> -- Selecione o tipo de pessoa -- </option>
                                             <option value="PF">Pessoa Física</option>
                                             <option value="PJ">Pessoa Jurídica</option>
                                         </select>
@@ -78,7 +78,7 @@
                                         <label id="licencaLabel" class="form-label">Licença</label>
                                         <select class="form-select @error('licenca_id') is-invalid @enderror"
                                             id="licencaInput" name="licenca_id">
-                                            <option value="" disabled selected>Selecione uma licença</option>
+                                            <option value="" disabled selected> -- Selecione uma licença -- </option>
                                             <!-- Opções de licença serão preenchidas dinamicamente pelo JavaScript -->
                                         </select>
                                         @error('licenca_id')
