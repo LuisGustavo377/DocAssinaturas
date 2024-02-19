@@ -51,8 +51,8 @@
 
                                     <div class="mb-3">
                                         <label class="form-label">Pesquisar por CPF</label>
-                                        <input type="text" class="form-control" id="pessoaInput" name="pessoaInput" maxlength="11">
-                                        <div id="pessoaResult"></div>
+                                        <input type="text" class="form-control" id="pessoaFisicaInput" name="pessoaFisicaInput" maxlength="11">
+                                        <div id="pessoaFisicaResult"></div>
                                     </div>
 
 
@@ -169,5 +169,5 @@
 
 
     <!-- Script para Buscar Pessoa-->
-    <script src="{{ asset('assets/js/buscarPessoa.js') }}"></script>
+    <script src="{{ asset('assets/js/buscarPessoaFisica.js') }}"></script>
 @endsection
