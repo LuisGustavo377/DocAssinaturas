@@ -21,6 +21,9 @@ class UnidadeDeNegocio extends Model
     'grupo_negocio_id',
     'user_cadastro_id',
     'user_ultima_atualizacao_id',
+    'tipo_pessoa',
+    'pessoa_id',
+    'licenca_id'
 ];
 
 public function grupoDeNegocios()

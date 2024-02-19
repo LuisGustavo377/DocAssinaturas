@@ -21,9 +21,8 @@ class UnidadeDeNegocioController extends Controller
     public function index(): View
     {
         $unidades = UnidadeDeNegocio::orderBy('id')->get();
-        $grupos = GrupoDeNegocios::orderBy('id')->get();
 
-        return view('admin.unidade-de-negocio.index', compact('unidades', 'grupos'));
+        return view('admin.unidade-de-negocio.index', compact('unidades'));
     }
 
 
@@ -41,7 +40,7 @@ class UnidadeDeNegocioController extends Controller
 
     public function store(Request $request)
     {
-
+        // dd($request);
         try {
 
             if (auth()->check()) {
@@ -55,6 +54,16 @@ class UnidadeDeNegocioController extends Controller
                 $unidade->fill($request->all());
                 $unidade->id = Str::uuid();
                 $unidade->user_cadastro_id = $user_id;
+                $unidade->tipo_pessoa = $request->tipoPessoaInput;
+                
+                // Verifica se o tipo de pessoa é PF e atribui o valor do campo cpfIdInput
+                if ($request->tipoPessoaInput === 'pf') {
+                    $unidade->pessoa_id = $request->cpfIdInput;
+                }
+                // Verifica se o tipo de pessoa é PJ e atribui o valor do campo razaoSocialIdInput
+                elseif ($request->tipoPessoaInput === 'pj') {
+                    $unidade->pessoa_id = $request->razaoSocialIdInput;
+                }
                 $unidade->save();
 
 
@@ -156,6 +165,4 @@ class UnidadeDeNegocioController extends Controller
 
         return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade não encontrado.');
     }
-
-
 }

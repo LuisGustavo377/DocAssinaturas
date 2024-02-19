@@ -56,39 +56,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($grupos as $grupo)
+                            @forelse($unidades as $unidade)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">{{ $grupo->nome }}</h6>
+                                    <h6 class="mb-0 fw-semibold">{{ $unidade->id }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">
                                     <span
-                                        class="badge bg-{{ $grupo->status === 'ativo' ? 'success' : ($grupo->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
-                                        {{ ucfirst($grupo->status) }}
+                                        class="badge bg-{{ $unidade->status === 'ativo' ? 'success' : ($unidade->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
+                                        {{ ucfirst($unidade->status) }}
                                     </span>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id) }}"
+                                    <a href="{{ url('admin/grupo-de-negocios/' . $unidade->id) }}"
                                         class="m-1 btn btn-primary" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $grupo->id . '/edit') }}"
+                                    <a href="{{ url('admin/grupo-de-negocios/' . $unidade->id . '/edit') }}"
                                         class="m-1 btn btn-success" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
 
-                                    @if($grupo->status==='ativo')
+                                    @if($unidade->status==='ativo')
 
-                                    <a href="{{ url('admin/grupo-de-negocios/inativar/' . $grupo->id) }}"
+                                    <a href="{{ url('admin/grupo-de-negocios/inativar/' . $unidade->id) }}"
                                         class="m-1 btn btn-danger" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </a>
 
-                                    @elseif ($grupo->status==='inativo')
+                                    @elseif ($unidade->status==='inativo')
 
-                                    <a href="{{ url('admin/grupo-de-negocios/reativar/' . $grupo->id) }}"
+                                    <a href="{{ url('admin/grupo-de-negocios/reativar/' . $unidade->id) }}"
                                         class="m-1 btn btn-warning" title="Reativar">
                                         <i class="ti ti-lock-off"></i>
                                     </a>

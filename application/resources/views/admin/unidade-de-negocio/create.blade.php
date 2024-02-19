@@ -50,12 +50,13 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label">Tipo de Pessoa:</label>
+                                        <label class="form-label">Tipo de Pessoa</label>
                                         <select id="tipoPessoaSelect" class="form-select">
                                             <option value="" selected disabled> -- Selecione o tipo de pessoa -- </option>
                                             <option value="PF">Pessoa Física</option>
                                             <option value="PJ">Pessoa Jurídica</option>
                                         </select>
+                                        <input type="hidden" id="tipoPessoaInput" name="tipoPessoaInput">
                                     </div>
 
                                     <div class="mb-3" id="cpfInputDiv" style="display: none;">
@@ -63,6 +64,7 @@
                                         <input type="text" class="form-control" id="cpfInput"
                                             name="cpfInput" maxlength="11">
                                         <div id="pessoaFisicaResult"></div>
+                                        <input type="hidden" id="cpfIdInput" name="cpfIdInput">
                                     </div>
 
                                     <div class="mb-3" id="cnpjInputDiv" style="display: none;">
@@ -70,6 +72,7 @@
                                         <input type="text" class="form-control" id="cnpjInput"
                                             name="cnpjInput" maxlength="14">
                                         <div id="pessoaJuridicaResult"></div>
+                                        <input type="hidden" id="razaoSocialIdInput" name="razaoSocialIdInput">
                                     </div>
 
 
@@ -172,6 +175,8 @@
     <!--  Mascara CNPJ -->
     <script src="{{ asset('assets/js/mascaraCNPJ.js') }}"></script>
     <script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
+
+    <script src="{{ asset('assets/js/inputPjPf.js') }}"></script>
 
     
 @endsection
