@@ -214,7 +214,6 @@ Route::get('/cargo/reativar/{id}', [CargosController::class, 'reativar'])->name(
 
 });
 
-//ROTAS PARA CIDADES
-Route::get('/api/cidades/{estado_id}', [CidadesController::class, 'getCidadesPorEstado']);
+
 
 

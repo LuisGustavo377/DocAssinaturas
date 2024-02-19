@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('unidades_de_negocio', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum('tipo_pessoa', ['PF', 'PJ'])->nullable();
+            $table->enum('tipo_pessoa', ['pf', 'pj'])->nullable();
+            $table->uuid('pessoa_id')->nullable();
             $table->uuid('user_cadastro_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->uuid('grupo_negocio_id');
+            $table->uuid('licenca_id');
             $table->timestamps();
             $table->softDeletes();
 

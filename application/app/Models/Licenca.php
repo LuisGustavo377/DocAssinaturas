@@ -47,7 +47,7 @@ public function contrato()
 }
 public function unidadeDeNegocio()
 {
-    return $this->hasMany(UnidadeDeNegocio::class);
+    return $this->belongsTo(UnidadeDeNegocio::class);
 }
 
 }

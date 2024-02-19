@@ -50,12 +50,9 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label">Pesquisar Pessoa por Nome ou CPF</label>
-                                        <input type="text" class="form-control" id="termo_pesquisa" name="termo_pesquisa"
-                                            list="opcoes_pesquisa">
-                                        <datalist id="opcoes_pesquisa">
-                                            <!-- Opções de pesquisa serão preenchidas dinamicamente pelo JavaScript -->
-                                        </datalist>
+                                        <label class="form-label">Pesquisar por CPF</label>
+                                        <input type="text" class="form-control" id="pessoaInput" name="pessoaInput" maxlength="11">
+                                        <div id="pessoaResult"></div>
                                     </div>
 
 
@@ -170,4 +167,7 @@
         });
     </script>
 
+
+    <!-- Script para Buscar Pessoa-->
+    <script src="{{ asset('assets/js/buscarPessoa.js') }}"></script>
 @endsection

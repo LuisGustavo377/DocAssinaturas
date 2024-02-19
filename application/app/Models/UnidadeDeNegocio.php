@@ -29,7 +29,7 @@ public function grupoDeNegocios()
 }
 public function licenca()
 {
-    return $this->belongsTo(licenca::class);
+    return $this->hasMany(licenca::class); // Definido que quando for gerado uma licença após o vencimento, será um novo registro...
 }
 
 public function carteira()

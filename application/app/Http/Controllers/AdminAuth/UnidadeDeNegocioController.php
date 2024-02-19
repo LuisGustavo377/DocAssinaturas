@@ -157,17 +157,5 @@ class UnidadeDeNegocioController extends Controller
         return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade não encontrado.');
     }
 
-    public function pesquisarPessoas(Request $request)
-    {
-        $termoPesquisa = $request->input('termo_pesquisa');
-        Log::info('Termo de pesquisa: ' . $termoPesquisa); // Linha corrigida para registrar o termo de pesquisa
 
-        // Realize a consulta no banco de dados para buscar pessoas físicas
-        $pessoas = PessoaFisica::where('nome', 'LIKE', "%$termoPesquisa%")
-            ->orWhere('cpf', 'LIKE', "%$termoPesquisa%")
-            ->get();
-
-        // Retorne os resultados em formato JSON
-        return response()->json($pessoas);
-    }
 }
