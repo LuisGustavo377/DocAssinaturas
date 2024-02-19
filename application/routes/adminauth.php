@@ -21,7 +21,7 @@ use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
 use App\Http\Controllers\AdminAuth\TiposDeLogradouroController;
 use App\Http\Controllers\AdminAuth\CargosController;
 use App\Http\Controllers\CidadesController;
-
+use App\Models\TipoDeRelacionamento;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')->prefix('admin')->group(function () {
@@ -188,6 +188,17 @@ Route::put('/tipo-de-logradouro/{id}', [TiposDeLogradouroController::class, 'upd
 Route::post('/tipo-de-logradouro/search', [TiposDeLogradouroController::class, 'search'])->name('admin.tipos-de-logradouro.search');
 Route::get('/tipo-de-logradouro/inativar/{id}', [TiposDeLogradouroController::class, 'inativar'])->name('admin.tipos-de-logradouro.inativar');
 Route::get('/tipo-de-logradouro/reativar/{id}', [TiposDeLogradouroController::class, 'reativar'])->name('admin.tipos-de-logradouro.reativar');
+
+//TIPOS-DE-LOGRADOURO
+Route::get('/tipos-de-relacionamentos', [TipoDeRelacionamentoController::class, 'index'])->name('admin.tipos-de-relacionamento.index');
+Route::get('/tipo-de-relacionamento/create', [TipoDeRelacionamentoController::class, 'create'])->name('admin.tipos-de-relacionamento.create');
+Route::post('/tipo-de-relacionamento', [TipoDeRelacionamentoController::class, 'store'])->name('admin.tipos-de-relacionamento.store');
+Route::get('/tipo-de-relacionamento/{id}', [TipoDeRelacionamentoController::class, 'show'])->name('admin.tipos-de-relacionamento.show');
+Route::get('/tipo-de-relacionamento/{id}/edit', [TipoDeRelacionamentoController::class, 'edit'])->name('admin.tipos-de-relacionamento.edit');
+Route::put('/tipo-de-relacionamento/{id}', [TipoDeRelacionamentoController::class, 'update'])->name('admin.tipos-de-relacionamento.update');
+Route::post('/tipo-de-relacionamento/search', [TipoDeRelacionamentoController::class, 'search'])->name('admin.tipos-de-relacionamento.search');
+Route::get('/tipo-de-relacionamento/inativar/{id}', [TipoDeRelacionamentoController::class, 'inativar'])->name('admin.tipos-de-relacionamento.inativar');
+Route::get('/tipo-de-relacionamento/reativar/{id}', [TipoDeRelacionamentoController::class, 'reativar'])->name('admin.tipos-de-relacionamento.reativar');
 
 
 //CARGOS

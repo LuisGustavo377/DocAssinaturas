@@ -144,7 +144,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" href="/admin/tipos-de-relacionamento">
+                            <a class="sidebar-link" href="/admin/tipos-de-relacionamentos">
                                 <span class="hide-menu">
                                      > Tipos de Relacionamento
                                 </span>
