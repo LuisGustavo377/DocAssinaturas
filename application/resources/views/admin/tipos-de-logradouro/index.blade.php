@@ -17,7 +17,7 @@
         <div class="card w-100">
             <div class="p-4 card-body">
                 <div class="mb-4 d-flex justify-content-between align-items-center">
-                    <h5 class="card-title fw-semibold">Tipos de Logradouro</h5>
+                <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
 
                     <!-- Button to Create Establishment -->
                     <a href="{{ route('admin.tipos-de-logradouro.create') }}" class="btn btn-success float-end">

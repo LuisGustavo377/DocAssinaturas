@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Tipos de Cobrança')
+@section('title', 'Tipos de Renovação')
 
 @section('sidebar')
 <x-sidebar-admin></x-sidebar-admin>
@@ -17,21 +17,20 @@
         <div class="card w-100">
             <div class="p-4 card-body">
                 <div class="mb-4 d-flex justify-content-between align-items-center">
-                <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
+                    <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
 
                     <!-- Button to Create Establishment -->
-                    <a href="{{ route('admin.tipos-de-cobranca.create') }}" class="btn btn-success float-end">
+                    <a href="{{ route('admin.tipos-de-renovacao.create') }}" class="btn btn-success float-end">
                         <i class="ti ti-plus"></i>
                         Novo
                     </a>
                 </div>
 
                 <!-- Formulário da Barra de Pesquisa -->
-                <form action="{{ route('admin.tipos-de-cobranca.search') }}" method="post">
+                <form action="{{ route('admin.tipos-de-renovacao.search') }}" method="post">
                     @csrf
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search"
-                            placeholder="Buscar por descrição...">
+                    <div class="mb-3 input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Buscar por descrição...">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
                             Pesquisar
@@ -57,7 +56,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($tipos_de_cobranca as $tipo)
+                            @forelse($tipos_de_renovacao as $tipo)
                             <tr>
                                 <td class="border-bottom-0">
                                     <h6 class="mb-0 fw-semibold">{{ $tipo->descricao }}</h6>
@@ -71,28 +70,27 @@
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/tipo-de-cobranca/' . $tipo->id) }}"
+                                    <a href="{{ url('admin/tipo-de-renovacao/' . $tipo->id) }}"
                                         class="m-1 btn btn-primary" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/tipo-de-cobranca/' . $tipo->id . '/edit') }}"
+                                    <a href="{{ url('admin/tipo-de-renovacao/' . $tipo->id . '/edit') }}"
                                         class="m-1 btn btn-success" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
 
                                     @if($tipo->status==='ativo')
-                                    <a href="{{ url('admin/tipo-de-cobranca/inativar/' . $tipo->id) }}"
+                                    <a href="{{ url('admin/tipo-de-renovacao/inativar/' . $tipo->id) }}"
                                         class="btn btn-danger m-1" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </a>
                                     @elseif ($tipo->status==='inativo')
-                                    <a href="{{ url('admin/tipo-de-cobranca/reativar/' . $tipo->id) }}"
+                                    <a href="{{ url('admin/tipo-de-renovacao/reativar/' . $tipo->id) }}"
                                         class="btn btn-warning m-1" title="Reativar">
                                         <i class="ti ti-lock-off"></i>
                                     </a>
                                     @endif
-
                                 </td>
                             </tr>
                             @empty
@@ -103,7 +101,7 @@
                         </tbody>
                     </table>
 
-                    {{ $tipos_de_cobranca->links() }}
+                    {{ $tipos_de_renovacao->links() }}
 
                 </div>
             </div>

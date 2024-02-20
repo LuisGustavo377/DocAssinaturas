@@ -26,6 +26,14 @@ public function licencas()
     return $this->belongsTo(Licenca::class, 'licenca_id');
 }
 
-
+public function salvarComAtributosMaiusculos(array $atributos)
+{
+    foreach ($atributos as $atributo) {
+        if (isset($this->$atributo)) {
+            $this->$atributo = ucwords(strtolower($this->$atributo));
+        }
+    }
+    $this->save();
+}
 
 }

@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminAuth\BancosController;
 use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
 use App\Http\Controllers\AdminAuth\TiposDeLogradouroController;
 use App\Http\Controllers\AdminAuth\TipoDeCobrancaController;
+use App\Http\Controllers\AdminAuth\TipoDeRenovacaoController;
 use App\Http\Controllers\AdminAuth\CargosController;
 use App\Http\Controllers\CidadesController;
 use App\Models\TipoDeRelacionamento;
@@ -211,6 +212,17 @@ Route::put('/tipo-de-cobranca/{id}', [TipoDeCobrancaController::class, 'update']
 Route::post('/tipo-de-cobranca/search', [TipoDeCobrancaController::class, 'search'])->name('admin.tipos-de-cobranca.search');
 Route::get('/tipo-de-cobranca/inativar/{id}', [TipoDeCobrancaController::class, 'inativar'])->name('admin.tipos-de-cobranca.inativar');
 Route::get('/tipo-de-cobranca/reativar/{id}', [TipoDeCobrancaController::class, 'reativar'])->name('admin.tipos-de-cobranca.reativar');
+
+//TIPOS-DE-RENOVAÇÃO
+Route::get('/tipos-de-renovacao', [TipoDeRenovacaoController::class, 'index'])->name('admin.tipos-de-renovacao.index');
+Route::get('/tipo-de-renovacao/create', [TipoDeRenovacaoController::class, 'create'])->name('admin.tipos-de-renovacao.create');
+Route::post('/tipo-de-renovacao', [TipoDeRenovacaoController::class, 'store'])->name('admin.tipos-de-renovacao.store');
+Route::get('/tipo-de-renovacao/{id}', [TipoDeRenovacaoController::class, 'show'])->name('admin.tipos-de-renovacao.show');
+Route::get('/tipo-de-renovacao/{id}/edit', [TipoDeRenovacaoController::class, 'edit'])->name('admin.tipos-de-renovacao.edit');
+Route::put('/tipo-de-renovacao/{id}', [TipoDeRenovacaoController::class, 'update'])->name('admin.tipos-de-renovacao.update');
+Route::post('/tipo-de-renovacao/search', [TipoDeRenovacaoController::class, 'search'])->name('admin.tipos-de-renovacao.search');
+Route::get('/tipo-de-renovacao/inativar/{id}', [TipoDeRenovacaoController::class, 'inativar'])->name('admin.tipos-de-renovacao.inativar');
+Route::get('/tipo-de-renovacao/reativar/{id}', [TipoDeRenovacaoController::class, 'reativar'])->name('admin.tipos-de-renovacao.reativar');
 
 
 //CARGOS
