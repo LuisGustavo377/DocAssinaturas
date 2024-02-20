@@ -40,23 +40,24 @@ class UnidadeDeNegocioController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         try {
             if (auth()->check()) {
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
-    
+
                 DB::beginTransaction();
-    
+
                 // Início - Salvar Unidade de Negócio no Banco
                 $unidade = new UnidadeDeNegocio();
                 $unidade->fill($request->all());
                 $unidade->id = Str::uuid();
                 $unidade->user_cadastro_id = $user_id;
                 $unidade->tipo_pessoa = $request->tipoPessoaInput;
-    
+
                 if ($request->tipoPessoaInput === 'pf') {
                     $unidade->pessoa_id = $request->cpfIdInput;
                     $unidade->save();
-    
+
                     // Salvar o unidade_negocio_id na tabela PessoaFisica
                     $pessoaFisica = PessoaFisica::find($request->cpfIdInput);
                     if ($pessoaFisica) {
@@ -66,7 +67,7 @@ class UnidadeDeNegocioController extends Controller
                 } elseif ($request->tipoPessoaInput === 'pj') {
                     $unidade->pessoa_id = $request->razaoSocialIdInput;
                     $unidade->save();
-    
+
                     // Salvar o unidade_negocio_id na tabela PessoaJuridica
                     $pessoaJuridica = PessoaJuridica::find($request->razaoSocialIdInput);
                     if ($pessoaJuridica) {
@@ -75,9 +76,9 @@ class UnidadeDeNegocioController extends Controller
                     }
                 }
                 // Fim - Salvar Unidade de Negócio no Banco
-    
+
                 DB::commit();
-    
+
                 return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade de Negócio criada com sucesso!');
             }
         } catch (\Exception $e) {
@@ -91,20 +92,43 @@ class UnidadeDeNegocioController extends Controller
     public function show($id)
     {
         $unidade = UnidadeDeNegocio::findOrFail($id);
-        return view('admin.unidade-de-negocio.show', compact('unidade'));
+        $grupo = GrupoDeNegocios::where('id', $unidade->grupo_de_negocio_id)->first();
+        $licenca = Licenca::where('id', $unidade->licenca_id)->first();
+
+        if ($unidade->tipo_pessoa === 'pf') {
+            $nome = $unidade->pessoaFisica->nome;
+        } elseif ($unidade->tipo_pessoa === 'pj') {
+            $nome = $unidade->pessoaJuridica->razao_social;
+        } else {
+            // Tratar caso em que tipo de pessoa é desconhecido ou inválido
+            $nome = null;
+        }
+
+        return view('admin.unidade-de-negocio.show', compact('unidade', 'grupo', 'nome', 'licenca'));
     }
 
     public function edit($id)
     {
         try {
             $unidade = UnidadeDeNegocio::findOrFail($id);
+            $grupo = GrupoDeNegocios::where('id', $unidade->grupo_de_negocio_id)->first();
+
+            if ($unidade->tipo_pessoa === 'pf') {
+                $nome = $unidade->pessoaFisica->nome;
+            } elseif ($unidade->tipo_pessoa === 'pj') {
+                $nome = $unidade->pessoaJuridica->razao_social;
+            } else {
+                // Tratar caso em que tipo de pessoa é desconhecido ou inválido
+                $nome = null;
+            }
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Grupo não encontrado
-            abort(404, 'Grupo não encontrado.');
+            abort(404, 'Unidade não encontrada.');
         }
 
-        return view('admin.unidade-de-negocio.edit', compact('unidade'));
+        return view('admin.unidade-de-negocio.edit', compact('unidade', 'grupo', 'nome'));
     }
+
 
     public function update(Request $request, $id)
     {
@@ -173,5 +197,12 @@ class UnidadeDeNegocioController extends Controller
         }
 
         return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade não encontrado.');
+    }
+
+    public function licencasPorGrupo(Request $request)
+    {
+        $grupo_de_negocio_id = $request->grupo_de_negocio_id;
+        $licencas = Licenca::where('grupo_de_negocio_id', $grupo_de_negocio_id)->get();
+        return response()->json($licencas);
     }
 }

@@ -69,26 +69,26 @@
                                     </span>
                                 </td>
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $unidade->id) }}"
+                                    <a href="{{ url('admin/unidade-de-negocio/' . $unidade->id) }}"
                                         class="m-1 btn btn-primary" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/grupo-de-negocios/' . $unidade->id . '/edit') }}"
+                                    <a href="{{ url('admin/unidade-de-negocio/' . $unidade->id . '/edit') }}"
                                         class="m-1 btn btn-success" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
 
                                     @if($unidade->status==='ativo')
 
-                                    <a href="{{ url('admin/grupo-de-negocios/inativar/' . $unidade->id) }}"
+                                    <a href="{{ url('admin/unidade-de-negocio/inativar/' . $unidade->id) }}"
                                         class="m-1 btn btn-danger" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </a>
 
                                     @elseif ($unidade->status==='inativo')
 
-                                    <a href="{{ url('admin/grupo-de-negocios/reativar/' . $unidade->id) }}"
+                                    <a href="{{ url('admin/unidade-de-negocio/reativar/' . $unidade->id) }}"
                                         class="m-1 btn btn-warning" title="Reativar">
                                         <i class="ti ti-lock-off"></i>
                                     </a>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->enum('tipo_pessoa', ['pf', 'pj'])->nullable();
             $table->uuid('pessoa_id')->nullable();
+            $table->enum('status', ['ativo', 'inativo','bloqueado'])->default('ativo');
             $table->uuid('user_cadastro_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->uuid('grupo_de_negocio_id');

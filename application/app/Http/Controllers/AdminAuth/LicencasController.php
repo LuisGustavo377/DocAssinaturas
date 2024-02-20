@@ -25,7 +25,7 @@ class LicencasController extends Controller
     public function index(): View
     {
 
-        $licencas = Licenca::all();
+        $licencas = Licenca::orderBy('descricao')->paginate(20);
         $grupos = GrupoDeNegocios::all();
 
         return view('admin.licencas.index', compact('licencas', 'grupos'));
@@ -56,6 +56,10 @@ class LicencasController extends Controller
 
                 DB::beginTransaction();
 
+                $atributosParaMaiusculas = [
+                    'descricao', 
+                ];
+
                 // Inicio - Salvar Grupo no Banco
 
                 $licenca = new Licenca();
@@ -65,6 +69,7 @@ class LicencasController extends Controller
                 $licenca->status = 'ativo';
                 $licenca->tipo_de_renovacao_id = $request->tipo_de_renovacao;
                 $licenca->user_cadastro_id = auth()->id();
+                $licenca->salvarComAtributosMaiusculos($atributosParaMaiusculas);
                 $licenca->save();
 
                 DB::commit();
@@ -103,6 +108,10 @@ class LicencasController extends Controller
             $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
             DB::beginTransaction();
 
+            $atributosParaMaiusculas = [
+                'descricao', 
+            ];
+
             $licenca = Licenca::findOrFail($id);
 
             if (!$licenca) {
@@ -111,6 +120,7 @@ class LicencasController extends Controller
 
             $licenca->fill($request->all());
             $licenca->user_ultima_atualizacao_id = auth()->id();
+            $licenca->salvarComAtributosMaiusculos($atributosParaMaiusculas);
             $licenca->save();
 
             DB::commit();

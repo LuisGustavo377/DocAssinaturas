@@ -50,4 +50,13 @@ public function unidadeDeNegocio()
     return $this->belongsTo(UnidadeDeNegocio::class);
 }
 
+public function salvarComAtributosMaiusculos(array $atributos)
+{
+    foreach ($atributos as $atributo) {
+        if (isset($this->$atributo)) {
+            $this->$atributo = ucwords(strtolower($this->$atributo));
+        }
+    }
+    $this->save();
+}
 }

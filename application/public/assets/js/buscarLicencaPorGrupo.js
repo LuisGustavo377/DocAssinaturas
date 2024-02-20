@@ -1,3 +1,4 @@
+// O script usa o CHANGE  ou seja quando o usuário seleciona um grupo de negócios, o script é acionado.
 $(document).ready(function () {
     $('#grupoInput').change(function () {
         var grupo_de_negocio_id = $(this).val();

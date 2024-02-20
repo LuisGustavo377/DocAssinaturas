@@ -15,7 +15,7 @@ class GrupoDeNegocios extends Model
     protected $primaryKey = 'id'; // Nome da coluna UUID
     public $incrementing = false; // Desativar autoincremento
     protected $keyType = 'string'; // Tipo da chave primária
-   //Fim Configuração UUID
+    //Fim Configuração UUID
 
     protected $fillable = [
         'nome',
@@ -29,13 +29,13 @@ class GrupoDeNegocios extends Model
 
 
     public function licencas()
-{
-    return $this->hasMany(Licenca::class, 'grupos_de_negocio_id');
-}
+    {
+        return $this->hasMany(Licenca::class, 'grupo_de_negocio_id');
+    }
 
 
-    // public function unidade()
-    // {
-    //     return $this->hasMany(UnidadeDeNegocios::class);
-    // }
+    public function unidadeDeNegocio()
+    {
+        return $this->hasMany(UnidadeDeNegocio::class);
+    }
 }

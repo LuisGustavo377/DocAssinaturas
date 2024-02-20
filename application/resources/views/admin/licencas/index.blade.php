@@ -100,7 +100,7 @@
                                                 class="m-1 btn btn-success" title="Editar">
                                                 <i class="ti ti-edit"></i>
                                             </a>
-                                            {{-- OLHAR COM LETICIA  --}}
+                                          
                                             {{-- @if ($licenca->status === 'ativo')
                                                 <a href="{{ url('admin/licenca/inativar/' . $licenca->id) }}"
                                                     class="m-1 btn btn-danger" title="Inativar">
@@ -121,6 +121,7 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        {{ $licencas->links() }}
                     </div>
 
                 </div>

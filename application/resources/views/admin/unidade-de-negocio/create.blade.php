@@ -33,7 +33,7 @@
                                     <div class="mb-3">
                                         <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
                                         <select class="form-select @error('grupo_id') is-invalid @enderror" id="grupoInput"
-                                            name="grupo_negocio_id">
+                                            name="grupo_de_negocio_id">
                                             <option value="" disabled selected> -- Selecione um grupo de negócio -- </option>
                                             @foreach ($gruposDeNegocios as $grupo)
                                                 <option value="{{ $grupo->id }}"
