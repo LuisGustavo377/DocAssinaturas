@@ -20,12 +20,12 @@ return new class extends Migration
             $table->enum('senha_temporaria', ['sim', 'nao'])->nullable();
             $table->enum('status', ['ativo', 'inativo', 'pendente-pagamento'])->default('ativo');
             $table->string('imagem')->nullable();
-            $table->uuid('unidade_negocio_id')->nullable();
+            $table->uuid('unidade_de_negocio_id')->nullable();
             $table->uuid('user_cadastro_id')->nullable();
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
                 
-            $table->foreign('unidade_negocio_id')->references('id')->on('unidades_de_negocio');
+            $table->foreign('unidade_de_negocio_id')->references('id')->on('unidades_de_negocio');
 
             
         });

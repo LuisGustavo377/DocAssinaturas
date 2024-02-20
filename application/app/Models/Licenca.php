@@ -26,14 +26,14 @@ class Licenca extends Model
         'tipo_de_renovacao_id',
         'user_cadastro_id',
         'user_ultima_atualizacao_id',
-        'grupos_de_negocio_id',
+        'grupo_de_negocio_id',
         'contrato_id'
 
     ];
 
     public function grupoDeNegocios()
 {
-    return $this->belongsTo(GrupoDeNegocios::class, 'grupos_de_negocio_id');
+    return $this->belongsTo(GrupoDeNegocios::class, 'grupo_de_negocio_id');
 }
 
 public function tipoDeRenovacao()

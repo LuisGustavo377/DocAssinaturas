@@ -32,7 +32,7 @@
                                 <div class="mb-3">
                                     <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
                                     <input type="text" class="form-control" id="nomeGrupoInput"
-                                        name="grupos_de_negocio_id" value="{{ $licenca->grupoDeNegocios->nome }}" disabled>
+                                        name="grupo_de_negocio_id" value="{{ $licenca->grupoDeNegocios->nome }}" disabled>
                                 </div>
 
 

@@ -28,7 +28,7 @@ class PessoaJuridica extends Model
         'imagem',
         'senha',
         'senha_temporaria',
-        'unidade_negocio_id',
+        'unidade_de_negocio_id',
         'user_cadastro_id',
         'user_ultima_atualizacao',
     ];
@@ -46,7 +46,7 @@ class PessoaJuridica extends Model
 
     public function unidadeDeNegocio()
     {
-        return $this->belongsTo(UnidadeDeNegocio::class);
+        return $this->belongsTo(UnidadeDeNegocio::class, 'unidade_de_negocio_id');
     }
 
     public function pessoaJuridicaContaBancaria()

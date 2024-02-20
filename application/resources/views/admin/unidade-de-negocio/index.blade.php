@@ -59,7 +59,7 @@
                             @forelse($unidades as $unidade)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">{{ $unidade->id }}</h6>
+                                    <h6 class="mb-0 fw-semibold">{{ $unidade->nomeOuRazaoSocial }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">

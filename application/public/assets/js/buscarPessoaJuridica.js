@@ -9,7 +9,7 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response && response.id) { // Verifica se a resposta não está vazia e se possui o ID
                         $('#razaoSocialIdInput').val(response.id); // Salva o ID da razão social em um campo oculto
-                        $('#pessoaJuridicaResult').html('Pessoa encontrada: ' + response.razao_social);
+                        $('#pessoaJuridicaResult').html(response.razao_social);
                     } else {
                         $('#razaoSocialIdInput').val(''); // Limpa o campo do ID da razão social
                         $('#pessoaJuridicaResult').html('Pessoa não encontrada.');

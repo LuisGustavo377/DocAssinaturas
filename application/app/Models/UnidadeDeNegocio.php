@@ -18,7 +18,7 @@ class UnidadeDeNegocio extends Model
    //Fim Configuração UUID
 
    protected $fillable = [
-    'grupo_negocio_id',
+    'grupo_de_negocio_id',
     'user_cadastro_id',
     'user_ultima_atualizacao_id',
     'tipo_pessoa',
@@ -50,5 +50,15 @@ public function pessoaJuridica()
     return $this->hasOne(PessoaJuridica::class);
 }
 
+public function getNomeOuRazaoSocialAttribute()
+{
+    if ($this->tipo_pessoa === 'pj') {
+        return $this->pessoaJuridica->razao_social;
+    } elseif ($this->tipo_pessoa === 'pf') {
+        return $this->pessoaFisica->nome;
+    }
+
+    return null;
+}
 
 }

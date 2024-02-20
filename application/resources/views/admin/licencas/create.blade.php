@@ -33,17 +33,17 @@
 
                                 <div class="mb-3">
                                     <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
-                                    <select class="form-select @error('grupos_de_negocio_id') is-invalid @enderror"
-                                        id="grupoInput" name="grupos_de_negocio_id">
+                                    <select class="form-select @error('grupo_de_negocio_id') is-invalid @enderror"
+                                        id="grupoInput" name="grupo_de_negocio_id">
                                         <option value="" disabled selected>--Selecione um grupo de negócio--</option>
                                         @foreach ($gruposDeNegocios as $grupo)
                                             <option value="{{ $grupo->id }}"
-                                                {{ old('grupos_de_negocio_id') == $grupo->id ? 'selected' : '' }}>
+                                                {{ old('grupo_de_negocio_id') == $grupo->id ? 'selected' : '' }}>
                                                 {{ $grupo->nome }}
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('grupos_de_negocio_id')
+                                    @error('grupo_de_negocio_id')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

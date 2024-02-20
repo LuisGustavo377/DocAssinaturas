@@ -40,36 +40,45 @@ class UnidadeDeNegocioController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request);
         try {
-
             if (auth()->check()) {
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
-
+    
                 DB::beginTransaction();
-
-                // Inicio - Salvar Grupo no Banco
-
+    
+                // Início - Salvar Unidade de Negócio no Banco
                 $unidade = new UnidadeDeNegocio();
                 $unidade->fill($request->all());
                 $unidade->id = Str::uuid();
                 $unidade->user_cadastro_id = $user_id;
                 $unidade->tipo_pessoa = $request->tipoPessoaInput;
-                
-                // Verifica se o tipo de pessoa é PF e atribui o valor do campo cpfIdInput
+    
                 if ($request->tipoPessoaInput === 'pf') {
                     $unidade->pessoa_id = $request->cpfIdInput;
-                }
-                // Verifica se o tipo de pessoa é PJ e atribui o valor do campo razaoSocialIdInput
-                elseif ($request->tipoPessoaInput === 'pj') {
+                    $unidade->save();
+    
+                    // Salvar o unidade_negocio_id na tabela PessoaFisica
+                    $pessoaFisica = PessoaFisica::find($request->cpfIdInput);
+                    if ($pessoaFisica) {
+                        $pessoaFisica->unidade_de_negocio_id = $unidade->id;
+                        $pessoaFisica->save();
+                    }
+                } elseif ($request->tipoPessoaInput === 'pj') {
                     $unidade->pessoa_id = $request->razaoSocialIdInput;
+                    $unidade->save();
+    
+                    // Salvar o unidade_negocio_id na tabela PessoaJuridica
+                    $pessoaJuridica = PessoaJuridica::find($request->razaoSocialIdInput);
+                    if ($pessoaJuridica) {
+                        $pessoaJuridica->unidade_de_negocio_id = $unidade->id;
+                        $pessoaJuridica->save();
+                    }
                 }
-                $unidade->save();
-
-
+                // Fim - Salvar Unidade de Negócio no Banco
+    
                 DB::commit();
-
-                return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade de Negócio criado com sucesso!');
+    
+                return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade de Negócio criada com sucesso!');
             }
         } catch (\Exception $e) {
             // Em caso de erro, reverta a transação e lance a exceção novamente.

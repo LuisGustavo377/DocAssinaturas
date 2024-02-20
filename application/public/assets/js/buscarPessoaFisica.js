@@ -8,7 +8,7 @@
                     success: function(response) {
                         if (response && response.id) { // Verifica se a resposta não está vazia e se possui o id
                             $('#cpfIdInput').val(response.id); // Salva o ID cpf em um campo oculto
-                            $('#pessoaFisicaResult').html('Pessoa encontrada: ' + response.nome);
+                            $('#pessoaFisicaResult').html(response.nome);
                         } else {
                             $('#cpfIdInput').val(''); // Limpa o campo do ID cpf
                             $('#pessoaFisicaResult').html('Pessoa não encontrada.');

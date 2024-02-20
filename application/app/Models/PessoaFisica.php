@@ -26,7 +26,7 @@ class PessoaFisica extends Model
         'senha_temporaria',
         'status',
         'imagem',
-        'unidade_negocio_id',
+        'unidade_de_negocio_id',
         'user_cadastro_id',
         'user_ultima_atualizacao_id',
         'tipo_de_logradouro_id'
@@ -46,7 +46,7 @@ class PessoaFisica extends Model
 
     public function unidadeDeNegocio()
     {
-        return $this->belongsTo(UnidadeDeNegocio::class);
+        return $this->belongsTo(UnidadeDeNegocio::class, 'unidade_negocio_id');
     }
 
     public function pessoaFisicaContaBancaria()

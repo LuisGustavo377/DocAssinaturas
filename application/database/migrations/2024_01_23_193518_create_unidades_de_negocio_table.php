@@ -17,12 +17,12 @@ return new class extends Migration
             $table->uuid('pessoa_id')->nullable();
             $table->uuid('user_cadastro_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
-            $table->uuid('grupo_negocio_id');
+            $table->uuid('grupo_de_negocio_id');
             $table->uuid('licenca_id');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('grupo_negocio_id')->references('id')->on('grupos_de_negocio');
+            $table->foreign('grupo_de_negocio_id')->references('id')->on('grupos_de_negocio');
         });
     }
 
