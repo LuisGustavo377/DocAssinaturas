@@ -21,5 +21,15 @@ class TipoDeCobranca extends Model
     'descricao',
 ];
 
+public function salvarComAtributosMaiusculos(array $atributos)
+{
+    foreach ($atributos as $atributo) {
+        if (isset($this->$atributo)) {
+            $this->$atributo = ucwords(strtolower($this->$atributo));
+        }
+    }
+    $this->save();
+}
+
 
 }

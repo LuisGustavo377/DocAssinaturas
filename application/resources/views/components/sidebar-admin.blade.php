@@ -135,6 +135,14 @@
                                 </span>
                             </a>
                         </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/tipos-de-cobranca">
+                                <span class="hide-menu">
+                                     > Tipos de Cobrança
+                                </span>
+                            </a>
+                        </li>
                         
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/tipos-de-logradouro">

@@ -19,7 +19,8 @@ class TipoDeRelacionamentoController extends Controller
 {
     public function index(): View
     {
-        $tipos_de_relacionamento = TipoDeRelacionamento::paginate(20);
+        $tipos_de_relacionamento = TipoDeRelacionamento::orderBy('descricao')->paginate(20);
+        
 
         return view('admin.tipos-de-relacionamento.index', compact('tipos_de_relacionamento'));
     }

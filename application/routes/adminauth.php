@@ -19,6 +19,7 @@ use App\Http\Controllers\AdminAuth\PlanosController;
 use App\Http\Controllers\AdminAuth\BancosController;
 use App\Http\Controllers\AdminAuth\TipoDeRelacionamentoController;
 use App\Http\Controllers\AdminAuth\TiposDeLogradouroController;
+use App\Http\Controllers\AdminAuth\TipoDeCobrancaController;
 use App\Http\Controllers\AdminAuth\CargosController;
 use App\Http\Controllers\CidadesController;
 use App\Models\TipoDeRelacionamento;
@@ -199,6 +200,17 @@ Route::put('/tipo-de-relacionamento/{id}', [TipoDeRelacionamentoController::clas
 Route::post('/tipo-de-relacionamento/search', [TipoDeRelacionamentoController::class, 'search'])->name('admin.tipos-de-relacionamento.search');
 Route::get('/tipo-de-relacionamento/inativar/{id}', [TipoDeRelacionamentoController::class, 'inativar'])->name('admin.tipos-de-relacionamento.inativar');
 Route::get('/tipo-de-relacionamento/reativar/{id}', [TipoDeRelacionamentoController::class, 'reativar'])->name('admin.tipos-de-relacionamento.reativar');
+
+//TIPOS-DE-COBRANCA
+Route::get('/tipos-de-cobranca', [TipoDeCobrancaController::class, 'index'])->name('admin.tipos-de-cobranca.index');
+Route::get('/tipo-de-cobranca/create', [TipoDeCobrancaController::class, 'create'])->name('admin.tipos-de-cobranca.create');
+Route::post('/tipo-de-cobranca', [TipoDeCobrancaController::class, 'store'])->name('admin.tipos-de-cobranca.store');
+Route::get('/tipo-de-cobranca/{id}', [TipoDeCobrancaController::class, 'show'])->name('admin.tipos-de-cobranca.show');
+Route::get('/tipo-de-cobranca/{id}/edit', [TipoDeCobrancaController::class, 'edit'])->name('admin.tipos-de-cobranca.edit');
+Route::put('/tipo-de-cobranca/{id}', [TipoDeCobrancaController::class, 'update'])->name('admin.tipos-de-cobranca.update');
+Route::post('/tipo-de-cobranca/search', [TipoDeCobrancaController::class, 'search'])->name('admin.tipos-de-cobranca.search');
+Route::get('/tipo-de-cobranca/inativar/{id}', [TipoDeCobrancaController::class, 'inativar'])->name('admin.tipos-de-cobranca.inativar');
+Route::get('/tipo-de-cobranca/reativar/{id}', [TipoDeCobrancaController::class, 'reativar'])->name('admin.tipos-de-cobranca.reativar');
 
 
 //CARGOS

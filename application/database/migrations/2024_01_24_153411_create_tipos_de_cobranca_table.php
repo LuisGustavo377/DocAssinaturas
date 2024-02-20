@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('tipos_de_cobranca', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('descricao');
+            $table->string('descricao')->nullable();
+            $table->enum('status', ['ativo', 'inativo'])->default('ativo');
+            $table->uuid('user_cadastro_id')->nullable();
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
         });
     }

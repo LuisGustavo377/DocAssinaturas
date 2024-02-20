@@ -19,7 +19,7 @@ class TiposDeLogradouroController extends Controller
 {
     public function index(): View
     {
-        $tipos_de_logradouro = TipoDeLogradouro::paginate(20);
+        $tipos_de_logradouro = TipoDeLogradouro::orderBy('descricao')->paginate(20);
 
         return view('admin.tipos-de-logradouro.index', compact('tipos_de_logradouro'));
     }
