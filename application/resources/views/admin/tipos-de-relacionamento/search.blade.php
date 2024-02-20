@@ -44,6 +44,10 @@
                                 </th>
 
                                 <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Status</h6>
+                                </th>
+
+                                <th class="border-bottom-0">
                                     <h6 class="fw-semibold mb-0">Ações</h6>
                                 </th>
                             </tr>
@@ -57,15 +61,34 @@
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/tipo-de-logradouro/' . $resultado->id) }}"
+                                    <span
+                                        class="badge bg-{{ $resultado->status === 'ativo' ? 'success' : ($resultado->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
+                                        {{ ucfirst($resultado->status) }}
+                                    </span>
+                                </td>
+
+                                <td class="border-bottom-0">
+                                    <a href="{{ url('admin/tipo-de-relacionamento/' . $resultado->id) }}"
                                         class="btn btn-primary m-1" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/tipo-de-logradouro/' . $resultado->id . '/edit') }}"
+                                    <a href="{{ url('admin/tipo-de-relacionamento/' . $resultado->id . '/edit') }}"
                                         class="btn btn-success m-1" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
+
+                                    @if($resultado->status==='ativo')
+                                    <a href="{{ url('admin/tipo-de-relacionamento/inativar/' . $resultado->id) }}"
+                                        class="btn btn-danger m-1" title="Inativar">
+                                        <i class="ti ti-lock"></i>
+                                    </a>
+                                    @elseif ($resultado->status==='inativo')
+                                    <a href="{{ url('admin/tipo-de-relacionamento/reativar/' . $resultado->id) }}"
+                                        class="btn btn-warning m-1" title="Reativar">
+                                        <i class="ti ti-lock-off"></i>
+                                    </a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

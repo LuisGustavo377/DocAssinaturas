@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Detalhar Tipo de Logradouro')
+@section('title', 'Detalhar Tipo de Relacionamento')
 
 @section('sidebar')
     <x-sidebar-admin></x-sidebar-admin>
@@ -30,7 +30,7 @@
                                     <div class="mb-12 col-md-12">
                                         <label id="descricaoLabel" class="form-label">Descrição</label>
                                         <input type="text" class="form-control @error('descricao') is-invalid @enderror"
-                                            id="nomeInput" name="nome" value="{{ $tipo_de_logradouro->descricao }}" disabled>
+                                            id="nomeInput" name="nome" value="{{ $tipo_de_relacionamento->descricao }}" disabled>
                                     </div>
                                     
                                 </div>
@@ -45,7 +45,7 @@
                                     Voltar
                                 </a>
 
-                                <a href="{{ url('admin/tipo-de-logradouro/' . $tipo_de_logradouro->id . '/edit') }}" class="btn btn-success me-2">
+                                <a href="{{ url('admin/tipo-de-relacionamento/' . $tipo_de_relacionamento->id . '/edit') }}" class="btn btn-success me-2">
                                     <i class="ti ti-edit me-1"></i>
                                     Editar
                                 </a>

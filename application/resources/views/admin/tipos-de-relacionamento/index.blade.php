@@ -27,11 +27,10 @@
                 </div>
 
                 <!-- Formulário da Barra de Pesquisa -->
-                <form action="{{ route('admin.tipos-de-logradouro.search') }}" method="post">
+                <form action="{{ route('admin.tipos-de-relacionamento.search') }}" method="post">
                     @csrf
                     <div class="mb-3 input-group">
-                        <input type="text" class="form-control" name="search"
-                            placeholder="Buscar por descrição...">
+                        <input type="text" class="form-control" name="search" placeholder="Buscar por descrição...">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
                             Pesquisar
@@ -48,6 +47,10 @@
                                 </th>
 
                                 <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Status</h6>
+                                </th>
+
+                                <th class="border-bottom-0">
                                     <h6 class="mb-0 fw-semibold">Ações</h6>
                                 </th>
                             </tr>
@@ -60,16 +63,34 @@
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/tipo-de-logradouro/' . $tipo->id) }}"
+                                    <span
+                                        class="badge bg-{{ $tipo->status === 'ativo' ? 'success' : ($tipo->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
+                                        {{ ucfirst($tipo->status) }}
+                                    </span>
+                                </td>
+
+                                <td class="border-bottom-0">
+                                    <a href="{{ url('admin/tipo-de-relacionamento/' . $tipo->id) }}"
                                         class="m-1 btn btn-primary" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/tipo-de-logradouro/' . $tipo->id . '/edit') }}"
+                                    <a href="{{ url('admin/tipo-de-relacionamento/' . $tipo->id . '/edit') }}"
                                         class="m-1 btn btn-success" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
 
+                                    @if($tipo->status==='ativo')
+                                    <a href="{{ url('admin/tipo-de-relacionamento/inativar/' . $tipo->id) }}"
+                                        class="btn btn-danger m-1" title="Inativar">
+                                        <i class="ti ti-lock"></i>
+                                    </a>
+                                    @elseif ($tipo->status==='inativo')
+                                    <a href="{{ url('admin/tipo-de-relacionamento/reativar/' . $tipo->id) }}"
+                                        class="btn btn-warning m-1" title="Reativar">
+                                        <i class="ti ti-lock-off"></i>
+                                    </a>
+                                    @endif
                                 </td>
                             </tr>
                             @empty

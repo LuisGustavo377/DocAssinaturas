@@ -19,7 +19,7 @@
                     <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
                     <div class="card">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('admin.tipos-de-relacionamento.update', $tipo_de_logradouro->id) }}">
+                            <form method="POST" action="{{ route('admin.tipos-de-relacionamento.update', $tipo_de_relacionamento->id) }}">
 
                                 @csrf {{-- Prevenção do laravel de ataques a formularios --}}
                                 @method('PUT')
@@ -34,7 +34,7 @@
                                         <div class="mb-12 col-md-12">
                                             <label id="descricaoLabel" class="form-label">Descrição</label>
                                             <input type="text" class="form-control @error('nome') is-invalid @enderror"
-                                                id="descricaoInput" name="descricao" value="{{ $tipo_de_logradouro->descricao }}">
+                                                id="descricaoInput" name="descricao" value="{{ $tipo_de_relacionamento->descricao }}">
                                             @error('descricao')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
