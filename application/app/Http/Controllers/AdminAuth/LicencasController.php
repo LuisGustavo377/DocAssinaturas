@@ -25,6 +25,8 @@ class LicencasController extends Controller
     public function index(): View
     {
 
+        $usuario = Auth::check();
+
         $licencas = Licenca::all();
         $grupos = GrupoDeNegocios::all();
 

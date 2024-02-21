@@ -16,8 +16,6 @@ return new class extends Migration
             $table->string('nome');
             $table->string('cpf')->unique();
             $table->string('email')->nullable();
-            $table->text('senha')->nullable();
-            $table->enum('senha_temporaria', ['sim', 'nao'])->nullable();
             $table->enum('status', ['ativo', 'inativo', 'pendente-pagamento'])->default('ativo');
             $table->string('imagem')->nullable();
             $table->uuid('unidade_de_negocio_id')->nullable();

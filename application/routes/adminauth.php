@@ -22,6 +22,7 @@ use App\Http\Controllers\AdminAuth\TiposDeLogradouroController;
 use App\Http\Controllers\AdminAuth\TipoDeCobrancaController;
 use App\Http\Controllers\AdminAuth\TipoDeRenovacaoController;
 use App\Http\Controllers\AdminAuth\CargosController;
+use App\Http\Controllers\AdminAuth\ContaBancariaController;
 use App\Http\Controllers\CidadesController;
 use App\Models\TipoDeRelacionamento;
 use Illuminate\Support\Facades\Route;
@@ -223,6 +224,17 @@ Route::put('/tipo-de-renovacao/{id}', [TipoDeRenovacaoController::class, 'update
 Route::post('/tipo-de-renovacao/search', [TipoDeRenovacaoController::class, 'search'])->name('admin.tipos-de-renovacao.search');
 Route::get('/tipo-de-renovacao/inativar/{id}', [TipoDeRenovacaoController::class, 'inativar'])->name('admin.tipos-de-renovacao.inativar');
 Route::get('/tipo-de-renovacao/reativar/{id}', [TipoDeRenovacaoController::class, 'reativar'])->name('admin.tipos-de-renovacao.reativar');
+
+//CONTAS-BANCARIAS
+Route::get('/contas-bancarias', [ContaBancariaController::class, 'index'])->name('admin.contas-bancarias.index');
+Route::get('/conta-bancaria/create', [ContaBancariaController::class, 'create'])->name('admin.contas-bancarias.create');
+Route::post('/conta-bancaria', [ContaBancariaController::class, 'store'])->name('admin.contas-bancarias.store');
+Route::get('/conta-bancaria/{id}', [ContaBancariaController::class, 'show'])->name('admin.contas-bancarias.show');
+Route::get('/conta-bancaria/{id}/edit', [ContaBancariaController::class, 'edit'])->name('admin.contas-bancarias.edit');
+Route::put('/conta-bancaria/{id}', [ContaBancariaController::class, 'update'])->name('admin.contas-bancarias.update');
+Route::post('/conta-bancaria/search', [ContaBancariaController::class, 'search'])->name('admin.contas-bancarias.search');
+Route::get('/conta-bancaria/inativar/{id}', [ContaBancariaController::class, 'inativar'])->name('admin.contas-bancarias.inativar');
+Route::get('/conta-bancaria/reativar/{id}', [ContaBancariaController::class, 'reativar'])->name('admin.contas-bancarias.reativar');
 
 
 //CARGOS

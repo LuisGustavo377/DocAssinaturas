@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PessoaFisicaContaBancaria extends Model
+class UnidadeDeNegocioContaBancaria extends Model
 {
     use HasFactory;
 
-    protected $table = 'pessoa_fisica_conta_bancaria';
+    
+    protected $table = 'unidades_de_negocios_contas_bancarias';
 
     //Inicio Configuração UUID
     protected $primaryKey = 'id'; // Nome da coluna UUID
@@ -22,23 +23,14 @@ class PessoaFisicaContaBancaria extends Model
     'agencia',
     'numero_conta',
     'codigo_banco',
-    'digito',
     'status',
-    'pessoa_fisica_id',
-    'banco_id',
     'user_cadastro_id',
     'user_ultima_atualizacao_id',
 ];
 
-public function pessoaFisica()
+public function unidadeDeNegocio()
 {
-    return $this->belongsTo(PessoaFisicaContaBancaria::class);
+    return $this->belongsTo(UnidadeDeNegocio::class);
 }
-
-public function banco()
-{
-    return $this->belongsTo(Banco::class);
-}
-
 
 }
