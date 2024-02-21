@@ -18,12 +18,12 @@ class UnidadeDeNegocio extends Model
    //Fim Configuração UUID
 
    protected $fillable = [
-    'grupo_de_negocio_id',
-    'user_cadastro_id',
-    'user_ultima_atualizacao_id',
-    'tipo_pessoa',
-    'pessoa_id',
-    'licenca_id'
+       'user_cadastro_id',
+       'user_ultima_atualizacao_id',
+       'tipo_pessoa',
+       'pessoa_id',
+       'licenca_id',
+       'grupo_de_negocio_id'
 ];
 
 public function grupoDeNegocios()

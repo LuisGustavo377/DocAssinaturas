@@ -32,17 +32,18 @@
 
                                     <div class="mb-3">
                                         <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
-                                        <select class="form-select @error('grupo_id') is-invalid @enderror" id="grupoInput"
-                                            name="grupo_negocio_id">
-                                            <option value="" disabled selected> -- Selecione um grupo de negócio -- </option>
+                                        <select class="form-select @error('grupo_de_negocio_id') is-invalid @enderror"
+                                            id="grupoInput" name="grupo_de_negocio_id">
+                                            <option value="" disabled selected> -- Selecione um grupo de negócio --
+                                            </option>
                                             @foreach ($gruposDeNegocios as $grupo)
                                                 <option value="{{ $grupo->id }}"
-                                                    {{ old('grupo_id') == $grupo->id ? 'selected' : '' }}>
+                                                    {{ old('grupo_de_negocio_id') == $grupo->id ? 'selected' : '' }}>
                                                     {{ $grupo->nome }}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('grupo_id')
+                                        @error('grupo_de_negocio_id')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
@@ -51,26 +52,36 @@
 
                                     <div class="mb-3">
                                         <label class="form-label">Tipo de Pessoa</label>
-                                        <select id="tipoPessoaSelect" class="form-select">
-                                            <option value="" selected disabled> -- Selecione o tipo de pessoa -- </option>
-                                            <option value="PF">Pessoa Física</option>
-                                            <option value="PJ">Pessoa Jurídica</option>
+                                        <select id="tipoPessoaSelect"
+                                            class="form-select @error('tipoPessoaInput') is-invalid @enderror">
+                                            <option value="" {{ old('tipoPessoaInput') == '' ? 'selected' : '' }}
+                                                disabled> -- Selecione o tipo de pessoa -- </option>
+                                            <option value="PF" {{ old('tipoPessoaInput') == 'PF' ? 'selected' : '' }}>
+                                                Pessoa Física</option>
+                                            <option value="PJ" {{ old('tipoPessoaInput') == 'PJ' ? 'selected' : '' }}>
+                                                Pessoa Jurídica</option>
                                         </select>
-                                        <input type="hidden" id="tipoPessoaInput" name="tipoPessoaInput">
+                                        <input type="hidden" id="tipoPessoaInput" name="tipoPessoaInput"
+                                            value="{{ old('tipoPessoaInput') }}">
+                                        @error('tipoPessoaInput')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3" id="cpfInputDiv" style="display: none;">
                                         <label class="form-label">Pesquisar por CPF</label>
-                                        <input type="text" class="form-control" id="cpfInput"
-                                            name="cpfInput" maxlength="11">
+                                        <input type="text" class="form-control" id="cpfInput" name="cpfInput"
+                                            maxlength="11">
                                         <div id="pessoaFisicaResult"></div>
                                         <input type="hidden" id="cpfIdInput" name="cpfIdInput">
                                     </div>
 
                                     <div class="mb-3" id="cnpjInputDiv" style="display: none;">
                                         <label class="form-label">Pesquisar por CNPJ</label>
-                                        <input type="text" class="form-control" id="cnpjInput"
-                                            name="cnpjInput" maxlength="14">
+                                        <input type="text" class="form-control" id="cnpjInput" name="cnpjInput"
+                                            maxlength="14">
                                         <div id="pessoaJuridicaResult"></div>
                                         <input type="hidden" id="razaoSocialIdInput" name="razaoSocialIdInput">
                                     </div>
@@ -163,8 +174,8 @@
     </script>
     <!-- Fim Gerar Senha Temporaria -->
 
-    
-{{-- Buscar Licenças por grupo --}}
+
+    {{-- Buscar Licenças por grupo --}}
     <script src="{{ asset('assets/js/buscarLicencaPorGrupo.js') }}"></script>
 
     <!-- Script para Buscar Pessoa-->
@@ -178,5 +189,5 @@
 
     <script src="{{ asset('assets/js/inputPjPf.js') }}"></script>
 
-    
+
 @endsection

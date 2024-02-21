@@ -27,7 +27,7 @@ class LicencaRequest extends FormRequest
             'tipo_de_renovacao' => 'required',
             'inicio' => 'required|date',
             'termino' => 'required|date',
-            'descricao' => 'nullable|string|max:255',        
+            'descricao' => 'required|string|max:255',        
         ];
     }
 
@@ -42,6 +42,7 @@ class LicencaRequest extends FormRequest
             'termino.required' => 'O campo Término é obrigatório.',
 
             'descricao.max' => 'O campo descrição não pode ter mais de :max caracteres.',
+            'descricao.required' => 'O campo descrição é obrigatório.',
         
 
         ];
