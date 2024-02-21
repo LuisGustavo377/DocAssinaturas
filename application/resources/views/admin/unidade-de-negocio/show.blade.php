@@ -1,17 +1,17 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Detalhar Grupo de Negócios')
+@section('title', 'Detalhar Unidade de Negócio')
 
 @section('sidebar')
-<x-sidebar-admin></x-sidebar-admin>
+    <x-sidebar-admin></x-sidebar-admin>
 @endsection
 
 @section('navbar')
-<x-navbar-admin></x-navbar-admin>
+    <x-navbar-admin></x-navbar-admin>
 @endsection
 
 @section('content')
-<div class="container-fluid">
+    <div class="container-fluid">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
@@ -55,8 +55,8 @@
                                     <!-- Campo Licença -->
                                     <div class="mb-3">
                                         <label id="licencaLabel" class="form-label">Licença</label>
-                                        <input type="text" class="form-control" id="licenca_id"
-                                                name="licenca_id" value="{{ $licenca->descricao }}" disabled>
+                                        <input type="text" class="form-control" id="licenca_id" name="licenca_id"
+                                            value="{{ $licenca->descricao }}" disabled>
                                     </div>
                                 </div>
 
@@ -68,10 +68,11 @@
                                                 <i class="ti ti-arrow-left me-1"></i>
                                                 Voltar
                                             </a>
-                                            <button type="submit" class="btn btn-success ms-2">
-                                                <i class="ti ti-check me-1"></i>
-                                                Alterar
-                                            </button>
+                                            <a href="{{ url('admin/unidade-de-negocio/' . $unidade->id . '/edit') }}"
+                                                class="btn btn-success me-2">
+                                                <i class="ti ti-edit me-1"></i>
+                                                Editar
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

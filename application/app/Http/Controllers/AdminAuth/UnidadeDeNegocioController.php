@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminAuth\UnidadeDeNegocioRequest;
 use App\Models\GrupoDeNegocios;
 use App\Models\UnidadeDeNegocio;
 use App\Models\Licenca;
@@ -20,8 +21,7 @@ class UnidadeDeNegocioController extends Controller
 {
     public function index(): View
     {
-        $unidades = UnidadeDeNegocio::orderBy('id')->get();
-
+        $unidades = UnidadeDeNegocio::orderBy('id')->paginate(20);
         return view('admin.unidade-de-negocio.index', compact('unidades'));
     }
 
@@ -38,7 +38,7 @@ class UnidadeDeNegocioController extends Controller
 
 
 
-    public function store(Request $request)
+    public function store(UnidadeDeNegocioRequest $request)
     {
         // dd($request);
         try {
@@ -134,6 +134,8 @@ class UnidadeDeNegocioController extends Controller
     {
         try {
             $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
+            $licenca_id = $request->input('licenca_id');
+
             DB::beginTransaction();
 
             $unidade = UnidadeDeNegocio::findOrFail($id);
@@ -142,14 +144,13 @@ class UnidadeDeNegocioController extends Controller
                 throw new \Exception('Unidade não encontrado');
             }
 
-            $unidade->nome = $request->input('name');
-            $unidade->observacao = $request->input('observacao');
+            $unidade->licenca_id = $licenca_id;
             $unidade->user_ultima_atualizacao_id = $user_ultima_atualizacao;
             $unidade->save();
 
             DB::commit();
 
-            return redirect()->route('admin.unidade-de-negocio.index', ['id' => $unidade->id])->with('msg', 'Unidade alterado com sucesso!');
+            return redirect()->route('admin.unidade-de-negocios.index', ['id' => $unidade->id])->with('msg', 'Unidade alterado com sucesso!');
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
@@ -160,8 +161,20 @@ class UnidadeDeNegocioController extends Controller
     {
         $termoPesquisa = $request->input('search');
 
-        if (Auth::check()) {
-            $resultados = UnidadeDeNegocio::where('nome', 'ILIKE', "%$termoPesquisa%")->get();
+        if (strlen($termoPesquisa) >= 3) {
+            if (Auth::check()) {
+                $resultados = DB::table('unidades_de_negocio')
+                    ->leftJoin('pessoa_fisica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_fisica.id')
+                    ->leftJoin('pessoa_juridica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_juridica.id')
+                    ->where(function ($query) use ($termoPesquisa) {
+                        $query->where('pessoa_fisica.nome', 'ILIKE', "%$termoPesquisa%")
+                            ->orWhere('pessoa_juridica.razao_social', 'ILIKE', "%$termoPesquisa%");
+                    })
+                    ->select('unidades_de_negocio.id', 'unidades_de_negocio.status', 'pessoa_fisica.nome', 'pessoa_juridica.razao_social')
+                    ->get();
+            } else {
+                $resultados = [];
+            }
         } else {
             $resultados = [];
         }
@@ -169,34 +182,40 @@ class UnidadeDeNegocioController extends Controller
         return view('admin.unidade-de-negocio.search', compact('resultados', 'termoPesquisa'));
     }
 
+
+
+
+
     public function inativar($id)
     {
-
+        $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
         $unidade = UnidadeDeNegocio::findOrFail($id);
 
         if ($unidade) {
             $unidade->status = 'inativo';
+            $unidade->user_ultima_atualizacao_id = $user_ultima_atualizacao;
             $unidade->save();
 
-            return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade inativado com sucesso.');
+            return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade inativado com sucesso.');
         }
 
-        return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade não encontrado.');
+        return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade não encontrado.');
     }
 
     public function reativar($id)
     {
-
+        $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
         $unidade = UnidadeDeNegocio::findOrFail($id);
 
         if ($unidade) {
             $unidade->status = 'ativo';
+            $unidade->user_ultima_atualizacao_id = $user_ultima_atualizacao;
             $unidade->save();
 
-            return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade reativada com sucesso.');
+            return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade reativada com sucesso.');
         }
 
-        return redirect()->route('admin.unidade-de-negocio.index')->with('msg', 'Unidade não encontrado.');
+        return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade não encontrado.');
     }
 
     public function licencasPorGrupo(Request $request)
