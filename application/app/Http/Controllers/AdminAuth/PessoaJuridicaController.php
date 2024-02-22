@@ -82,8 +82,6 @@ class PessoaJuridicaController extends Controller
                 $pessoa->cnpj = str_replace(['.', '/', '-'], '', $request->cnpj);
                 $pessoa->inscricao_estadual =  $request->inscricao_estadual;
                 $pessoa->inscricao_municipal =  $request->inscricao_municipal;
-                $pessoa->senha =  $request->senha;
-                $pessoa->senha_temporaria =  $request->senha_temporaria;
                 $pessoa->email =  $request->email;
                 $pessoa->user_cadastro_id = Auth::id();
                 $pessoa->user_ultima_atualizacao_id = Auth::id();

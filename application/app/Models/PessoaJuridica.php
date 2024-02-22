@@ -26,8 +26,6 @@ class PessoaJuridica extends Model
         'inscricao_municipal',
         'email',
         'imagem',
-        'senha',
-        'senha_temporaria',
         'unidade_de_negocio_id',
         'user_cadastro_id',
         'user_ultima_atualizacao',
@@ -51,7 +49,7 @@ class PessoaJuridica extends Model
 
     public function pessoaJuridicaContaBancaria()
     {
-        return $this->hasMany(PessoaJuridicaContaBancaria::class);
+        return $this->hasMany(UnidadeDeNegocioContaBancaria::class);
     }
 
     public function salvarComAtributosMaiusculos(array $atributos)

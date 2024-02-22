@@ -33,35 +33,44 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <label id="unidadeNegocioLabel" class="form-label">Unidade de Negócio</label>
-                                        <input type="text"
-                                            class="form-control @error('unidade_negocio') is-invalid @enderror"
-                                            id="unidadeNegocioInput" name="unidade_negocio"
-                                            value="{{ old('unidade_negocio') }}" maxLength="4">
-                                        @error('unidade_negocio')
+                                        <select class="form-select" id="unidadeNegocioSelect" name="unidade_de_negocio_id">
+                                            <option value="" selected disabled> -- Selecione a Unidade de Negócio --
+                                            </option>
+                                            @foreach($unidades as $unidade)
+                                                @if($unidade->tipo_pessoa=='pf')
+                                                    <option value="{{ $unidade->id }}">{{ $unidade->pessoaFisica->nome }}
+                                                @else
+                                                    <option value="{{ $unidade->id }}">{{ $unidade->pessoaJuridica->razao_social }}
+                                                @endif
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('unidade_de_negocio_id')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                         @enderror
                                     </div>
-
                                 </div>
+
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label id="tipoContaLabel" class="form-label">Tipo de Conta</label>
-                                        <select class="form-select" id="tipoContaSelect" name="tipo_conta">
+                                        <select class="form-select" id="tipoContaSelect" name="tipo_de_conta">
                                             <option value="" selected disabled> -- Selecione o tipo da Conta --</option>
-                                            <option value="corrente">Conta Corrente</option>
-                                            <option value="poupanca">Conta Poupança</option>
+                                            <option value="conta-corrente">Conta Corrente</option>
+                                            <option value="conta-poupanca">Conta Poupança</option>
+                                            <option value="conta-pagamento">Conta de Pagamento</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label id="bancoLabel" class="form-label">Banco</label>
-                                        <select class="form-select" id="bancoSelect" name="banco">
+                                        <select class="form-select" id="bancoSelect" name="codigo_banco">
                                             <option value="" selected disabled> -- Selecione o nome do Banco --</option>
                                             @foreach($bancos as $banco)
-                                            <option value="{{ $banco->id }}">{{ $banco->nome }} ({{ $banco->codigo }})
+                                            <option value="{{ $banco->codigo }}">{{ $banco->nome }} ({{ $banco->codigo }})
                                             </option>
                                             @endforeach
                                         </select>

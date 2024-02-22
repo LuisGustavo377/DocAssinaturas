@@ -21,7 +21,8 @@ class ContaBancariaController extends Controller
 {
     public function index(): View
     {
-
+        $bancos = Banco::orderBy('nome')->get(); 
+        $unidades = UnidadeDeNegocio::all();
         $contas = UnidadeDeNegocioContaBancaria::orderBy('numero_conta')->paginate(20);
 
         return view('admin.contas-bancarias.index', compact('contas'));
@@ -33,17 +34,39 @@ class ContaBancariaController extends Controller
     {   
         $bancos = Banco::orderBy('nome')->get(); 
         $unidades = UnidadeDeNegocio::all();
-        dd($unidades); 
-        
-        
-        return view('admin.contas-bancarias.create', compact('bancos'));
+              
+        return view('admin.contas-bancarias.create', compact('bancos', 'unidades'));
         
     }
 
     public function store(Request $request)
     {
+        
+        try {
+            if (auth()->check()) {
 
+                DB::beginTransaction();
+
+
+                // Início - Salvar Plano no Banco
+                $conta = new UnidadeDeNegocioContaBancaria();                
+                $conta->id = Str::uuid();
+                $conta->fill($request->all());
+                $conta->unidade_de_negocio_id = $request->unidade_de_negocio_id;
+                $conta->user_cadastro_id = auth()->id();
+                $conta->save();
+
+                DB::commit();
+
+                return redirect()->route('admin.contas-bancarias.index')->with('msg', 'Conta Bancaria criado com sucesso!');
+            }
+        } catch (\Exception $e) {
+            // Em caso de erro, reverta a transação e lance a exceção novamente.
+            DB::rollback();
+            throw $e;
+        }
     }
+
 
     public function show($id)
     {

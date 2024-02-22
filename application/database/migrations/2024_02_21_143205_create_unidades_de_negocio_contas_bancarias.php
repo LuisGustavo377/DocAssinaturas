@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unidades_de_negocios_contas_bancarias', function (Blueprint $table) {
+        Schema::create('unidades_de_negocio_contas_bancarias', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->enum('tipo_de_conta', ['conta-corrente', 'conta-poupanca','conta-pagamento']);
             $table->string('agencia');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unidade_de_negocios_contas_bancarias');
+        Schema::dropIfExists('unidades_de_negocio_contas_bancarias');
     }
 };
