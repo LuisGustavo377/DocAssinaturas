@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminAuth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminAuth\GruposDeNegocioRequest;
 use App\Models\GrupoDeNegocios;
+use App\Models\UnidadeDeNegocio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -64,7 +65,9 @@ class GrupoDeNegociosController extends Controller
     public function show($id)
     {
         $grupo = GrupoDeNegocios::findOrFail($id);
-        return view('admin.grupo-de-negocios.show', compact('grupo'));
+        $unidades = UnidadeDeNegocio::where('grupo_de_negocio_id', $id)->get(); // Obtém todas as unidades de negócio vinculadas a este grupo
+        
+        return view('admin.grupo-de-negocios.show', compact('grupo', 'unidades' ));
     }
 
     public function edit($id)
