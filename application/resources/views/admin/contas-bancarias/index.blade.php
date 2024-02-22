@@ -67,7 +67,11 @@
                             @forelse($contas as $conta)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">{{ $conta->unidadeDeNegocio->nome }}</h6>
+                                    @if ($conta->unidadeDeNegocio->tipo_pessoa=='pf')
+                                        <h6 class="mb-0 fw">{{ $conta->unidadeDeNegocio->pessoaFisica->nome }}</h6>
+                                    @else
+                                        <h6 class="mb-0 fw">{{ $conta->unidadeDeNegocio->pessoaJuridica->razao_social }}</h6>
+                                    @endif                                    
                                 </td>
 
                                 <td class="border-bottom-0">

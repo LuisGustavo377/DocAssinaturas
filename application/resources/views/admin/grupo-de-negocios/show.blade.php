@@ -27,7 +27,7 @@
 
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="mb-3 col-md-6">
+                                <div class="mb-3 col-md-6">
                                         <label id="nomeLabel" class="form-label">Nome</label>
                                         <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             id="nomeInput" name="name" placeholder="Nome" value="{{ $grupo->nome }}"

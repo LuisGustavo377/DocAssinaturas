@@ -33,4 +33,10 @@ public function unidadeDeNegocio()
     return $this->belongsTo(UnidadeDeNegocio::class, 'unidade_de_negocio_id');
 }
 
+public function banco()
+{
+    return $this->belongsTo(Banco::class);
+}
+
+
 }

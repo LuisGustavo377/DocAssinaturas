@@ -22,8 +22,12 @@ class ContaBancariaController extends Controller
     public function index(): View
     {
         $bancos = Banco::orderBy('nome')->get(); 
-        $unidades = UnidadeDeNegocio::all();
-        $contas = UnidadeDeNegocioContaBancaria::orderBy('numero_conta')->paginate(20);
+        
+        $contas = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica')
+                                                ->orderBy('numero_conta')
+                                                ->paginate(20);                                     
+
+
 
         return view('admin.contas-bancarias.index', compact('contas'));
 
@@ -70,6 +74,17 @@ class ContaBancariaController extends Controller
 
     public function show($id)
     {
+        try {
+            $conta = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica', 'banco.unidadeDeNegocio')
+            ->findOrFail($id);
+            
+            dd($conta);
+                                                
+        } catch (ModelNotFoundException $e) {
+            // Tratamento de exceção: Tipo de Logradouro não encontrado
+            abort(404, 'Conta Bancária não encontrado.');
+        }
+        return view('admin.contas-bancarias.show', compact('conta'));
 
     }
 

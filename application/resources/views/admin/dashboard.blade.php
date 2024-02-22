@@ -362,6 +362,5 @@
         </div>
       </div>
 
-
-
+      <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
 @endsection
