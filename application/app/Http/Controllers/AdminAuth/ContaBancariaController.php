@@ -21,11 +21,13 @@ class ContaBancariaController extends Controller
 {
     public function index(): View
     {
-
-        $contas = UnidadeDeNegocioContaBancaria::orderBy('numero_conta')->paginate(20);
-
-        return view('admin.contas-bancarias.index', compact('contas'));
-
+        $contas = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica')                                                ->orderBy('numero_conta')
+                                                ->paginate(20);   
+    
+        // Busca todos os bancos disponíveis
+        $bancos = Banco::orderBy('nome')->get();
+        
+        return view('admin.contas-bancarias.index', compact('contas', 'bancos'));
     }
 
     public function create(): View
@@ -33,20 +35,53 @@ class ContaBancariaController extends Controller
     {   
         $bancos = Banco::orderBy('nome')->get(); 
         $unidades = UnidadeDeNegocio::all();
-        dd($unidades); 
-        
-        
-        return view('admin.contas-bancarias.create', compact('bancos'));
+              
+        return view('admin.contas-bancarias.create', compact('bancos', 'unidades'));
         
     }
 
     public function store(Request $request)
     {
+        
+        try {
+            if (auth()->check()) {
 
+                DB::beginTransaction();
+
+
+                // Início - Salvar Plano no Banco
+                $conta = new UnidadeDeNegocioContaBancaria();                
+                $conta->id = Str::uuid();
+                $conta->fill($request->all());
+                $conta->banco_id = $request->banco_id;
+                $conta->unidade_de_negocio_id = $request->unidade_de_negocio_id;
+                $conta->user_cadastro_id = auth()->id();
+                $conta->save();
+
+                DB::commit();
+
+                return redirect()->route('admin.contas-bancarias.index')->with('msg', 'Conta Bancaria criado com sucesso!');
+            }
+        } catch (\Exception $e) {
+            // Em caso de erro, reverta a transação e lance a exceção novamente.
+            DB::rollback();
+            throw $e;
+        }
     }
+
 
     public function show($id)
     {
+        try {
+            $conta = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica')
+            ->findOrFail($id);
+          
+                                                
+        } catch (ModelNotFoundException $e) {
+            // Tratamento de exceção: Tipo de Logradouro não encontrado
+            abort(404, 'Conta Bancária não encontrado.');
+        }
+        return view('admin.contas-bancarias.show', compact('conta'));
 
     }
 

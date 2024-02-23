@@ -30,8 +30,7 @@
                 <form action="{{ route('admin.contas-bancarias.search') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search"
-                            placeholder="Buscar por descricao...">
+                        <input type="text" class="form-control" name="search" placeholder="Buscar por descricao...">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
                             Pesquisar
@@ -44,8 +43,14 @@
                         <thead class="text-dark fs-4">
                             <tr>
                                 <th class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">Descrição</h6>
+                                    <h6 class="mb-0 fw-semibold">Unidade</h6>
                                 </th>
+
+                                <th class="border-bottom-0">
+                                    <h6 class="mb-0 fw-semibold"> Banco</h6>
+                                </th>
+
+
 
                                 <th class="border-bottom-0">
                                     <h6 class="mb-0 fw-semibold">Status</h6>
@@ -61,34 +66,47 @@
                             @forelse($contas as $conta)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">{{ $cargo->descricao }}</h6>
+                                    @if ($conta->unidadeDeNegocio->tipo_pessoa=='pf')
+                                    <h6 class="mb-0 fw">{{ $conta->unidadeDeNegocio->pessoaFisica->nome }}</h6>
+                                    @else
+                                    <h6 class="mb-0 fw">{{ $conta->unidadeDeNegocio->pessoaJuridica->razao_social }}
+                                    </h6>
+                                    @endif
                                 </td>
 
                                 <td class="border-bottom-0">
+                                    @if($conta->banco)
+                                    <h6 class="mb-0 fw">{{ $conta->banco->nome }}</h6>
+                                    @else
+                                    <h6 class="mb-0 fw">n/a</h6>
+                                    @endif
+
+                                </td>
+                                <td class="border-bottom-0">
                                     <span
-                                        class="badge bg-{{ $cargo->status === 'ativo' ? 'success' : ($cargo->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
-                                        {{ ucfirst($cargo->status) }}
+                                        class="badge bg-{{ $conta->status === 'ativo' ? 'success' : ($conta->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
+                                        {{ ucfirst($conta->status) }}
                                     </span>
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/cargo/' . $cargo->id) }}"
+                                    <a href="{{ url('admin/conta-bancaria/' . $conta->id) }}"
                                         class="m-1 btn btn-primary" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/cargo/' . $cargo->id . '/edit') }}"
+                                    <a href="{{ url('admin/conta-bancaria/' . $conta->id . '/edit') }}"
                                         class="m-1 btn btn-success" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
 
-                                    @if($cargo->status==='ativo')
-                                    <a href="{{ url('admin/cargo/inativar/' . $cargo->id) }}"
+                                    @if($conta->status==='ativo')
+                                    <a href="{{ url('admin/conta-bancaria/inativar/' . $conta->id) }}"
                                         class="btn btn-danger m-1" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </a>
-                                    @elseif ($cargo->status==='inativo')
-                                    <a href="{{ url('admin/cargo/reativar/' . $cargo->id) }}"
+                                    @elseif ($conta->status==='inativo')
+                                    <a href="{{ url('admin/conta-bancaria/reativar/' . $conta->id) }}"
                                         class="btn btn-warning m-1" title="Reativar">
                                         <i class="ti ti-lock-off"></i>
                                     </a>

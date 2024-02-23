@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unidades_de_negocios_contas_bancarias', function (Blueprint $table) {
+        Schema::create('unidades_de_negocio_contas_bancarias', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->enum('tipo_de_conta', ['conta-corrente', 'conta-poupanca','conta-pagamento']);
             $table->string('agencia');
             $table->string('numero_conta');
-            $table->string('codigo_banco');
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');             
             $table->uuid('unidade_de_negocio_id');
             $table->uuid('user_cadastro_id');
+            $table->uuid('banco_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('unidade_de_negocio_id')->references('id')->on('unidades_de_negocio');                       
+            $table->foreign('unidade_de_negocio_id')->references('id')->on('unidades_de_negocio');
+            $table->foreign('banco_id')->references('id')->on('bancos');  
         });
     }
 
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unidade_de_negocios_contas_bancarias');
+        Schema::dropIfExists('unidades_de_negocio_contas_bancarias');
     }
 };

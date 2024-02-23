@@ -10,7 +10,7 @@ class UnidadeDeNegocioContaBancaria extends Model
     use HasFactory;
 
     
-    protected $table = 'unidades_de_negocios_contas_bancarias';
+    protected $table = 'unidades_de_negocio_contas_bancarias';
 
     //Inicio Configuração UUID
     protected $primaryKey = 'id'; // Nome da coluna UUID
@@ -30,7 +30,12 @@ class UnidadeDeNegocioContaBancaria extends Model
 
 public function unidadeDeNegocio()
 {
-    return $this->belongsTo(UnidadeDeNegocio::class);
+    return $this->belongsTo(UnidadeDeNegocio::class, 'unidade_de_negocio_id');
+}
+
+public function banco()
+{
+    return $this->belongsTo(Banco::class, 'banco_id');
 }
 
 }

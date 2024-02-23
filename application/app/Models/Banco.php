@@ -19,20 +19,20 @@ class Banco extends Model
 
     protected $fillable = [
         'nome',
+        'codigo',
         'status',
-        'observacao',
+        'banco_id',
         'user_cadastro_id',
         'user_ultima_atualizacao_id',
 
     ];
 
-    public function pessoaJuridicaContaBancaria()
+
+    public function contasBancarias()
     {
-        return $this->hasMany(PessoaJuridicaContaBancaria::class, 'codigo_banco');
+        return $this->hasMany(UnidadeDeNegocioContaBancaria::class, 'banco_id');
     }
 
-    public function pessoaFisicaContaBancaria()
-    {
-        return $this->hasMany(PessoaFisicaContaBancaria::class, 'codigo_banco');
-    }
+
+
 }

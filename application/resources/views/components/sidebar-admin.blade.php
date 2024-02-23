@@ -57,7 +57,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/pessoa-fisica">
                                 <span class="hide-menu">
-                                   > Pessoa Física
+                                    > Pessoa Física
                                 </span>
                             </a>
                         </li>
@@ -65,7 +65,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/pessoa-juridica">
                                 <span class="hide-menu">
-                                   > Pessoa Jurídica
+                                    > Pessoa Jurídica
                                 </span>
                             </a>
                         </li>
@@ -79,6 +79,23 @@
                         <span class="hide-menu">Licenciamento</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/contratos">
+                                <span class="hide-menu">
+                                    > Contratos
+                                </span>
+                            </a>
+                        </li>
+
+                        <!-- Submenu for Licenças -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/licencas">
+                                <span class="hide-menu">
+                                    > Licenças
+                                </span>
+                            </a>
+                        </li>
+
                         <!-- Submenu for Planos -->
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/planos">
@@ -87,24 +104,11 @@
                                 </span>
                             </a>
                         </li>
-                        <!-- Submenu for Licenças -->
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/admin/licencas">
-                                <span class="hide-menu">
-                                     > Licenças
-                                </span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/admin/contratos">
-                                <span class="hide-menu">
-                                    > Contratos
-                                </span>
-                            </a>
-                        </li>
+
+
                     </ul>
                 </li>
-                
+
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
@@ -117,7 +121,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/bancos">
                                 <span class="hide-menu">
-                                   > Bancos
+                                    > Bancos
                                 </span>
                             </a>
                         </li>
@@ -139,29 +143,29 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/tipos-de-cobranca">
                                 <span class="hide-menu">
-                                     > Tipos de Cobrança
+                                    > Tipos de Cobrança
                                 </span>
                             </a>
                         </li>
-                        
+
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/tipos-de-logradouro">
                                 <span class="hide-menu">
-                                     > Tipos de Logradouro
+                                    > Tipos de Logradouro
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/tipos-de-relacionamentos">
                                 <span class="hide-menu">
-                                     > Tipos de Relacionamento
+                                    > Tipos de Relacionamento
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/tipos-de-renovacao">
                                 <span class="hide-menu">
-                                     > Tipos de Renovação
+                                    > Tipos de Renovação
                                 </span>
                             </a>
                         </li>

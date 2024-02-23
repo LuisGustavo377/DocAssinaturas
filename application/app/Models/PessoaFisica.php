@@ -51,13 +51,9 @@ class PessoaFisica extends Model
 
     public function pessoaFisicaContaBancaria()
     {
-        return $this->hasMany(PessoaFisicaContaBancaria::class);
+        return $this->hasMany(UnidadeDeNegocioContaBancaria::class);
     }
 
-    public function pessoaJuridicaContaBancaria()
-    {
-        return $this->hasMany(PessoaJuridicaContaBancaria::class);
-    }
 
     public function salvarComAtributosMaiusculos(array $atributos)
     {

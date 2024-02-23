@@ -50,6 +50,11 @@ public function pessoaJuridica()
     return $this->hasOne(PessoaJuridica::class);
 }
 
+public function contaBancaria()
+{
+    return $this->hasMany(UnidadeDeNegocioContaBancaria::class, 'unidade_de_negocio_id');
+}
+
 public function getNomeOuRazaoSocialAttribute()
 {
     if ($this->tipo_pessoa === 'pj') {
