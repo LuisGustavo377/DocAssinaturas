@@ -21,22 +21,17 @@ class Banco extends Model
         'nome',
         'codigo',
         'status',
+        'banco_id',
         'user_cadastro_id',
         'user_ultima_atualizacao_id',
 
     ];
 
 
-//  public function unidadeDeNegocioContaBancaria()
-//  {
-//      return $this->hasMany(UnidadeDeNegocioContaBancaria::class, 'banco_id');
-//  }
-
-
- public function contasBancarias()
- {
-     return $this->hasMany(UnidadeDeNegocioContaBancaria::class, 'banco_id');
- }
+    public function contasBancarias()
+    {
+        return $this->hasMany(UnidadeDeNegocioContaBancaria::class, 'banco_id');
+    }
 
 
 

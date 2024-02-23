@@ -21,8 +21,7 @@ class ContaBancariaController extends Controller
 {
     public function index(): View
     {
-        $contas = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica', 'unidadeDeNegocio.contaBancaria.banco')
-                                                ->orderBy('numero_conta')
+        $contas = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica')                                                ->orderBy('numero_conta')
                                                 ->paginate(20);   
     
         // Busca todos os bancos disponíveis
@@ -54,7 +53,7 @@ class ContaBancariaController extends Controller
                 $conta = new UnidadeDeNegocioContaBancaria();                
                 $conta->id = Str::uuid();
                 $conta->fill($request->all());
-              
+                $conta->banco_id = $request->banco_id;
                 $conta->unidade_de_negocio_id = $request->unidade_de_negocio_id;
                 $conta->user_cadastro_id = auth()->id();
                 $conta->save();

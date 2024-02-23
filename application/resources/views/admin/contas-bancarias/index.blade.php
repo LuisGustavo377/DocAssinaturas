@@ -30,8 +30,7 @@
                 <form action="{{ route('admin.contas-bancarias.search') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search"
-                            placeholder="Buscar por descricao...">
+                        <input type="text" class="form-control" name="search" placeholder="Buscar por descricao...">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
                             Pesquisar
@@ -46,9 +45,9 @@
                                 <th class="border-bottom-0">
                                     <h6 class="mb-0 fw-semibold">Unidade</h6>
                                 </th>
-   
+
                                 <th class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">Código do Banco</h6>
+                                    <h6 class="mb-0 fw-semibold"> Banco</h6>
                                 </th>
 
 
@@ -68,17 +67,21 @@
                             <tr>
                                 <td class="border-bottom-0">
                                     @if ($conta->unidadeDeNegocio->tipo_pessoa=='pf')
-                                        <h6 class="mb-0 fw">{{ $conta->unidadeDeNegocio->pessoaFisica->nome }}</h6>
+                                    <h6 class="mb-0 fw">{{ $conta->unidadeDeNegocio->pessoaFisica->nome }}</h6>
                                     @else
-                                        <h6 class="mb-0 fw">{{ $conta->unidadeDeNegocio->pessoaJuridica->razao_social }}</h6>
-                                    @endif                                    
+                                    <h6 class="mb-0 fw">{{ $conta->unidadeDeNegocio->pessoaJuridica->razao_social }}
+                                    </h6>
+                                    @endif
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0">{{ $conta->unidadeDeNegocio->contaBancaria->banco->codigo }}</h6>
+                                    @if($conta->banco)
+                                    <h6 class="mb-0 fw">{{ $conta->banco->nome }}</h6>
+                                    @else
+                                    <h6 class="mb-0 fw">n/a</h6>
+                                    @endif
+
                                 </td>
-
-
                                 <td class="border-bottom-0">
                                     <span
                                         class="badge bg-{{ $conta->status === 'ativo' ? 'success' : ($conta->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">

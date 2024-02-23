@@ -67,7 +67,7 @@
 
                                     <div class="col-md-6 mb-3">
                                         <label id="bancoLabel" class="form-label">Banco</label>
-                                        <select class="form-select" id="banco_id" name="banco_id">
+                                        <select class="form-select" id="bancoSelect" name="banco_id">
                                             <option value="" selected disabled> -- Selecione o nome do Banco --</option>
                                             @foreach($bancos as $banco)
                                             <option value="{{ $banco->id }}">{{ $banco->nome }} ({{ $banco->codigo }})
