@@ -75,10 +75,11 @@ class ContaBancariaController extends Controller
     public function show($id)
     {
         try {
-            $conta = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica', 'banco.unidadeDeNegocio')
+            $conta = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica', 'unidadeDeNegocio.contaBancaria.banco')
             ->findOrFail($id);
-            
+
             dd($conta);
+            
                                                 
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Tipo de Logradouro não encontrado

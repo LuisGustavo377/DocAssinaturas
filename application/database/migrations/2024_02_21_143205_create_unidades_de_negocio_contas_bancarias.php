@@ -23,7 +23,8 @@ return new class extends Migration
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('unidade_de_negocio_id')->references('id')->on('unidades_de_negocio');                       
+            $table->foreign('unidade_de_negocio_id')->references('id')->on('unidades_de_negocio');
+            $table->foreign('codigo_banco')->references('codigo')->on('bancos');  
         });
     }
 

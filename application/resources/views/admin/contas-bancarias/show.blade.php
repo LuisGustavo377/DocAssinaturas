@@ -46,8 +46,13 @@
                                 </div>
                                 <div class="col-md-6 mb-6">
                                     <label class="form-label">Banco</label>
-                                    <input type="text" class="form-control" value="{{ $conta->unidadeDeNegocio->codigo_banco }}" disabled>
+                                    @if($conta->banco)
+                                    <input type="text" class="form-control" value="{{ $conta->banco->nome }}" disabled>
+                                    @else
+                                    <input type="text" class="form-control" value="Nenhum banco associado" disabled>
+                                    @endif
                                 </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-6">
