@@ -165,13 +165,14 @@
     </div>
     </div>
 
-{{--  Sempre que o usuário selecionar um contrato no campo de seleção,
- o valor do campo oculto numero_contrato será atualizado com o número do contrato selecionado.--}}
-<script>
-    document.getElementById('numeroContratoInput').addEventListener('change', function() {
-        var selectedOption = this.options[this.selectedIndex];
-        document.getElementById('numeroContratoHidden').value = selectedOption.innerText;
-    });
-</script>
+    {{--  Sempre que o usuário selecionar um contrato no campo de seleção,
+ o valor do campo oculto numero_contrato será atualizado com o número do contrato selecionado. --}}
+    <script>
+        document.getElementById('numeroContratoInput').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            document.getElementById('numeroContratoHidden').value = selectedOption.innerText;
+        });
+
+    </script>
 
 @endsection

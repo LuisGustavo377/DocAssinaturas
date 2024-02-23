@@ -72,6 +72,7 @@ class LicencasController extends Controller
                 $licenca->tipo_de_renovacao_id = $request->tipo_de_renovacao;
                 $licenca->user_cadastro_id = auth()->id();
                 $licenca->salvarComAtributosMaiusculos($atributosParaMaiusculas);
+                
                 $licenca->save();
 
                 DB::commit();
