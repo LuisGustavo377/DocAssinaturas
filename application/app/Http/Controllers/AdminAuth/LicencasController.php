@@ -96,13 +96,14 @@ class LicencasController extends Controller
     public function edit($id)
     {
         try {
+            $tiposDeRenovacao = TipoDeRenovacao::all();
             $licenca = Licenca::findOrFail($id);
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Grupo não encontrado
             abort(404, 'Licença não encontrada.');
         }
 
-        return view('admin.licencas.edit', compact('licenca'));
+        return view('admin.licencas.edit', compact('licenca', 'tiposDeRenovacao'));
     }
 
     public function update(Request $request, $id)
