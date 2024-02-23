@@ -16,15 +16,15 @@ return new class extends Migration
             $table->enum('tipo_de_conta', ['conta-corrente', 'conta-poupanca','conta-pagamento']);
             $table->string('agencia');
             $table->string('numero_conta');
-            $table->string('codigo_banco');
             $table->enum('status', ['ativo', 'inativo'])->default('ativo');             
             $table->uuid('unidade_de_negocio_id');
             $table->uuid('user_cadastro_id');
+            $table->uuid('banco_id');
             $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
 
             $table->foreign('unidade_de_negocio_id')->references('id')->on('unidades_de_negocio');
-            $table->foreign('codigo_banco')->references('codigo')->on('bancos');  
+            $table->foreign('banco_id')->references('id')->on('bancos');  
         });
     }
 

@@ -75,7 +75,7 @@
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0">{{ $conta->codigo_banco }}</h6>
+                                    <h6 class="mb-0">{{ $conta->unidadeDeNegocio->contaBancaria->banco->codigo }}</h6>
                                 </td>
 
 

@@ -22,7 +22,7 @@ class UnidadeDeNegocioContaBancaria extends Model
     'tipo_de_conta',
     'agencia',
     'numero_conta',
-    'codigo_banco',
+    'banco_id',
     'status',
     'user_cadastro_id',
     'user_ultima_atualizacao_id',
@@ -35,7 +35,7 @@ public function unidadeDeNegocio()
 
 public function banco()
 {
-    return $this->belongsTo(Banco::class);
+    return $this->belongsTo(Banco::class, 'banco_id');
 }
 
 

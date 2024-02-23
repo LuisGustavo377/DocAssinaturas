@@ -52,7 +52,7 @@ public function pessoaJuridica()
 
 public function contaBancaria()
 {
-    return $this->hasMany(UnidadeDeNegocioContaBancaria::class);
+    return $this->hasMany(UnidadeDeNegocioContaBancaria::class, 'unidade_de_negocio_id');
 }
 
 public function getNomeOuRazaoSocialAttribute()
