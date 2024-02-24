@@ -53,7 +53,7 @@
                                     <div class="mb-3 col-md-4">
                                         <label id="tipoDeRenovacaoLabel" class="form-label">Tipo de Renovação</label>
                                         <select class="form-select @error('tipo_de_renovacao') is-invalid @enderror"
-                                            id="tipoDeRenovacaoInput" name="tipo_de_renovacao">
+                                            id="tipoDeRenovacaoInput" name="tipo_de_renovacao_id">
                                             <option value="" disabled>-- Selecione um tipo de renovação --</option>
                                             @foreach ($tiposDeRenovacao as $tipo)
                                                 <option value="{{ $tipo['id'] }}"
