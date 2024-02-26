@@ -30,7 +30,7 @@
                 <form action="{{ route('admin.contas-bancarias.search') }}" method="post">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="search" placeholder="Digite o nome da unidade de negócio...">
+                        <input type="text" class="form-control" name="search" placeholder="Digite o nome ou razão social da unidade de negócio...">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
                             Pesquisar
