@@ -21,6 +21,7 @@ class ContaBancariaController extends Controller
 {
     public function index(): View
     {
+        
         $contas = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica')                                                ->orderBy('numero_conta')
                                                 ->paginate(20);   
     
@@ -35,6 +36,7 @@ class ContaBancariaController extends Controller
     {   
         $bancos = Banco::orderBy('nome')->get(); 
         $unidades = UnidadeDeNegocio::all();
+        dd($usuario_logado);
               
         return view('admin.contas-bancarias.create', compact('bancos', 'unidades'));
         
