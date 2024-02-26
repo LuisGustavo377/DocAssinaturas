@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Detalhar Cargo')
+@section('title', 'Detalhar Conta Bancária')
 
 @section('sidebar')
 <x-sidebar-admin></x-sidebar-admin>
@@ -41,8 +41,10 @@
                             <div class="row">
                                 <div class="col-md-6 mb-6">
                                     <label class="form-label">Tipo de Conta</label>
-                                    <input type="text" class="form-control" value="{{ $conta->tipo_de_conta }}"
-                                        disabled>
+                                    <input type="text" class="form-control" value="@if($conta->tipo_de_conta == 'conta-corrente')Conta Corrente @elseif($conta->tipo_de_conta == 'conta-pagamento')Conta de Pagamento@elseif($conta->tipo_de_conta == 'conta-poupanca')
+                                            Conta Poupança
+                                        @endif
+                                    " disabled>
                                 </div>
                                 <div class="col-md-6 mb-6">
                                     <label class="form-label">Banco</label>
