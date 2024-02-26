@@ -70,18 +70,18 @@
                                         @enderror
                                     </div>
 
-                                    <div class="mb-3" id="cpfInputDiv" style="display: none;">
+                                     <div class="mb-3" id="cpfInputDiv" @if(old('tipoPessoaInput') == 'pf') style="display: block;" @else style="display: none;" @endif>
                                         <label class="form-label">Pesquisar por CPF</label>
                                         <input type="text" class="form-control" id="cpfInput" name="cpfInput"
-                                            maxlength="11">
+                                            maxlength="11" value="{{ old('cpfInput') }}">
                                         <div id="pessoaFisicaResult"></div>
                                         <input type="hidden" id="cpfIdInput" name="cpfIdInput">
                                     </div>
 
-                                    <div class="mb-3" id="cnpjInputDiv" style="display: none;">
+                                    <div class="mb-3" id="cnpjInputDiv" @if(old('tipoPessoaInput') == 'pj') style="display: block;" @else style="display: none;" @endif>
                                         <label class="form-label">Pesquisar por CNPJ</label>
                                         <input type="text" class="form-control" id="cnpjInput" name="cnpjInput"
-                                            maxlength="14">
+                                            maxlength="14"  value="{{ old('cnpjInput') }}">
                                         <div id="pessoaJuridicaResult"></div>
                                         <input type="hidden" id="razaoSocialIdInput" name="razaoSocialIdInput">
                                     </div>
