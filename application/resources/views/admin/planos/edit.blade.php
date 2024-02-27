@@ -32,7 +32,7 @@
 
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="mb-12 col-md-12">
+                                        <div class="mb-6 col-md-6">
                                             <label id="nomeLabel" class="form-label">Nome</label>
                                             <input type="text" class="form-control @error('nome') is-invalid @enderror"
                                                 id="nomeInput" name="nome" value="{{ $plano->nome }}">
@@ -42,7 +42,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="mb-3 col-md-4">
+                                        <div class="mb-6 col-md-6">
                                             <label id="valorlabel" class="form-label">Valor</label>
                                             <input type="text" class="form-control @error('valor') is-invalid @enderror"
                                                 id="valorInput" name="valor" value="{{ $plano->valor }}">
@@ -53,7 +53,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="mb-3 col-md-4">
+                                        <div class="mb-6 col-md-6">
                                             <label id="statusLabel" class="form-label">Status</label>
                                             <select class="form-select @error('status') is-invalid @enderror"
                                                 id="statusInput" name="status">

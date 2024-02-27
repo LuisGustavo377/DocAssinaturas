@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Termwind\Components\Raw;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class PlanosController extends Controller
 {
@@ -140,5 +141,20 @@ class PlanosController extends Controller
         }
 
         return redirect()->route('admin.planos.index')->with('msg', 'Plano não encontrado.');
+    }
+
+    public function search(Request $request)
+    {
+        $termoPesquisa = $request->input('search');
+
+        if (Auth::check()) {
+
+            $resultados = Plano::whereRaw("unaccent(nome) ILIKE unaccent('%$termoPesquisa%')")
+                ->get();
+        } else {
+            $resultados = [];
+        }
+
+        return view('admin.planos.search', compact('resultados', 'termoPesquisa'));
     }
 }

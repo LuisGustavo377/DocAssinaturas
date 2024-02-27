@@ -36,7 +36,7 @@ class ContaBancariaController extends Controller
     {   
         $bancos = Banco::orderBy('nome')->get(); 
         $unidades = UnidadeDeNegocio::all();
-        dd($usuario_logado);
+       
               
         return view('admin.contas-bancarias.create', compact('bancos', 'unidades'));
         
@@ -172,14 +172,15 @@ class ContaBancariaController extends Controller
         if ($termoPesquisa) {
             if (Auth::check()) {
                 $unidade = DB::table('unidades_de_negocio')
-                    ->leftJoin('pessoa_fisica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_fisica.id')
-                    ->leftJoin('pessoa_juridica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_juridica.id')
-                    ->where(function ($query) use ($termoPesquisa) {
-                        $query->where('pessoa_fisica.nome', 'ILIKE', "%$termoPesquisa%")
-                            ->orWhere('pessoa_juridica.razao_social', 'ILIKE', "%$termoPesquisa%");
-                    })
-                    ->select('unidades_de_negocio.id', 'unidades_de_negocio.status', 'pessoa_fisica.nome', 'pessoa_juridica.razao_social')
-                    ->first();
+                ->leftJoin('pessoa_fisica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_fisica.id')
+                ->leftJoin('pessoa_juridica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_juridica.id')
+                ->where(function ($query) use ($termoPesquisa) {
+                    $query->whereRaw("unaccent(pessoa_fisica.nome) ILIKE unaccent('%$termoPesquisa%')")
+                          ->orWhereRaw("unaccent(pessoa_juridica.razao_social) ILIKE unaccent('%$termoPesquisa%')");
+                })
+                ->select('unidades_de_negocio.id', 'unidades_de_negocio.status', 'pessoa_fisica.nome', 'pessoa_juridica.razao_social')
+                ->first();
+            
     
                 if ($unidade) {
                     // Buscar as contas bancárias associadas a esta unidade de negócio

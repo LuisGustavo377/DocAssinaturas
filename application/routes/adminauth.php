@@ -168,6 +168,7 @@ Route::get('/plano/{id}/edit', [PlanosController::class, 'edit'])->name('admin.p
 Route::put('/plano/{id}', [PlanosController::class, 'update'])->name('admin.planos.update');
 Route::get('/plano/inativar/{id}', [PlanosController::class, 'inativar'])->name('admin.planos.inativar');
 Route::get('/plano/reativar/{id}', [PlanosController::class, 'reativar'])->name('admin.planos.reativar');
+Route::post('/plano/search', [PlanosController::class, 'search'])->name('admin.planos.search');
 
 
 //BANCOS
