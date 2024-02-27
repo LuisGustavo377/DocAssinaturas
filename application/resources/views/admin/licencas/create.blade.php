@@ -81,14 +81,12 @@
 
                                             <option value="" selected disabled>-- Selecione um tipo de renovação --
                                             </option>
-
                                             @foreach ($tiposDeRenovacao as $tipo)
                                                 <option value="{{ $tipo['id'] }}"
                                                     {{ old('tipo_de_renovacao') == $tipo['id'] ? 'selected' : '' }}>
                                                     {{ $tipo['descricao'] }}
                                                 </option>
                                             @endforeach
-
                                         </select>
 
                                         @error('tipo_de_renovacao')
@@ -166,13 +164,15 @@
     </div>
 
     {{--  Sempre que o usuário selecionar um contrato no campo de seleção,
- o valor do campo oculto numero_contrato será atualizado com o número do contrato selecionado. --}}
+ o valor do campo oculto numero_contrato será atualizado com o número do contrato selecionado. E o campo numero_contrato vai atualizae sempre que houver uma mudança em qualquer campo do formulário --}}
     <script>
-        document.getElementById('numeroContratoInput').addEventListener('change', function() {
-            var selectedOption = this.options[this.selectedIndex];
-            document.getElementById('numeroContratoHidden').value = selectedOption.innerText;
+        document.querySelectorAll('.form-control').forEach(function(element) {
+            element.addEventListener('input', function() {
+                var selectedOption = document.getElementById('numeroContratoInput').options[document
+                    .getElementById('numeroContratoInput').selectedIndex];
+                document.getElementById('numeroContratoHidden').value = selectedOption.innerText;
+            });
         });
-
     </script>
 
 @endsection

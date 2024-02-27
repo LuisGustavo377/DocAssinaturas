@@ -187,8 +187,8 @@ class BancosController extends Controller
         $termoPesquisa = $request->input('search');
 
         if (Auth::check()) {
-            $resultados = Banco::where('nome', 'ILIKE', "%$termoPesquisa%")
-            ->orWhere('codigo', 'ILIKE', "%$termoPesquisa%")
+            $resultados = Banco::whereRaw("unaccent(nome) ILIKE unaccent('%$termoPesquisa%')")
+            ->orWhereRaw("unaccent(codigo) ILIKE unaccent('%$termoPesquisa%')")
             ->get();
         } else {
             $resultados = [];
