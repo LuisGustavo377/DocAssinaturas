@@ -58,7 +58,7 @@
                                         <input type="tel"
                                             class="form-control telefone @error('inscricao_estadual') is-invalid @enderror"
                                             id="inscricaoEstadualInput" name="inscricao_estadual"
-                                            placeholder="Inscrição Estadual" value="{{ $pessoa->inscricao_estadual }}"
+                                             value="{{ ucfirst($pessoa->inscricao_estadual) }}"
                                             disabled>
                                     </div>
                                     <div class="mb-3 col-md-4">
@@ -66,7 +66,7 @@
                                         <input type="tel"
                                             class="form-control telefone @error('inscricao_municipal') is-invalid @enderror"
                                             id="inscricaoMunicipalInput" name="inscricao_municipal"
-                                            placeholder="Inscrição Municipal" value="{{ $pessoa->inscricao_municipal }}"
+                                             value="{{ $pessoa->inscricao_municipal }}"
                                             disabled>
                                     </div>
                                 </div>
@@ -84,13 +84,13 @@
                                         @foreach ($pessoa->telefones as $telefone)
                                         <input type="tel" oninput="mascaraTelefone(this)" maxlength="15"
                                             class="form-control telefone" id="telefoneInput" name="telefone"
-                                            placeholder="Telefone" value="{{ $telefone->telefone }}" disabled>
+                                             value="{{ $telefone->telefone }}" disabled>
                                         @endforeach
                                     </div>
                                     <div class="mb-3 col-md-4">
                                         <label id="emailLabel" class="form-label">Email</label>
                                         <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                            id="emailInput" name="email" placeholder="Email"
+                                            id="emailInput" name="email"
                                             value="{{ $pessoa->email  }}" disabled>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                                     <div class="mb-3">
                                         <label id="logradouroLabel" class="form-label">Logradouro</label>
                                         <input type="text" class="form-control" id="logradouroInput" name="logradouro"
-                                            placeholder="Logradouro"
+                                           
                                             value="{{ $pessoa->enderecos->first()->tipoDeLogradouro->descricao . ' ' . $pessoa->enderecos->first()->logradouro }}"
                                             disabled>
                                     </div>
@@ -121,21 +121,21 @@
                                     <div class="mb-3 col-md-4">
                                         <label id="numeroLabel" class="form-label">Número</label>
                                         <input type="text" class="form-control" id="numeroInput" name="numero"
-                                            placeholder="Número" value="{{ $pessoa->enderecos->first()->numero }}"
+                                            value="{{ $pessoa->enderecos->first()->numero }}"
                                             disabled>
                                     </div>
 
                                     <div class="mb-3 col-md-4">
                                         <label id="complementoLabel" class="form-label">Complemento</label>
                                         <input type="text" class="form-control" id="complementoInput" name="complemento"
-                                            placeholder="Complemento"
+                                            
                                             value="{{ $pessoa->enderecos->first()->complemento }}" disabled>
                                     </div>
 
                                     <div class="mb-3 col-md-4">
                                         <label id="bairroLabel" class="form-label">Bairro</label>
                                         <input type="text" class="form-control" id="bairroInput" name="bairro"
-                                            placeholder="Bairro" value="{{ $pessoa->enderecos->first()->bairro }}"
+                                            value="{{ $pessoa->enderecos->first()->bairro }}"
                                             disabled>
                                     </div>
                                 </div>

@@ -72,7 +72,8 @@
                                         class="form-control telefone @error('inscricao_estadual') is-invalid @enderror"
                                         id="inscricaoEstadualInput" name="inscricao_estadual" maxlength="9"
                                         placeholder="Inscrição Estadual"
-                                        value="{{ old('inscricao_estadual', $pessoa->inscricao_estadual) }}">
+                                        value="{{ old('inscricao_estadual', ucfirst($pessoa->inscricao_estadual)) }}">
+
                                     @error('inscricao_estadual')
                                     <div class="invalid-feedback">
                                         {{ $message }}

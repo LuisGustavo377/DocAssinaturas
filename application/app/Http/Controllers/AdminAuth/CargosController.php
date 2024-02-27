@@ -148,7 +148,7 @@ class CargosController extends Controller
         $termoPesquisa = $request->input('search');
 
         if (Auth::check()) {
-            $resultados = Cargo::where('descricao', 'ILIKE', "%$termoPesquisa%")
+            $resultados = Cargo::whereRaw("unaccent(descricao) ILIKE unaccent('%$termoPesquisa%')")
             ->get();
         } else {
             $resultados = [];

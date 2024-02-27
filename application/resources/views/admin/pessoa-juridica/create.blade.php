@@ -70,8 +70,8 @@
                                     </div>
                                     <div class="mb-3 col-md-4">
                                         <label class="form-label">Inscrição Estadual</label>
-                                        <input type="tel"
-                                            class="form-control telefone @error('inscricao_estadual') is-invalid @enderror"
+                                        <input type="text"
+                                            class="form-control @error('inscricao_estadual') is-invalid @enderror"
                                             id="inscricaoEstadualInput" name="inscricao_estadual"
                                             placeholder="Inscrição Estadual" value="{{ old('inscricao_estadual') }}">
                                         @error('inscricao_estadual')
@@ -82,8 +82,8 @@
                                     </div>
                                     <div class="mb-3 col-md-4">
                                         <label class="form-label">Inscrição Municipal</label>
-                                        <input type="tel"
-                                            class="form-control telefone @error('inscricao_municipal') is-invalid @enderror"
+                                        <input type="text"
+                                            class="form-control @error('inscricao_municipal') is-invalid @enderror"
                                             id="inscricaoMunicipalInput" name="inscricao_municipal"
                                             placeholder="Inscrição Municipal" value="{{ old('inscricao_municipal') }}">
                                         @error('inscricao_municipal')
