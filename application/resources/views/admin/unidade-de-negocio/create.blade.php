@@ -179,7 +179,7 @@
 
 
 
-<!-- {{-- Buscar Licenças por grupo --}} -->
+<!-- {{-- Gerar Senha Temporaria --}} -->
 <script src="{{ asset('assets/js/gerarSenhaTemporaria.js') }}"></script>
 
 

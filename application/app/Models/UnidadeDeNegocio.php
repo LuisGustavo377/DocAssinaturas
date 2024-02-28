@@ -65,5 +65,15 @@ public function getNomeOuRazaoSocialAttribute()
 
     return null;
 }
+public function getCpfOuCnpjAttribute()
+{
+    if ($this->tipo_pessoa === 'pj') {
+        return $this->pessoaJuridica->cnpj;
+    } elseif ($this->tipo_pessoa === 'pf') {
+        return $this->pessoaFisica->cpf;
+    }
+
+    return null;
+}
 
 }

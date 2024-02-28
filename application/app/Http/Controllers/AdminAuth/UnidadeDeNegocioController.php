@@ -92,44 +92,24 @@ class UnidadeDeNegocioController extends Controller
     {
         $unidade = UnidadeDeNegocio::findOrFail($id);
         $grupo = GrupoDeNegocios::where('id', $unidade->grupo_de_negocio_id)->first();
-        $licenca = Licenca::where('id', $unidade->licenca_id)->first();
+        $licenca = Licenca::where('id', $unidade->licenca_id)->first();        
 
-        
-        if ($unidade->tipo_pessoa === 'pf') {
-            $nome = $unidade->pessoaFisica->nome;
-        } elseif ($unidade->tipo_pessoa === 'pj') {
-            $nome = $unidade->pessoaJuridica->razao_social;
-        } else {
-            // Tratar caso em que tipo de pessoa é desconhecido ou inválido
-            $nome = null;
-        }
-
-        
-
-        return view('admin.unidade-de-negocio.show', compact('unidade', 'grupo', 'licenca', 'nome'));
+        return view('admin.unidade-de-negocio.show', compact('unidade', 'grupo', 'licenca'));
     }
 
     public function edit($id)
     {
         try {
             $unidade = UnidadeDeNegocio::findOrFail($id);
-            $grupo = GrupoDeNegocios::where('id', $unidade->grupo_de_negocio_id)->first();
+            $gruposDeNegocios = GrupoDeNegocios::orderBy('nome')->get();
             $licenca = Licenca::where('id', $unidade->licenca_id)->first();
 
-            if ($unidade->tipo_pessoa === 'pf') {
-                $nome = $unidade->pessoaFisica->nome;
-            } elseif ($unidade->tipo_pessoa === 'pj') {
-                $nome = $unidade->pessoaJuridica->razao_social;
-            } else {
-                // Tratar caso em que tipo de pessoa é desconhecido ou inválido
-                $nome = null;
-            }
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Grupo não encontrado
             abort(404, 'Unidade não encontrada.');
         }
 
-        return view('admin.unidade-de-negocio.edit', compact('unidade', 'grupo', 'nome', 'licenca'));
+        return view('admin.unidade-de-negocio.edit', compact('unidade', 'gruposDeNegocios', 'licenca'));
     }
 
 
@@ -184,8 +164,6 @@ class UnidadeDeNegocioController extends Controller
 
         return view('admin.unidade-de-negocio.search', compact('resultados', 'termoPesquisa'));
     }
-
-
 
 
 

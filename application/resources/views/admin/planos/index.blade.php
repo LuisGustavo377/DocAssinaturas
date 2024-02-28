@@ -29,7 +29,7 @@
                 <!-- Formulário da Barra de Pesquisa -->
                 <form action="{{ route('admin.planos.search') }}" method="post">
                     @csrf
-                    <div class="input-group mb-3">
+                    <div class="mb-3 input-group">
                         <input type="text" class="form-control" name="search" placeholder="Buscar por nome...">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
@@ -61,7 +61,7 @@
                             @forelse($planos as $plano)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">{{ $plano->nome }}</h6>
+                                    <h6 class="mb-0">{{ $plano->nome }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">
