@@ -1,5 +1,13 @@
 $(document).ready(function () {
 
+    $('#licencaInput').on('input', function() {
+        var licencaInput = $(this).val();
+        if (licencaInput.trim() !== '') {
+            $(this).removeClass('is-invalid');
+            $(this).next('.invalid-feedback').remove();
+        }
+    });
+
     // Função para carregar as licenças com base no grupo selecionado
     function carregarLicencas(grupo_de_negocio_id, licenca_selecionada_id) {
         $.ajax({
@@ -9,14 +17,16 @@ $(document).ready(function () {
             },
             success: function (data) {
                 $('#licencaInput').empty();
+                $('#licencaInput').append(
+                    '<option value="" disabled selected>--Selecione uma Licença--</option>'
+                );
                 if (data.length === 0) {
+                    $('#licencaInput').prop('disabled', true); // Desabilita o campo
                     $('#licencaInput').append(
-                        '<option value="" disabled selected>Nenhuma licença encontrada</option>'
+                        '<option value="" disabled>Nenhuma licença encontrada</option>'
                     );
                 } else {
-                    $('#licencaInput').append(
-                        '<option value="" disabled>--Selecione uma Licença--</option>'
-                    );
+                    $('#licencaInput').prop('disabled', false); // Habilita o campo
                     $.each(data, function (index, licenca) {
                         $('#licencaInput').append('<option value="' + licenca.id +
                             '">' + licenca.descricao + '</option>');
@@ -44,6 +54,11 @@ $(document).ready(function () {
     // Carregar as licenças novamente sempre que o grupo é alterado
     $('#grupoInput').on('change', function () {
         var grupo_de_negocio_id = $(this).val();
+        if (!grupo_de_negocio_id) {
+            $('#licencaInput').prop('disabled', true); // Desabilita o campo se nenhum grupo estiver selecionado
+            $('#licencaInput').empty(); // Limpa as opções se nenhum grupo estiver selecionado
+            return;
+        }
         carregarLicencas(grupo_de_negocio_id);
     });
 

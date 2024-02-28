@@ -14,15 +14,7 @@ script.onload = function() {
             }
         });
 
-        $('#licencaSelect').on('input', function() {
-            var licenca = $(this).val();
-            if (licenca.trim() !== '') {
-                $(this).removeClass('is-invalid');
-                $(this).next('.invalid-feedback').remove();
-            }
-        });
-    
-    
+   
         $('#tipoPessoaSelect').on('input', function() {
             var tipoPessoa = $(this).val();
             if (tipoPessoa.trim() !== '') {
@@ -41,14 +33,6 @@ script.onload = function() {
         $('#cnpjInput').on('input', function() {
             var cnpj = $(this).val();
             if (cnpj.trim() !== '') {
-                $(this).removeClass('is-invalid');
-                $(this).next('.invalid-feedback').remove();
-            }
-        });
-
-        $('#senha_temporaria').on('input', function() {
-            var senha_temporaria = $(this).val();
-            if (senha_temporaria.trim() !== '') {
                 $(this).removeClass('is-invalid');
                 $(this).next('.invalid-feedback').remove();
             }

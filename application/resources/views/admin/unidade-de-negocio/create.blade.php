@@ -138,7 +138,7 @@
                                             class="form-control @error('senha_temporaria') is-invalid @enderror"
                                             id="senha_temporaria" name="senha_temporaria"
                                             value="{{ old('senha_temporaria') }}"
-                                            placeholder="Clique no botão para gerar senha" readonly>
+                                            placeholder="Clique no botão para gerar senha">
 
                                         <button type="button" class="btn btn-outline-success"
                                             onclick="generateTemporaryPassword()">Gerar Senha</button>
@@ -177,20 +177,15 @@
     </div>
 </div>
 
-<!-- Inicio Gerar Senha Temporaria -->
-
-<script>
-function generateTemporaryPassword() {
-    const temporaryPasswordInput = document.getElementById('senha_temporaria');
-    const temporaryPassword = Math.random().toString(36).slice(-8); // Generate an 8-character random string
-    temporaryPasswordInput.value = temporaryPassword;
-}
-</script>
-<!-- Fim Gerar Senha Temporaria -->
 
 
-{{-- Buscar Licenças por grupo --}}
+<!-- {{-- Buscar Licenças por grupo --}} -->
+<script src="{{ asset('assets/js/gerarSenhaTemporaria.js') }}"></script>
+
+
+<!-- {{-- Buscar Licenças por grupo --}} -->
 <script src="{{ asset('assets/js/buscarLicencaPorGrupo.js') }}"></script>
+
 
 <!-- Validação Formulario Preenchimento de formulario -->
 <script src="{{ asset('assets/js/validacaoPreenchimentoFormularios.js') }}"></script>
