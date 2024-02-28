@@ -43,9 +43,7 @@
                     <table class="table mb-0 align-middle text-nowrap">
                         <thead class="text-dark fs-4">
                             <tr>
-                                <th class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">Nome</h6>
-                                </th>
+                       
 
                                 <th class="border-bottom-0">
                                     <h6 class="mb-0 fw-semibold">Status</h6>
@@ -58,9 +56,7 @@
                         <tbody>
                             @forelse($unidades as $unidade)
                             <tr>
-                                <td class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">{{ $unidade->nomeOuRazaoSocial }}</h6>
-                                </td>
+                         
 
                                 <td class="border-bottom-0">
                                     <span

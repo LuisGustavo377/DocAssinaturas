@@ -1,9 +1,7 @@
 $(document).ready(function () {
-    // Armazenar a seleção atual do usuário
-    var selectedGrupo = $('#grupoInput').val();
 
-    $('#grupoInput').change(function () {
-        var grupo_de_negocio_id = $(this).val();
+    // Função para carregar as licenças com base no grupo selecionado
+    function carregarLicencas(grupo_de_negocio_id, licenca_selecionada_id) {
         $.ajax({
             url: "/admin/licencas-por-grupo/",
             data: {
@@ -17,18 +15,41 @@ $(document).ready(function () {
                     );
                 } else {
                     $('#licencaInput').append(
-                        '<option value="" disabled selected>--Selecione uma Licença--</option>'
+                        '<option value="" disabled>--Selecione uma Licença--</option>'
                     );
                     $.each(data, function (index, licenca) {
                         $('#licencaInput').append('<option value="' + licenca.id +
                             '">' + licenca.descricao + '</option>');
                     });
                 }
+
+                // Verifica se há uma licença selecionada e a marca como selecionada
+                if (licenca_selecionada_id) {
+                    $('#licencaInput').val(licenca_selecionada_id);
+                }
             },
             error: function () {
-                // Restaurar a seleção do usuário em caso de falha
-                $('#grupoInput').val(selectedGrupo);
+                // Adicione aqui a lógica de tratamento de erro, se necessário
             }
         });
+    }
+
+    // Obtém a licença selecionada do localStorage
+    var selectedLicencaID = localStorage.getItem('selectedLicencaID');
+
+    // Carregar as licenças quando a página é carregada
+    var selectedGrupo = $('#grupoInput').val();
+    carregarLicencas(selectedGrupo, selectedLicencaID);
+
+    // Carregar as licenças novamente sempre que o grupo é alterado
+    $('#grupoInput').on('change', function () {
+        var grupo_de_negocio_id = $(this).val();
+        carregarLicencas(grupo_de_negocio_id);
+    });
+
+    // Evento de mudança para salvar a licença selecionada no localStorage
+    $('#licencaInput').on('change', function () {
+        var selectedLicencaID = $(this).val();
+        localStorage.setItem('selectedLicencaID', selectedLicencaID);
     });
 });

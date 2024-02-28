@@ -54,6 +54,8 @@ class UnidadeDeNegocioRequest extends FormRequest
                     }
                 },
             ],
+            
+            'senha_temporaria' => 'required',
         ];
     }
 
@@ -67,6 +69,7 @@ class UnidadeDeNegocioRequest extends FormRequest
             'cnpjInput.exists' => 'O CNPJ fornecido não existe na base de dados.',
             'cpfInput.required_if' => 'O campo CPF é obrigatório.',
             'cnpjInput.required_if' => 'O campo CNPJ é obrigatório.',
+            'senha_temporaria.required' => 'O campo Senha Temporária é obrigatório.',
         ];
     }
 }
