@@ -33,7 +33,7 @@
                                     <div class="mb-3">
                                         <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
                                         <input type="text" class="form-control" id="nomeInput" name="name"
-                                            value="{{ $grupo->nome }}" disabled>
+                                            value="{{ $unidade->grupo_de_negocio_id }}" disabled>
                                     </div>
 
                                     <div class="row">
@@ -56,7 +56,7 @@
                                     <div class="mb-3">
                                         <label id="licencaLabel" class="form-label">Licença</label>
                                         <input type="text" class="form-control" id="licenca_id" name="licenca_id"
-                                            value="{{ $licenca->descricao }}" disabled>
+                                            value="{{ $unidade->licenca_id }}" disabled>
                                     </div>
                                 </div>
 

@@ -19,66 +19,156 @@
                     <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
                     <div class="card">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('admin.unidade-de-negocio.update', $unidade->id) }}">
-                                @csrf {{-- Prevenção do laravel de ataques a formulários --}}
-                                @method('PUT')
+                        <form method="POST" action="{{ route('admin.planos.update', $unidade->id) }}">
+                            @csrf {{-- Prevenção do laravel de ataques a formularios --}}
 
-                                <!-- Seção de Dados Cadastrais -->
-                                <div class="alert alert-light">
-                                    <i class="ti ti-file-description" style="color: #13deb9"></i>
-                                    <label class="form-label" style="color: #13deb9">Dados Cadastrais</label>
+                            <div class="alert alert-light">
+                                <i class="ti ti-file-description" style="color: #13deb9"></i>
+                                <label class="form-label" style="color: #13deb9">Dados de Vinculação</label>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="mb-3">
+                                    <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
+                                    <select class="form-select @error('grupo_de_negocio_id') is-invalid @enderror"
+                                        id="grupoInput" name="grupo_de_negocio_id">
+                                        <option value="" disabled selected> -- Selecione um grupo de negócio --
+                                        </option>
+                                        @foreach ($gruposDeNegocios as $grupo)
+                                        <option value="{{ $grupo->id }}"
+                                            {{ old('grupo_de_negocio_id') == $grupo->id ? 'selected' : '' }}>
+                                            {{ $grupo->nome }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @error('grupo_de_negocio_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
 
-                                <div class="card-body">
-                                    <!-- Campo Grupo de Negócio -->
-                                    <div class="mb-3">
-                                        <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
-                                        <input type="text" class="form-control" id="nomeInput" name="name"
-                                            value="{{ $grupo->nome }}" disabled>
+                                <div class="mb-3">
+                                    <label id="licencaLabel" class="form-label">Licença</label>
+                                    <select class="form-select @error('licenca_id') is-invalid @enderror"
+                                        id="licencaInput" name="licenca_id">
+                                        <option value="" disabled selected> -- Selecione uma licença -- </option>
+                                        @if (isset($licencas) && !$licencas->isEmpty())
+                                        @foreach ($licencas as $licenca)
+                                        <option value="{{ $licenca->id }}"
+                                            {{ old('licenca_id') == $licenca->id ? 'selected' : '' }}>
+                                            {{ $licenca->descricao }}
+                                        </option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+
+                                    @error('licenca_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
                                     </div>
+                                    @enderror
+                                </div>
 
-                                    <div class="row">
-                                        <div class="mb-6 col-md-6">
-                                            <label class="form-label">Tipo de Pessoa</label>
-                                            <input type="text" class="form-control" id="tipoPessoa" name="tipoPessoa"
-                                                value="{{ $unidade->tipo_pessoa === 'pf' ? 'Pessoa Física' : 'Pessoa Jurídica' }}"
-                                                disabled>
-                                        </div>
-
-                                        <div class="mb-6 col-md-6">
-                                            <label class="form-label">Nome/Razão Social</label>
-                                            <input type="text" class="form-control" id="nome-razaoSocial"
-                                                name="nome-razaoSocial" value="{{ $nome }}" disabled>
-                                        </div>
-
+                                <div class="mb-3">
+                                    <label class="form-label">Tipo de Pessoa</label>
+                                    <select id="tipoPessoaSelect"
+                                        class="form-select @error('tipoPessoaInput') is-invalid @enderror">
+                                        <option value="" {{ old('tipoPessoaInput') == '' ? 'selected' : '' }} disabled>
+                                            -- Selecione o tipo de pessoa -- </option>
+                                        <option value="pf" {{ old('tipoPessoaInput') == 'pf' ? 'selected' : '' }}>
+                                            Pessoa Física</option>
+                                        <option value="pj" {{ old('tipoPessoaInput') == 'pj' ? 'selected' : '' }}>
+                                            Pessoa Jurídica</option>
+                                    </select>
+                                    <input type="hidden" id="tipoPessoaInput" name="tipoPessoaInput"
+                                        value="{{ old('tipoPessoaInput') }}">
+                                    @error('tipoPessoaInput')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
                                     </div>
+                                    @enderror
+                                </div>
 
-                                    <!-- Campo Licença -->
-                                    <div class="mb-3">
-                                        <label id="licencaLabel" class="form-label">Licença</label>
-                                        <select class="form-select" id="licencaInput" name="licenca_id">
-                                            <option value="" disabled> -- Selecione uma licença -- </option>
-                                            <!-- Opções de licença serão preenchidas dinamicamente pelo JavaScript -->
-                                        </select>
+                                <div class="mb-3" id="cpfInputDiv" @if (old('tipoPessoaInput')=='pf' )
+                                    style="display: block;" @else style="display: none;" @endif>
+                                    <label class="form-label">Pesquisar por CPF</label>
+                                    <input type="text" class="form-control @error('cpfInput') is-invalid @enderror"
+                                        id="cpfInput" name="cpfInput" maxlength="11" value="{{ old('cpfInput') }}">
+                                    <div id="pessoaFisicaResult"></div>
+                                    <input type="hidden" id="cpfIdInput" name="cpfIdInput">
+                                    @error('cpfInput')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
+
+                                <div class="mb-3" id="cnpjInputDiv" @if (old('tipoPessoaInput')=='pj' )
+                                    style="display: block;" @else style="display: none;" @endif>
+                                    <label class="form-label">Pesquisar por CNPJ</label>
+                                    <input type="text" class="form-control @error('cnpjInput') is-invalid @enderror"
+                                        id="cnpjInput" name="cnpjInput" maxlength="14" value="{{ old('cnpjInput') }}">
+                                    <div id="pessoaJuridicaResult"></div>
+                                    <input type="hidden" id="razaoSocialIdInput" name="razaoSocialIdInput">
+                                    @error('cnpjInput')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="alert alert-light">
+                                <i class="ti ti-file-description" style="color: #13deb9"></i>
+                                <label class="form-label" style="color: #13deb9">Login</label>
+                            </div>
+
+                            <div class="card-body">
+
+
+                                <div class="mb-3">
+                                    <label class="form-label">Senha Temporária</label>
+                                    <div class="input-group">
+                                        <input type="text"
+                                            class="form-control @error('senha_temporaria') is-invalid @enderror"
+                                            id="senha_temporaria" name="senha_temporaria"
+                                            value="{{ old('senha_temporaria') }}"
+                                            placeholder="Clique no botão para gerar senha">
+
+                                        <button type="button" class="btn btn-outline-success"
+                                            onclick="generateTemporaryPassword()">Gerar Senha</button>
+                                        @error('senha_temporaria')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
 
-                                <!-- Seção de Botões -->
-                                <div class="mb-3 d-flex justify-content-end">
-                                    <div class="mb-3">
-                                        <div class="my-4 text-center">
-                                            <a href="javascript:history.back()" class="btn btn-light me-2">
-                                                <i class="ti ti-arrow-left me-1"></i>
-                                                Voltar
-                                            </a>
-                                            <button type="submit" class="btn btn-success ms-2">
-                                                <i class="ti ti-check me-1"></i>
-                                                Alterar
-                                            </button>
-                                        </div>
+
+                            </div>
+
+
+
+                            <div class="mb-3 d-flex justify-content-end">
+                                <div class="mb-3">
+                                    <div class="my-4 text-center">
+                                        <a href="javascript:history.back()" class="btn btn-light me-2">
+                                            <i class="ti ti-arrow-left me-1"></i>
+                                            Voltar
+                                        </a>
+                                        <button type="submit" class="btn btn-success ms-2">
+                                            <i class="ti ti-plus me-1"></i>
+                                            Editar
+                                        </button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -87,36 +177,25 @@
     </div>
 
 
-    {{-- Buscar Licenças por grupo EDIT --}}
-    <script>
-        $(document).ready(function() {
-            var grupo_de_negocio_id =
-                "{{ $unidade->grupo_de_negocio_id }}"; // Obtém o ID do grupo de negócio da unidade
-            var licenca_atual = "{{ $unidade->licenca_id }}"; // Obtém o ID da licença atual da unidade
-            $.ajax({
-                url: "/admin/licencas-por-grupo/",
-                data: {
-                    grupo_de_negocio_id: grupo_de_negocio_id
-                },
-                success: function(data) {
-                    $('#licencaInput').empty();
-                    if (data.length === 0) {
-                        // Adicionar uma mensagem de aviso se não houver licenças encontradas
-                        $('#licencaInput').append(
-                            '<option value="" disabled selected>Nenhuma licença encontrada</option>'
-                        );
-                    } else {
-                        // Adicionar as opções de licença normalmente se houver licenças encontradas
-                        $('#licencaInput').append(
-                            '<option value="" disabled> -- Selecione uma licença -- </option>');
-                        $.each(data, function(index, licenca) {
-                            var selected = (licenca.id == licenca_atual) ? 'selected' : '';
-                            $('#licencaInput').append('<option value="' + licenca.id + '" ' +
-                                selected + '>' + licenca.descricao + '</option>');
-                        });
-                    }
-                }
-            });
-        });
-    </script>
+<!-- {{-- Buscar Licenças por grupo --}} -->
+<script src="{{ asset('assets/js/gerarSenhaTemporaria.js') }}"></script>
+
+
+<!-- {{-- Buscar Licenças por grupo --}} -->
+<script src="{{ asset('assets/js/buscarLicencaPorGrupo.js') }}"></script>
+
+
+<!-- Validação Formulario Preenchimento de formulario -->
+<script src="{{ asset('assets/js/validacaoPreenchimentoFormularios.js') }}"></script>
+
+<!-- Script para Buscar Pessoa-->
+<script src="{{ asset('assets/js/buscarPessoaFisica.js') }}"></script>
+<script src="{{ asset('assets/js/buscarPessoaJuridica.js') }}"></script>
+<script src="{{ asset('assets/js/mostrarPessoas.js') }}"></script>
+
+<!--  Mascara CNPJ -->
+<script src="{{ asset('assets/js/mascaraCNPJ.js') }}"></script>
+<script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
+
+<script src="{{ asset('assets/js/inputPjPf.js') }}"></script>
 @endsection

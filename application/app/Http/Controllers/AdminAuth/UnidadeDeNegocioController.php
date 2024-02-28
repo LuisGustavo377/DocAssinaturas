@@ -94,6 +94,7 @@ class UnidadeDeNegocioController extends Controller
         $grupo = GrupoDeNegocios::where('id', $unidade->grupo_de_negocio_id)->first();
         $licenca = Licenca::where('id', $unidade->licenca_id)->first();
 
+        
         if ($unidade->tipo_pessoa === 'pf') {
             $nome = $unidade->pessoaFisica->nome;
         } elseif ($unidade->tipo_pessoa === 'pj') {
@@ -103,7 +104,9 @@ class UnidadeDeNegocioController extends Controller
             $nome = null;
         }
 
-        return view('admin.unidade-de-negocio.show', compact('unidade', 'grupo', 'nome', 'licenca'));
+        
+
+        return view('admin.unidade-de-negocio.show', compact('unidade', 'grupo', 'licenca', 'nome'));
     }
 
     public function edit($id)
@@ -111,6 +114,7 @@ class UnidadeDeNegocioController extends Controller
         try {
             $unidade = UnidadeDeNegocio::findOrFail($id);
             $grupo = GrupoDeNegocios::where('id', $unidade->grupo_de_negocio_id)->first();
+            $licenca = Licenca::where('id', $unidade->licenca_id)->first();
 
             if ($unidade->tipo_pessoa === 'pf') {
                 $nome = $unidade->pessoaFisica->nome;
@@ -125,7 +129,7 @@ class UnidadeDeNegocioController extends Controller
             abort(404, 'Unidade não encontrada.');
         }
 
-        return view('admin.unidade-de-negocio.edit', compact('unidade', 'grupo', 'nome'));
+        return view('admin.unidade-de-negocio.edit', compact('unidade', 'grupo', 'nome', 'licenca'));
     }
 
 
