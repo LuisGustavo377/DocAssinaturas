@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+// Validação de formulario
     $('#licencaInput').on('input', function() {
         var licencaInput = $(this).val();
         if (licencaInput.trim() !== '') {
@@ -16,6 +16,13 @@ $(document).ready(function () {
                 grupo_de_negocio_id: grupo_de_negocio_id
             },
             success: function (data) {
+
+                $('#licencaInput').empty();
+                if (!grupo_de_negocio_id) {
+                    $('#licencaInput').prop('disabled', true); // Desabilita o campo se nenhum grupo estiver selecionado
+                    $('#licencaInput').append('<option value="" disabled selected>Selecione um grupo primeiro</option>'); // Adiciona a mensagem de aviso como placeholder
+                    return;
+                }
                 $('#licencaInput').empty();
                 $('#licencaInput').append(
                     '<option value="" disabled selected>--Selecione uma Licença--</option>'
