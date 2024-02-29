@@ -19,8 +19,9 @@
                     <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
                     <div class="card">
                         <div class="card-body">
-                            <form method="POST" action="{{ route('admin.planos.update', $unidade->id) }}">
+                            <form method="POST" action="{{ route('admin.unidade-de-negocio.update', $unidade->id) }}">
                                 @csrf {{-- Prevenção do laravel de ataques a formularios --}}
+                                @method('PUT')
 
                                 <!-- Seção de Dados Cadastrais -->
                                 <div class="alert alert-light">
@@ -104,11 +105,10 @@
                                                 <i class="ti ti-arrow-left me-1"></i>
                                                 Voltar
                                             </a>
-                                            <a href="{{ url('admin/unidade-de-negocio/' . $unidade->id . '/edit') }}"
-                                                class="btn btn-success me-2">
-                                                <i class="ti ti-edit me-1"></i>
-                                                Editar
-                                            </a>
+                                            <button type="submit" class="btn btn-success ms-2">
+                                                <i class="ti ti-check me-1"></i>
+                                                Alterar
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -156,8 +156,7 @@
             }
         });
     </script>
-<!-- {{-- Buscar Licenças por grupo --}} -->
-<script src="{{ asset('assets/js/buscarLicencaPorGrupo.js') }}"></script>
-
+    <!-- {{-- Buscar Licenças por grupo --}} -->
+    <script src="{{ asset('assets/js/buscarLicencaPorGrupoEdit.js') }}"></script>
 
 @endsection

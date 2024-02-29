@@ -114,10 +114,11 @@ class UnidadeDeNegocioController extends Controller
 
 
     public function update(Request $request, $id)
-    {
+    {       
+            
         try {
+            
             $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
-            $licenca_id = $request->input('licenca_id');
 
             DB::beginTransaction();
 
@@ -127,10 +128,11 @@ class UnidadeDeNegocioController extends Controller
                 throw new \Exception('Unidade não encontrado');
             }
 
-            $unidade->licenca_id = $licenca_id;
+            $unidade->fill($request->only(['grupo_de_negocio_id', 'licenca_id']));
             $unidade->user_ultima_atualizacao_id = $user_ultima_atualizacao;
+    
             $unidade->save();
-
+            
             DB::commit();
 
             return redirect()->route('admin.unidade-de-negocios.index', ['id' => $unidade->id])->with('msg', 'Unidade alterado com sucesso!');
