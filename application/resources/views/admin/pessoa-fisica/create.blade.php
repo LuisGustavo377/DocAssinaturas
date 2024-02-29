@@ -109,7 +109,7 @@
                                             </option>
                                             @foreach($tipos_de_logradouro as $tipo)
                                             <option value="{{ $tipo['id'] }}"
-                                                {{ old('tipo_logradouro') == $tipo['id'] ? 'selected' : '' }}>
+                                                {{ old('tipo_de_logradouro_id') == $tipo['id'] ? 'selected' : '' }}>
                                                 {{ $tipo['descricao'] }}
                                             </option>
                                             @endforeach
@@ -120,6 +120,7 @@
                                         </div>
                                         @enderror
                                     </div>
+
 
                                     <div class="col-md-8 mb-8">
                                         <label id="logradouroLabel" class="form-label">Logradouro</label>
@@ -183,7 +184,7 @@
                                             <option value="" selected disabled> -- Selecione o estado -- </option>
                                             @foreach($estados as $estado)
                                             <option value="{{ $estado->id }}"
-                                                {{ old('estado') == $estado->id ? 'selected' : '' }}>
+                                                {{ old('estado_id') == $estado->id ? 'selected' : '' }}>
                                                 {{ $estado->nome }}
                                             </option>
                                             @endforeach
@@ -195,6 +196,7 @@
                                         @enderror
                                     </div>
 
+
                                     <div class="col-md-6 mb-3">
                                         <label for="cidadeSelect" class="form-label">Cidade</label>
                                         <select class="form-select @error('cidade_id') is-invalid @enderror"
@@ -202,7 +204,7 @@
                                             <option value="" selected disabled> -- Selecione a cidade -- </option>
                                             @foreach($cidades as $cidade)
                                             <option value="{{ $cidade->id }}"
-                                                {{ old('cidade') == $cidade->id ? 'selected' : '' }}>
+                                                {{ old('cidade_id') == $cidade->id ? 'selected' : '' }}>
                                                 {{ $cidade->nome }}
                                             </option>
                                             @endforeach
@@ -244,7 +246,7 @@
                             </div>
                         </form>
 
-                         <!-- Script para Buscar Cidade dinamicamente de acordo com o Estado -->
+                        <!-- Script para Buscar Cidade dinamicamente de acordo com o Estado -->
                         <script src="{{ asset('assets/js/buscarCidade.js') }}"></script>
 
                         <!-- Validação Formulario Preenchimento de formulario -->
