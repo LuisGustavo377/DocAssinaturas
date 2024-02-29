@@ -56,7 +56,7 @@
                                     @forelse($resultados as $resultado)
                                         <tr>
                                             <td class="border-bottom-0">
-                                                <h6 class="mb-0 fw-semibold">
+                                                <h6 class="mb-0">
                                                     @if (isset($resultado->nome))
                                                         {{ $resultado->nome }}
                                                     @elseif(isset($resultado->razao_social))
