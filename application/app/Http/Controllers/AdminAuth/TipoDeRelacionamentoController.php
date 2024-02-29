@@ -121,7 +121,7 @@ class TipoDeRelacionamentoController extends Controller
         $termoPesquisa = $request->input('search');
 
         if (Auth::check()) {
-            $resultados = TipoDeRelacionamento::where('descricao', 'ILIKE', "%$termoPesquisa%")
+            $resultados = TipoDeRelacionamento::whereRaw("unaccent(descricao) ILIKE unaccent('%$termoPesquisa%')")
             ->get();
         } else {
             $resultados = [];

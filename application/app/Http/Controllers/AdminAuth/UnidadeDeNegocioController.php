@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminAuth\UnidadeDeNegocioRequest;
+use App\Http\Requests\AdminAuth\UnidadeDeNegocioEditRequest;
 use App\Models\GrupoDeNegocios;
 use App\Models\UnidadeDeNegocio;
 use App\Models\Licenca;
@@ -39,7 +40,7 @@ class UnidadeDeNegocioController extends Controller
 
     public function store(UnidadeDeNegocioRequest $request)
     {
-        
+
         try {
             if (auth()->check()) {
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
@@ -75,7 +76,7 @@ class UnidadeDeNegocioController extends Controller
                     }
                 }
                 // Fim - Salvar Unidade de Negócio no Banco
-                
+
                 DB::commit();
 
                 return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade de Negócio criada com sucesso!');
@@ -94,46 +95,29 @@ class UnidadeDeNegocioController extends Controller
         $grupo = GrupoDeNegocios::where('id', $unidade->grupo_de_negocio_id)->first();
         $licenca = Licenca::where('id', $unidade->licenca_id)->first();
 
-        if ($unidade->tipo_pessoa === 'pf') {
-            $nome = $unidade->pessoaFisica->nome;
-        } elseif ($unidade->tipo_pessoa === 'pj') {
-            $nome = $unidade->pessoaJuridica->razao_social;
-        } else {
-            // Tratar caso em que tipo de pessoa é desconhecido ou inválido
-            $nome = null;
-        }
-
-        return view('admin.unidade-de-negocio.show', compact('unidade', 'grupo', 'nome', 'licenca'));
+        return view('admin.unidade-de-negocio.show', compact('unidade', 'grupo', 'licenca'));
     }
 
     public function edit($id)
     {
         try {
             $unidade = UnidadeDeNegocio::findOrFail($id);
-            $grupo = GrupoDeNegocios::where('id', $unidade->grupo_de_negocio_id)->first();
-
-            if ($unidade->tipo_pessoa === 'pf') {
-                $nome = $unidade->pessoaFisica->nome;
-            } elseif ($unidade->tipo_pessoa === 'pj') {
-                $nome = $unidade->pessoaJuridica->razao_social;
-            } else {
-                // Tratar caso em que tipo de pessoa é desconhecido ou inválido
-                $nome = null;
-            }
+            $gruposDeNegocios = GrupoDeNegocios::orderBy('nome')->get();
+            $licenca = Licenca::where('id', $unidade->licenca_id)->first();
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Grupo não encontrado
             abort(404, 'Unidade não encontrada.');
         }
 
-        return view('admin.unidade-de-negocio.edit', compact('unidade', 'grupo', 'nome'));
+        return view('admin.unidade-de-negocio.edit', compact('unidade', 'gruposDeNegocios', 'licenca'));
     }
 
 
-    public function update(Request $request, $id)
+    public function update(UnidadeDeNegocioEditRequest $request, $id)
     {
         try {
+
             $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
-            $licenca_id = $request->input('licenca_id');
 
             DB::beginTransaction();
 
@@ -143,8 +127,9 @@ class UnidadeDeNegocioController extends Controller
                 throw new \Exception('Unidade não encontrado');
             }
 
-            $unidade->licenca_id = $licenca_id;
+            $unidade->fill($request->only(['grupo_de_negocio_id', 'licenca_id']));
             $unidade->user_ultima_atualizacao_id = $user_ultima_atualizacao;
+
             $unidade->save();
 
             DB::commit();
@@ -166,8 +151,8 @@ class UnidadeDeNegocioController extends Controller
                     ->leftJoin('pessoa_fisica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_fisica.id')
                     ->leftJoin('pessoa_juridica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_juridica.id')
                     ->where(function ($query) use ($termoPesquisa) {
-                        $query->where('pessoa_fisica.nome', 'ILIKE', "%$termoPesquisa%")
-                            ->orWhere('pessoa_juridica.razao_social', 'ILIKE', "%$termoPesquisa%");
+                        $query->whereRaw("unaccent(pessoa_fisica.nome) ILIKE unaccent('%$termoPesquisa%')")
+                            ->orWhereRaw("unaccent(pessoa_juridica.razao_social) ILIKE unaccent('%$termoPesquisa%')");
                     })
                     ->select('unidades_de_negocio.id', 'unidades_de_negocio.status', 'pessoa_fisica.nome', 'pessoa_juridica.razao_social')
                     ->get();
@@ -180,8 +165,6 @@ class UnidadeDeNegocioController extends Controller
 
         return view('admin.unidade-de-negocio.search', compact('resultados', 'termoPesquisa'));
     }
-
-
 
 
 

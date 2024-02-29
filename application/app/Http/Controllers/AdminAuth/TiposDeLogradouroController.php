@@ -120,7 +120,7 @@ class TiposDeLogradouroController extends Controller
         $termoPesquisa = $request->input('search');
 
         if (Auth::check()) {
-            $resultados = TipoDeLogradouro::where('descricao', 'ILIKE', "%$termoPesquisa%")
+            $resultados = TipoDeLogradouro::whereRaw("unaccent(descricao) ILIKE unaccent('%$termoPesquisa%')")
             ->get();
         } else {
             $resultados = [];

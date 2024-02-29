@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-body">
                             <form method="POST" action="{{ route('admin.unidade-de-negocio.update', $unidade->id) }}">
-                                @csrf {{-- Prevenção do laravel de ataques a formulários --}}
+                                @csrf {{-- Prevenção do laravel de ataques a formularios --}}
                                 @method('PUT')
 
                                 <!-- Seção de Dados Cadastrais -->
@@ -33,33 +33,67 @@
                                     <!-- Campo Grupo de Negócio -->
                                     <div class="mb-3">
                                         <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
-                                        <input type="text" class="form-control" id="nomeInput" name="name"
-                                            value="{{ $grupo->nome }}" disabled>
+                                        <select class="form-select @error('grupo_de_negocio_id') is-invalid @enderror"
+                                            id="grupoInput" name="grupo_de_negocio_id">
+                                            <option value="" disabled> -- Selecione um grupo de negócio -- </option>
+                                            @foreach ($gruposDeNegocios as $grupo)
+                                                <option value="{{ $grupo->id }}"
+                                                    {{ $unidade->grupo_de_negocio_id == $grupo->id ? 'selected' : '' }}>
+                                                    {{ $grupo->nome }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('grupo_de_negocio_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
 
                                     <div class="row">
-                                        <div class="mb-6 col-md-6">
+                                        <div class="mb-3 col-md-4">
                                             <label class="form-label">Tipo de Pessoa</label>
                                             <input type="text" class="form-control" id="tipoPessoa" name="tipoPessoa"
                                                 value="{{ $unidade->tipo_pessoa === 'pf' ? 'Pessoa Física' : 'Pessoa Jurídica' }}"
                                                 disabled>
                                         </div>
 
-                                        <div class="mb-6 col-md-6">
+                                        <div class="mb-3 col-md-4">
                                             <label class="form-label">Nome/Razão Social</label>
                                             <input type="text" class="form-control" id="nome-razaoSocial"
-                                                name="nome-razaoSocial" value="{{ $nome }}" disabled>
+                                                name="nome-razaoSocial" value="{{ $unidade->nomeOuRazaoSocial }}" disabled>
                                         </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label class="form-label">Cpf/Cnpj</label>
+                                            <input type="text" class="form-control" id="cpf-cnpj" name="cpf-cnpj"
+                                                value="{{ $unidade->cpfOuCnpj }}" disabled>
+                                        </div>
+
 
                                     </div>
 
                                     <!-- Campo Licença -->
                                     <div class="mb-3">
                                         <label id="licencaLabel" class="form-label">Licença</label>
-                                        <select class="form-select" id="licencaInput" name="licenca_id">
-                                            <option value="" disabled> -- Selecione uma licença -- </option>
-                                            <!-- Opções de licença serão preenchidas dinamicamente pelo JavaScript -->
+                                        <select class="form-select @error('licenca_id') is-invalid @enderror"
+                                            id="licencaInput" name="licenca_id">
+                                            <option value="" disabled selected> -- Selecione uma licença -- </option>
+                                            @if (isset($licencas) && !$licencas->isEmpty())
+                                                @foreach ($licencas as $licenca)
+                                                    <option value="{{ $licenca->id }}"
+                                                        {{ old('licenca_id') == $licenca->id ? 'selected' : '' }}>
+                                                        {{ $licenca->descricao }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
                                         </select>
+
+                                        @error('licenca_id')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -87,36 +121,42 @@
     </div>
 
 
-    {{-- Buscar Licenças por grupo EDIT --}}
+    {{-- Mascara para CPF E CNPJ --}}
     <script>
         $(document).ready(function() {
-            var grupo_de_negocio_id =
-                "{{ $unidade->grupo_de_negocio_id }}"; // Obtém o ID do grupo de negócio da unidade
-            var licenca_atual = "{{ $unidade->licenca_id }}"; // Obtém o ID da licença atual da unidade
-            $.ajax({
-                url: "/admin/licencas-por-grupo/",
-                data: {
-                    grupo_de_negocio_id: grupo_de_negocio_id
-                },
-                success: function(data) {
-                    $('#licencaInput').empty();
-                    if (data.length === 0) {
-                        // Adicionar uma mensagem de aviso se não houver licenças encontradas
-                        $('#licencaInput').append(
-                            '<option value="" disabled selected>Nenhuma licença encontrada</option>'
-                        );
-                    } else {
-                        // Adicionar as opções de licença normalmente se houver licenças encontradas
-                        $('#licencaInput').append(
-                            '<option value="" disabled> -- Selecione uma licença -- </option>');
-                        $.each(data, function(index, licenca) {
-                            var selected = (licenca.id == licenca_atual) ? 'selected' : '';
-                            $('#licencaInput').append('<option value="' + licenca.id + '" ' +
-                                selected + '>' + licenca.descricao + '</option>');
-                        });
-                    }
+            $('#cpf-cnpj').on('input', function() {
+                var value = $(this).val();
+                // Remove a máscara para contar apenas os dígitos
+                var digitos = value.replace(/[^\d]/g, '');
+
+                // Determina se é CPF ou CNPJ com base na quantidade de dígitos
+                if (digitos.length <= 11) {
+                    // Aplica a máscara de CPF
+                    $(this).mask('000.000.000-00', {
+                        reverse: true
+                    });
+                } else {
+                    // Aplica a máscara de CNPJ
+                    $(this).mask('00.000.000/0000-00', {
+                        reverse: true
+                    });
                 }
             });
+
+            // Define a máscara inicialmente com base no tipo de pessoa
+            var tipoPessoa = '{{ $unidade->tipo_pessoa }}';
+            if (tipoPessoa === 'pf') {
+                $('#cpf-cnpj').mask('000.000.000-00', {
+                    reverse: true
+                });
+            } else {
+                $('#cpf-cnpj').mask('00.000.000/0000-00', {
+                    reverse: true
+                });
+            }
         });
     </script>
+    <!-- {{-- Buscar Licenças por grupo --}} -->
+    <script src="{{ asset('assets/js/buscarLicencaPorGrupoEdit.js') }}"></script>
+
 @endsection

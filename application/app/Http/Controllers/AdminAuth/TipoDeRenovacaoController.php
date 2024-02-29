@@ -120,7 +120,7 @@ class TipoDeRenovacaoController extends Controller
         $termoPesquisa = $request->input('search');
 
         if (Auth::check()) {
-            $resultados = TipoDeRenovacao::where('descricao', 'ILIKE', "%$termoPesquisa%")
+            $resultados = TipoDeRenovacao::whereRaw("unaccent(descricao) ILIKE unaccent('%$termoPesquisa%')")
             ->get();
         } else {
             $resultados = [];

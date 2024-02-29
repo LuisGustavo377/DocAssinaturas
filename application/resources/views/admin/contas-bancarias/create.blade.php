@@ -30,17 +30,21 @@
 
                             <div class="card-body">
 
+                                @if(auth()->check() && (auth()->user()->tipo_de_usuario == 'admin-master' || auth()->user()->tipo_de_usuario == 'admin-user'))
+
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <label id="unidadeNegocioLabel" class="form-label">Unidade de Negócio</label>
-                                        <select class="form-select" id="unidadeNegocioSelect" name="unidade_de_negocio_id">
+                                        <select class="form-select" id="unidadeNegocioSelect"
+                                            name="unidade_de_negocio_id">
                                             <option value="" selected disabled> -- Selecione a Unidade de Negócio --
                                             </option>
                                             @foreach($unidades as $unidade)
+                                            <option value="{{ $unidade->id }}">
                                                 @if($unidade->tipo_pessoa=='pf')
-                                                    <option value="{{ $unidade->id }}">{{ $unidade->pessoaFisica->nome }}
+                                                {{ $unidade->pessoaFisica->nome }}
                                                 @else
-                                                    <option value="{{ $unidade->id }}">{{ $unidade->pessoaJuridica->razao_social }}
+                                                {{ $unidade->pessoaJuridica->razao_social }}
                                                 @endif
                                             </option>
                                             @endforeach
@@ -52,6 +56,8 @@
                                         @enderror
                                     </div>
                                 </div>
+                                @endif
+
 
 
                                 <div class="row">

@@ -62,11 +62,11 @@
                                 @forelse($contratos as $contrato)
                                     <tr>
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">{{ $contrato->numero_contrato }}</h6>
+                                            <h6 class="mb-0">{{ $contrato->numero_contrato }}</h6>
                                         </td>
                                         
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">{{ $contrato->planos->nome }}</h6>
+                                            <h6 class="mb-0">{{ $contrato->planos->nome }}</h6>
                                         </td>
 
                                         <td class="border-bottom-0">

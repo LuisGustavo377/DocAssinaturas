@@ -27,7 +27,11 @@
                     </div>
                 </div>
 
-                @if ($resultados->isEmpty())
+                @if (!$unidade)
+
+                <p>Unidade com nome <b>{{$termoPesquisa}}</b> é inválida. Por favor, tente novamente.</p>
+
+                @elseif ($resultados->isEmpty())
 
                 <p>Não encontramos nenhum resultado em sua pesquisa <b>{{$termoPesquisa}}</b>. Por favor, tente
                     novamente.</p>
@@ -40,11 +44,19 @@
                         <thead class="text-dark fs-4">
                             <tr>
                                 <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Descrição</h6>
+                                    <h6 class="mb-0 fw-semibold">Unidade</h6>
                                 </th>
 
                                 <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Ações</h6>
+                                    <h6 class="mb-0 fw-semibold"> Banco</h6>
+                                </th>
+
+                                <th class="border-bottom-0">
+                                    <h6 class="mb-0 fw-semibold">Status</h6>
+                                </th>
+
+                                <th class="border-bottom-0">
+                                    <h6 class="mb-0 fw-semibold">Ações</h6>
                                 </th>
                             </tr>
                         </thead>
@@ -53,19 +65,52 @@
                             @foreach($resultados as $resultado)
                             <tr>
                                 <td class="border-bottom-0">
-                                    <h6 class="mb-0">{{ $resultado->descricao }}</h6>
+                                    @if ($resultado->unidadeDeNegocio->tipo_pessoa=='pf')
+                                    <h6 class="mb-0 fw">{{ $resultado->unidadeDeNegocio->pessoaFisica->nome }}</h6>
+                                    @else
+                                    <h6 class="mb-0 fw">{{ $resultado->unidadeDeNegocio->pessoaJuridica->razao_social }}
+                                    </h6>
+                                    @endif
                                 </td>
 
                                 <td class="border-bottom-0">
-                                    <a href="{{ url('admin/cargo/' . $resultado->id) }}"
-                                        class="btn btn-primary m-1" title="Detalhar">
+                                    @if($resultado->banco)
+                                    <h6 class="mb-0 fw">{{ $resultado->banco->nome }}</h6>
+                                    @else
+                                    <h6 class="mb-0 fw">n/a</h6>
+                                    @endif
+
+                                </td>
+                                <td class="border-bottom-0">
+                                    <span
+                                        class="badge bg-{{ $resultado->status === 'ativo' ? 'success' : ($resultado->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">
+                                        {{ ucfirst($resultado->status) }}
+                                    </span>
+                                </td>
+
+                                <td class="border-bottom-0">
+                                    <a href="{{ url('admin/conta-bancaria/' . $resultado->id) }}"
+                                        class="m-1 btn btn-primary" title="Detalhar">
                                         <i class="ti ti-search"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/cargo/' . $resultado->id . '/edit') }}"
-                                        class="btn btn-success m-1" title="Editar">
+                                    <a href="{{ url('admin/conta-bancaria/' . $resultado->id . '/edit') }}"
+                                        class="m-1 btn btn-success" title="Editar">
                                         <i class="ti ti-edit"></i>
                                     </a>
+
+                                    @if($resultado->status==='ativo')
+                                    <a href="{{ url('admin/conta-bancaria/inativar/' . $resultado->id) }}"
+                                        class="btn btn-danger m-1" title="Inativar">
+                                        <i class="ti ti-lock"></i>
+                                    </a>
+                                    @elseif ($resultado->status==='inativo')
+                                    <a href="{{ url('admin/conta-bancaria/reativar/' . $resultado->id) }}"
+                                        class="btn btn-warning m-1" title="Reativar">
+                                        <i class="ti ti-lock-off"></i>
+                                    </a>
+                                    @endif
+
                                 </td>
                             </tr>
                             @endforeach

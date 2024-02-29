@@ -149,8 +149,9 @@ class TipoDeCobrancaController extends Controller
         $termoPesquisa = $request->input('search');
 
         if (Auth::check()) {
-            $resultados = TipoDeCobranca::where('descricao', 'ILIKE', "%$termoPesquisa%")
+            $resultados = TipoDeCobranca::whereRaw("unaccent(descricao) ILIKE unaccent('%$termoPesquisa%')")
             ->get();
+        
         } else {
             $resultados = [];
         }

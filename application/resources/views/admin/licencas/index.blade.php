@@ -66,7 +66,7 @@
                                 @forelse($licencas as $licenca)
                                     <tr>
                                         <td class="border-bottom-0">
-                                            <h6 class="mb-0 fw-semibold">
+                                            <h6 class="mb-0">
                                                 @if ($licenca->grupoDeNegocios)
                                                     <!-- Verifica se o relacionamento existe -->
                                                     {{ $licenca->descricao }}

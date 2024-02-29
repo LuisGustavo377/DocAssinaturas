@@ -341,6 +341,7 @@ class PessoaJuridicaController extends Controller
 
         if (Auth::check()) {
             $resultados = PessoaJuridica::where('razao_social', 'ILIKE', "%$termoPesquisa%")
+                ->orWhere('nome_fantasia', 'ILIKE', "%$termoPesquisa%")
                 ->orWhere('cnpj', 'ILIKE', "%$termoPesquisaLimpo%")
                 ->get();
         } else {

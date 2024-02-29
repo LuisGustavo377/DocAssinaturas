@@ -11,6 +11,8 @@
 @endsection
 
 @section('content')
+{{-- Mascara para CPF E CNPJ --}}
+  <script src="{{ asset('assets/js/mascaraCPFeCnpj.js') }}"></script>
     <div class="container-fluid">
         <div class="container-fluid">
             <div class="card">
@@ -37,18 +39,24 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="mb-6 col-md-6">
+                                        <div class="mb-3 col-md-4">
                                             <label class="form-label">Tipo de Pessoa</label>
                                             <input type="text" class="form-control" id="tipoPessoa" name="tipoPessoa"
                                                 value="{{ $unidade->tipo_pessoa === 'pf' ? 'Pessoa Física' : 'Pessoa Jurídica' }}"
                                                 disabled>
                                         </div>
 
-                                        <div class="mb-6 col-md-6">
+                                        <div class="mb-3 col-md-4">
                                             <label class="form-label">Nome/Razão Social</label>
                                             <input type="text" class="form-control" id="nome-razaoSocial"
-                                                name="nome-razaoSocial" value="{{ $nome }}" disabled>
+                                                name="nome-razaoSocial" value="{{ $unidade->nomeOuRazaoSocial }}" disabled>
                                         </div>
+                                        <div class="mb-3 col-md-4">
+                                            <label class="form-label">CPF/CNPJ</label>
+                                            <input type="text" class="form-control" id="cpf-cnpj" name="cpf-cnpj"
+                                                value="{{ $unidade->cpfOuCnpj }}" disabled>
+                                        </div>
+
 
                                     </div>
 
@@ -83,4 +91,9 @@
             </div>
         </div>
     </div>
+
+
+
+
+
 @endsection
