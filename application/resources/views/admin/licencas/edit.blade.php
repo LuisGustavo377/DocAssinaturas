@@ -48,27 +48,27 @@
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
-                                        @enderror
+                                        @enderror  
                                     </div>
                                     <div class="mb-3 col-md-4">
                                         <label id="tipoDeRenovacaoLabel" class="form-label">Tipo de Renovação</label>
                                         <select class="form-select @error('tipo_de_renovacao') is-invalid @enderror"
-                                            id="tipoDeRenovacaoInput" name="tipo_de_renovacao">
-                                            <option value="" disabled>-- Selecione um tipo de Plano --</option>
-                                            @foreach (['semestral', 'mensal', 'anual'] as $opcao)
-                                                <option value="{{ $opcao }}"
-                                                    {{ old('tipo_de_renovacao', $licenca->tipo_de_renovacao) == $opcao ? 'selected' : '' }}>
-                                                    {{ ucfirst($opcao) }}
+                                            id="tipoDeRenovacaoInput" name="tipo_de_renovacao_id">
+                                            <option value="" disabled>-- Selecione um tipo de renovação --</option>
+                                            @foreach ($tiposDeRenovacao as $tipo)
+                                                <option value="{{ $tipo['id'] }}"
+                                                    {{ $licenca->tipo_de_renovacao == $tipo['id'] ? 'selected' : '' }}>
+                                                    {{ $tipo['descricao'] }}
                                                 </option>
                                             @endforeach
                                         </select>
-
                                         @error('tipo_de_renovacao')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
+
                                     <div class="mb-3 col-md-4">
                                         <label id="statusLabel" class="form-label">Status</label>
                                         <select class="form-select @error('status') is-invalid @enderror" id="statusInput"

@@ -81,6 +81,11 @@ class PessoaJuridicaController extends Controller
                 $pessoa->nome_fantasia =  $request->nome_fantasia;
                 $pessoa->cnpj = str_replace(['.', '/', '-'], '', $request->cnpj);
                 $pessoa->inscricao_estadual =  $request->inscricao_estadual;
+                if (empty($inscricaoEstadual)) {
+                    $pessoa->inscricao_estadual = 'isento';
+                } else {
+                    $pessoa->inscricao_estadual = $inscricaoEstadual;
+                }
                 $pessoa->inscricao_municipal =  $request->inscricao_municipal;
                 $pessoa->email =  $request->email;
                 $pessoa->user_cadastro_id = Auth::id();
@@ -229,6 +234,11 @@ class PessoaJuridicaController extends Controller
                 $pessoa->nome_fantasia =  $request->nome_fantasia;
                 $pessoa->cnpj = str_replace(['.', '/', '-'], '', $request->cnpj);
                 $pessoa->inscricao_estadual =  $request->inscricao_estadual;
+                if (empty($inscricaoEstadual)) {
+                    $pessoa->inscricao_estadual = 'isento';
+                } else {
+                    $pessoa->inscricao_estadual = $inscricaoEstadual;
+                }
                 $pessoa->inscricao_municipal =  $request->inscricao_municipal;
                 $pessoa->email =  $request->email;
                 $pessoa->user_ultima_atualizacao_id = Auth::id();

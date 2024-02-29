@@ -21,16 +21,13 @@ class ContaBancariaController extends Controller
 {
     public function index(): View
     {
-        $bancos = Banco::orderBy('nome')->get(); 
+        $contas = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica')                                                ->orderBy('numero_conta')
+                                                ->paginate(20);   
+    
+        // Busca todos os bancos disponíveis
+        $bancos = Banco::orderBy('nome')->get();
         
-        $contas = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica')
-                                                ->orderBy('numero_conta')
-                                                ->paginate(20);                                     
-
-
-
-        return view('admin.contas-bancarias.index', compact('contas'));
-
+        return view('admin.contas-bancarias.index', compact('contas', 'bancos'));
     }
 
     public function create(): View
@@ -56,6 +53,7 @@ class ContaBancariaController extends Controller
                 $conta = new UnidadeDeNegocioContaBancaria();                
                 $conta->id = Str::uuid();
                 $conta->fill($request->all());
+                $conta->banco_id = $request->banco_id;
                 $conta->unidade_de_negocio_id = $request->unidade_de_negocio_id;
                 $conta->user_cadastro_id = auth()->id();
                 $conta->save();
@@ -75,11 +73,9 @@ class ContaBancariaController extends Controller
     public function show($id)
     {
         try {
-            $conta = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica', 'unidadeDeNegocio.contaBancaria.banco')
+            $conta = UnidadeDeNegocioContaBancaria::with('unidadeDeNegocio', 'unidadeDeNegocio.pessoaFisica', 'unidadeDeNegocio.pessoaJuridica')
             ->findOrFail($id);
-
-            dd($conta);
-            
+          
                                                 
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Tipo de Logradouro não encontrado

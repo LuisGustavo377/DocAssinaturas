@@ -30,7 +30,6 @@ class UnidadeDeNegocioController extends Controller
     {
         $gruposDeNegocios = GrupoDeNegocios::orderBy('nome')->get();
         $unidades = UnidadeDeNegocio::orderBy('id')->get();
-        $licenca = Licenca::orderBy('id')->get();
         $pessoaF = PessoaFisica::all();
 
         return view('admin.unidade-de-negocio.create', compact('unidades', 'gruposDeNegocios', 'pessoaF'));
@@ -40,7 +39,7 @@ class UnidadeDeNegocioController extends Controller
 
     public function store(UnidadeDeNegocioRequest $request)
     {
-        // dd($request);
+        
         try {
             if (auth()->check()) {
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
@@ -76,7 +75,7 @@ class UnidadeDeNegocioController extends Controller
                     }
                 }
                 // Fim - Salvar Unidade de Negócio no Banco
-
+                
                 DB::commit();
 
                 return redirect()->route('admin.unidade-de-negocios.index')->with('msg', 'Unidade de Negócio criada com sucesso!');

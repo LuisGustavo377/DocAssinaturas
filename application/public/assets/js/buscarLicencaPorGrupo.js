@@ -1,5 +1,7 @@
-// O script usa o CHANGE  ou seja quando o usuário seleciona um grupo de negócios, o script é acionado.
 $(document).ready(function () {
+    // Armazenar a seleção atual do usuário
+    var selectedGrupo = $('#grupoInput').val();
+
     $('#grupoInput').change(function () {
         var grupo_de_negocio_id = $(this).val();
         $.ajax({
@@ -10,12 +12,10 @@ $(document).ready(function () {
             success: function (data) {
                 $('#licencaInput').empty();
                 if (data.length === 0) {
-                    // Adicionar uma mensagem de aviso se não houver licenças encontradas
                     $('#licencaInput').append(
                         '<option value="" disabled selected>Nenhuma licença encontrada</option>'
                     );
                 } else {
-                    // Adicionar as opções de licença normalmente se houver licenças encontradas
                     $('#licencaInput').append(
                         '<option value="" disabled selected>--Selecione uma Licença--</option>'
                     );
@@ -24,6 +24,10 @@ $(document).ready(function () {
                             '">' + licenca.descricao + '</option>');
                     });
                 }
+            },
+            error: function () {
+                // Restaurar a seleção do usuário em caso de falha
+                $('#grupoInput').val(selectedGrupo);
             }
         });
     });

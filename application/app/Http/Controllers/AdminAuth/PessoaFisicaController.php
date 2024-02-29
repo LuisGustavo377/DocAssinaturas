@@ -309,8 +309,9 @@ class PessoaFisicaController extends Controller
         $termoPesquisa = $request->input('search');
 
         if (Auth::check()) {
-            $resultados = PessoaFisica::where('nome', 'ILIKE', "%$termoPesquisa%")
-                ->orWhere('cpf', 'ILIKE', "%$termoPesquisa%")
+
+            $resultados = PessoaFisica::whereRaw("unaccent(nome) ILIKE unaccent('%$termoPesquisa%')")
+                ->orWhereRaw("unaccent(cpf) ILIKE unaccent('%$termoPesquisa%')")
                 ->get();
         } else {
             $resultados = [];

@@ -35,8 +35,7 @@ public function unidadeDeNegocio()
 
 public function banco()
 {
-    return $this->belongsTo(Banco::class);
+    return $this->belongsTo(Banco::class, 'banco_id');
 }
-
 
 }

@@ -1,10 +1,10 @@
 $(document).ready(function() {
     $('#tipoPessoaSelect').change(function() {
         var tipoPessoa = $(this).val();
-        if (tipoPessoa === "PF") {
+        if (tipoPessoa === "pf") {
             $('#cpfInputDiv').show();
             $('#cnpjInputDiv').hide();
-        } else if (tipoPessoa === "PJ") {
+        } else if (tipoPessoa === "pj") {
             $('#cpfInputDiv').hide();
             $('#cnpjInputDiv').show();
         }

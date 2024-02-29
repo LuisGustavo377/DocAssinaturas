@@ -67,10 +67,10 @@
 
                                     <div class="col-md-6 mb-3">
                                         <label id="bancoLabel" class="form-label">Banco</label>
-                                        <select class="form-select" id="bancoSelect" name="codigo_banco">
+                                        <select class="form-select" id="bancoSelect" name="banco_id">
                                             <option value="" selected disabled> -- Selecione o nome do Banco --</option>
                                             @foreach($bancos as $banco)
-                                            <option value="{{ $banco->codigo }}">{{ $banco->nome }} ({{ $banco->codigo }})
+                                            <option value="{{ $banco->id }}">{{ $banco->nome }} ({{ $banco->codigo }})
                                             </option>
                                             @endforeach
                                         </select>
