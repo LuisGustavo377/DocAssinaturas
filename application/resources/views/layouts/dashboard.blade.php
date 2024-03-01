@@ -27,12 +27,12 @@
             @yield('content')
 
             <!-- Caixa mensagens -->
-            <div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-                @if(session('msg'))
-                <div id="alert-message" class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('msg') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-                </div>
+            <div id="alert-container" class="top-0 p-3 position-fixed end-0" style="z-index: 11">
+                @if (session('msg'))
+                    <div id="alert-message" class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('msg') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                    </div>
                 @endif
             </div>
             <!-- Container principal End -->
@@ -42,7 +42,7 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    
+
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
@@ -53,6 +53,11 @@
     <script src="{{ asset('assets/js/alertas.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    {{-- Arquivos Select 2 --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
 
 
 </body>
