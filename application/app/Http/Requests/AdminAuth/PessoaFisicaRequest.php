@@ -3,6 +3,7 @@
 namespace App\Http\Requests\AdminAuth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class PessoaFisicaRequest extends FormRequest
 {
@@ -23,7 +24,18 @@ class PessoaFisicaRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:255',
-            'cpf' => ['required', 'unique:pessoa_fisica','regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/'],
+            'cpf' => [
+                'required',
+                'unique:pessoa_fisica',
+                'regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/',
+                function ($attribute, $value, $fail) {
+                    $value = preg_replace('/[^0-9]/', '', $value);
+                    $pessoaFisica = DB::table('pessoa_fisica')->where('cpf', $value)->exists();
+                    if ($pessoaFisica) {
+                        $fail('O CPF já existe na base de dados.');
+                    }
+                },
+            ],
             'email' => 'required|email|max:255',
             'telefone' => 'required|string|max:20',
             'tipo_de_logradouro_id' => 'required|exists:tipos_de_logradouro,id',
@@ -33,7 +45,7 @@ class PessoaFisicaRequest extends FormRequest
             'bairro' => 'required|string|max:255',
             'estado_id' => 'required|exists:estados,id',
             'cidade_id' => 'required|exists:cidades,id',
-            'imagem' => 'nullable|uploaded|image|mimes:jpeg,png,jpg,gif|max:2048',      
+            'imagem' => 'nullable|uploaded|image|mimes:jpeg,png,jpg,gif|max:2048',    
         ];
     }
 

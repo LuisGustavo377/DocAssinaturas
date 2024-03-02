@@ -3,6 +3,7 @@
 namespace App\Http\Requests\AdminAuth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class PessoaJuridicaRequest extends FormRequest
 {
@@ -20,11 +21,23 @@ class PessoaJuridicaRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array
-    {
+    {       
+       
         return [
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'required|string|max:255',
-            'cnpj' => ['required', 'unique:pessoa_juridica','regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/'],
+            'cnpj' => [
+                'required',
+                'unique:pessoa_juridica',
+                'regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/',
+                function ($attribute, $value, $fail) {
+                    $value = preg_replace('/[^0-9]/', '', $value);
+                    $pessoaJuridica = DB::table('pessoa_juridica')->where('cnpj', $value)->exists();
+                    if ($pessoaJuridica) {
+                        $fail('O CNPJ já existe na base de dados.');
+                    }
+                },
+            ],
             'inscricao_estadual' => 'nullable|numeric',
             'inscricao_municipal' => 'nullable|numeric',
             'email' => 'required|email|max:255',
