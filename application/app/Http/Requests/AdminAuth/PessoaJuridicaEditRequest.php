@@ -3,6 +3,8 @@
 namespace App\Http\Requests\AdminAuth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
+use App\Models\PessoaJuridica;
 
 class PessoaJuridicaEditRequest extends FormRequest
 {
@@ -24,7 +26,24 @@ class PessoaJuridicaEditRequest extends FormRequest
         return [
             'razao_social' => 'required|string|max:255',
             'nome_fantasia' => 'required|string|max:255',
-            'cnpj' => ['required', 'regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/'],
+            'cnpj' => [
+                'required', 
+                'regex:/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/',
+                function ($attribute, $value, $fail) {
+                    $value = preg_replace('/[^0-9]/', '', $value);
+                    $id = $this->route('id');
+                    
+                    // Verifica se o CNPJ é diferente do CNPJ atual
+                    $pessoaJuridica = PessoaJuridica::findOrFail($id);
+                    if ($value !== $pessoaJuridica->cnpj) {
+                        // Se o CNPJ for diferente do CNPJ atual, verifica se já existe no banco de dados
+                        $novoCnpjValidado = PessoaJuridica::where('cnpj', $value)->exists();
+                        if ($novoCnpjValidado) {
+                            $fail('O CNPJ já existe na base de dados.');
+                        }
+                    }
+                }
+            ],
             'email' => 'required|email|max:255',
             'telefone' => 'required|string|max:20',
             'tipo_de_logradouro_id' => 'required|exists:tipos_de_logradouro,id',

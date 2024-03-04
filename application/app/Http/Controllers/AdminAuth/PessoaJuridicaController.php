@@ -324,7 +324,7 @@ class PessoaJuridicaController extends Controller
                 DB::commit();
 
                 // Redireciona de volta à página de índice com uma mensagem de sucesso
-                return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa Física alterada com sucesso!');
+                return redirect()->route('admin.pessoa-juridica.index')->with('msg', 'Pessoa Jurídica alterada com sucesso!');
             }
         } catch (\Exception $e) {
             // Em caso de erro, reverte a transação e lança a exceção novamente.
