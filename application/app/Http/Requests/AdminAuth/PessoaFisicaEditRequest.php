@@ -4,6 +4,7 @@ namespace App\Http\Requests\AdminAuth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
+use App\Models\PessoaFisica;
 
 class PessoaFisicaEditRequest extends FormRequest
 {
@@ -20,22 +21,31 @@ class PessoaFisicaEditRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
+
     public function rules(): array
-    {
+    {         
         return [
             'nome' => 'required|string|max:255',
             'cpf' => [
                 'required',
-                'unique:pessoa_fisica',
                 'regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/',
                 function ($attribute, $value, $fail) {
                     $value = preg_replace('/[^0-9]/', '', $value);
-                    $pessoaFisica = DB::table('pessoa_fisica')->where('cpf', $value)->exists();
-                    if ($pessoaFisica) {
-                        $fail('O CPF já existe na base de dados.');
+                    $id = $this->route('id');
+            
+                    // Verifica se o CPF é diferente do CPF atual
+                    $pessoaFisica = PessoaFisica::findOrFail($id);
+                    if ($value !== $pessoaFisica->cpf) {
+                        // Se o CPF for diferente do CPF atual, verifica se já existe no banco de dados
+                        $novoCpfValidado = PessoaFisica::where('cpf', $value)->exists();
+            
+                        if ($novoCpfValidado) {
+                            $fail('O CPF já existe na base de dados.');
+                        }
                     }
                 },
             ],
+            
             'email' => 'required|email|max:255',
             'telefone' => 'required|string|max:20',
             'tipo_de_logradouro_id' => 'required|exists:tipos_de_logradouro,id',
