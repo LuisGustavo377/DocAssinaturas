@@ -10,6 +10,7 @@ use App\Models\UnidadeDeNegocio;
 use App\Models\Licenca;
 use App\Models\PessoaFisica;
 use App\Models\PessoaJuridica;
+use App\Models\Proprietario;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
@@ -40,7 +41,6 @@ class UnidadeDeNegocioController extends Controller
 
     public function store(UnidadeDeNegocioRequest $request)
     {
-
         try {
             if (auth()->check()) {
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
@@ -63,6 +63,23 @@ class UnidadeDeNegocioController extends Controller
                     if ($pessoaFisica) {
                         $pessoaFisica->unidade_de_negocio_id = $unidade->id;
                         $pessoaFisica->save();
+
+                        // Obter o e-mail da pessoa física
+                        $email = $pessoaFisica->email;
+
+                        // Criar um novo proprietário para pessoa física
+                        $proprietario = new Proprietario();
+                        $proprietario->id = Str::uuid();
+                        $proprietario->pessoa_id = $pessoaFisica->id;
+                        $proprietario->unidade_de_negocio_id = $unidade->id;
+                        $proprietario->name = $pessoaFisica->nome;
+                        $proprietario->email = $email;
+                        $proprietario->password = $request->senha_temporaria;
+                        $proprietario->password_temp = 'true';
+                        $proprietario->user_cadastro_id = Auth::id();
+                        $proprietario->user_ultima_atualizacao_id = Auth::id();
+                       
+                        $proprietario->save();
                     }
                 } elseif ($request->tipoPessoaInput === 'pj') {
                     $unidade->pessoa_id = $request->razaoSocialIdInput;
@@ -73,9 +90,24 @@ class UnidadeDeNegocioController extends Controller
                     if ($pessoaJuridica) {
                         $pessoaJuridica->unidade_de_negocio_id = $unidade->id;
                         $pessoaJuridica->save();
+
+                        // Obter o e-mail da pessoa jurídica
+                        $email = $pessoaJuridica->email;
+
+                        // Criar um novo proprietário para pessoa jurídica
+                        $proprietario = new Proprietario();
+                        $proprietario->id = Str::uuid();
+                        $proprietario->pessoa_id = $pessoaJuridica->id;
+                        $proprietario->unidade_de_negocio_id = $unidade->id;
+                        $proprietario->name = $pessoaJuridica->razao_social;
+                        $proprietario->email = $email;
+                        $proprietario->password = $request->senha_temporaria;
+                        $proprietario->password_temp = 'true';
+                        $proprietario->user_cadastro_id = Auth::id();
+                        $proprietario->user_ultima_atualizacao_id = Auth::id();
+                        $proprietario->save();
                     }
                 }
-                // Fim - Salvar Unidade de Negócio no Banco
 
                 DB::commit();
 

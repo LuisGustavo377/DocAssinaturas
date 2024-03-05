@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('password_temp')->default(true);
             $table->timestamp('email_verified_at')->nullable();
+            $table->enum('status', ['ativo','inativo','bloqueado'])->default('ativo');
+            $table->uuid('user_cadastro_id')->nullable();
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

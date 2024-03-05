@@ -15,10 +15,14 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email')->unique();
+            $table->uuid('pessoa_id')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('tipo_de_usuario', ['proprietario'])->default('proprietario');
             $table->string('password');
             $table->boolean('password_temp')->default(true);
+            $table->enum('status', ['ativo','inativo','bloqueado'])->default('ativo');
+            $table->uuid('user_cadastro_id')->nullable();
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
