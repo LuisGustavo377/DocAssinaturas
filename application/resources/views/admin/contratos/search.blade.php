@@ -3,21 +3,21 @@
 @section('title', 'Resultados Pesquisa')
 
 @section('sidebar')
-<x-sidebar-admin></x-sidebar-admin>
+    <x-sidebar-admin></x-sidebar-admin>
 @endsection
 
 @section('navbar')
-<x-navbar-admin></x-navbar-admin>
+    <x-navbar-admin></x-navbar-admin>
 @endsection
 
 @section('content')
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
 
-    <div class="col-lg-12 d-flex align-items-stretch">
-        <div class="card w-100">
-            <div class="p-4 card-body">
+        <div class="col-lg-12 d-flex align-items-stretch">
+            <div class="card w-100">
+                <div class="p-4 card-body">
 
                 <div class="alert alert-light d-flex justify-content-between align-items-center">
                     <div>
@@ -122,6 +122,5 @@
             </div>
         </div>
     </div>
-</div>
 
 @endsection
