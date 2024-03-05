@@ -112,10 +112,14 @@ class GrupoDeNegociosController extends Controller
         $termoPesquisa = $request->input('search');
 
         if (Auth::check()) {
-            $resultados = GrupoDeNegocios::where('nome', 'ILIKE', "%$termoPesquisa%")->get();
+
+            $resultados = GrupoDeNegocios::whereRaw("unaccent(nome) ILIKE unaccent('%$termoPesquisa%')")
+                ->orWhereRaw("unaccent(nome) ILIKE unaccent('%$termoPesquisa%')")
+                ->get();
         } else {
             $resultados = [];
         }
+
 
         return view('admin.grupo-de-negocios.search', compact('resultados', 'termoPesquisa'));
     }

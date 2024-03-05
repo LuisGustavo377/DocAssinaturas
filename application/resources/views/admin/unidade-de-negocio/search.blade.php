@@ -20,14 +20,12 @@
             <div class="card w-100">
                 <div class="p-4 card-body">
 
-                    <div class="mb-4 d-flex justify-content-between align-items-center">
-                        <h5 class="card-title fw-semibold">Resultados da Pesquisa: {{ $termoPesquisa }}</h5>
-
-                        <!-- Button to Create Establishment -->
-                        <a href="javascript:history.back()" class="btn btn-outline-success">
-                            <i class="ti ti-arrow-left me-1"></i>
-                            Limpar Pesquisa
-                        </a>
+                    <div class="alert alert-light d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="ti ti-search" style="color: #13deb9"></i>
+                            <label class="form-label" style="color: #13deb9">Resultados da Pesquisa:
+                                <span style="color: #5A6A85">{{ $termoPesquisa }}</span></label>
+                        </div>
                     </div>
 
                     @if ($resultados->isEmpty())
@@ -105,7 +103,17 @@
                         </div>
 
                     @endif
+                    <div class="mb-3 d-flex justify-content-end">
+                        <div class="mb-3">
+                            <div class="my-4 text-center">
+                                <a href="javascript:history.back()" class="btn btn-light me-2">
+                                    <i class="ti ti-arrow-left me-1"></i>
+                                    Voltar
+                                </a>
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

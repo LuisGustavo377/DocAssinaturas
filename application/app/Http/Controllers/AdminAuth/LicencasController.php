@@ -50,7 +50,7 @@ class LicencasController extends Controller
 
     public function store(AdminAuthLicencaRequest $request)
     {
-        
+
         try {
 
             if (auth()->check()) {
@@ -59,7 +59,7 @@ class LicencasController extends Controller
                 DB::beginTransaction();
 
                 $atributosParaMaiusculas = [
-                    'descricao', 
+                    'descricao',
                 ];
 
                 // Inicio - Salvar Grupo no Banco
@@ -72,7 +72,7 @@ class LicencasController extends Controller
                 $licenca->tipo_de_renovacao_id = $request->tipo_de_renovacao;
                 $licenca->user_cadastro_id = auth()->id();
                 $licenca->salvarComAtributosMaiusculos($atributosParaMaiusculas);
-                
+
                 $licenca->save();
 
                 DB::commit();
@@ -113,7 +113,7 @@ class LicencasController extends Controller
             DB::beginTransaction();
 
             $atributosParaMaiusculas = [
-                'descricao', 
+                'descricao',
             ];
 
             $licenca = Licenca::findOrFail($id);
@@ -144,7 +144,7 @@ class LicencasController extends Controller
         if (Auth::check()) {
             $resultados = Licenca::with('grupoDeNegocios')
                 ->whereHas('grupoDeNegocios', function ($query) use ($termoPesquisa) {
-                    $query->where('nome', 'ILIKE', "%$termoPesquisa%");
+                    $query->whereRaw("unaccent(descricao) ILIKE unaccent('%$termoPesquisa%')");
                 })
                 ->get();
         } else {
@@ -152,7 +152,8 @@ class LicencasController extends Controller
         }
 
         return view('admin.licencas.search', compact('resultados', 'termoPesquisa', 'licenca'));
-    }
+    }   
+
 
     public function inativar($id)
     {
@@ -190,5 +191,4 @@ class LicencasController extends Controller
         $licencas = Licenca::where('grupo_de_negocio_id', $grupo_de_negocio_id)->get();
         return response()->json($licencas);
     }
-    
 }
