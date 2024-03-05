@@ -43,9 +43,6 @@
                                 </th>
 
                                 <th class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">Grupo</h6>
-                                </th>
-                                <th class="border-bottom-0">
                                     <h6 class="mb-0 fw-semibold">Início</h6>
                                 </th>
                                 <th class="border-bottom-0">
@@ -64,10 +61,6 @@
                             <tr>
                                 <td class="border-bottom-0">
                                     <h6 class="mb-0 fw-semibold">{{ $resultado->descricao }}</h6>
-                                </td>
-
-                                <td class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">{{ $resultado->grupoDeNegocios->nome }}</h6>
                                 </td>
 
                                 <td class="border-bottom-0">

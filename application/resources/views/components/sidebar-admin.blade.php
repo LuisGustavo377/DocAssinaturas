@@ -79,13 +79,32 @@
                         <span class="hide-menu">Licenciamento</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/admin/contratos">
-                                <span class="hide-menu">
-                                    - Contratos
-                                </span>
-                            </a>
-                        </li>
+                        <ul class="sidebar-item">
+                            <li>
+                                <a class="sidebar-link" href="/admin/contratos">
+                                    <span class="hide-menu">
+                                        - Contratos
+                                    </span>
+                                </a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a class="sidebar-link" href="/admin/contratos/gerar-documento">
+                                            <span class="hide-menu">
+                                                -- Gerar Documento
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="sidebar-link" href="/admin/contratos/novo-contrato">
+                                            <span class="hide-menu">
+                                                -- Novo Contrato
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
 
                         <!-- Submenu for Licenças -->
                         <li class="sidebar-item">

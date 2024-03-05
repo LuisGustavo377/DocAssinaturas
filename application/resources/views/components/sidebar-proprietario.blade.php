@@ -42,6 +42,33 @@
                         <span>
                             <i class="ti ti-settings"></i>
                         </span>
+                        <span class="hide-menu">Carteira</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-settings"></i>
+                        </span>
+                        <span class="hide-menu">Clientes</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-settings"></i>
+                        </span>
+                        <span class="hide-menu">Contas Bancárias</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-settings"></i>
+                        </span>
                         <span class="hide-menu">Contas Bancárias</span>
                     </a>
                 </li>

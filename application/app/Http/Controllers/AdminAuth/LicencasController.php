@@ -9,6 +9,7 @@ use App\Models\Contrato;
 use App\Models\GrupoDeNegocios;
 use App\Models\UnidadeDeNegocio;
 use App\Models\Licenca;
+use App\Models\Plano;
 use App\Models\PessoaFisica;
 use App\Models\PessoaJuridica;
 use App\Models\TipoDeRenovacao;
@@ -41,15 +42,19 @@ class LicencasController extends Controller
         $unidades = UnidadeDeNegocio::orderBy('id')->get(); // talvez ainda nem precise 
         $licencas = Licenca::orderBy('id')->get();
         $tiposDeRenovacao = TipoDeRenovacao::all();
+        $planos = Plano::all();
         $contratos = Contrato::all();
 
         // $pessoas = $gruposDeNegocios->merge($unidades); utilizar na unidade de negócio
 
-        return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas', 'tiposDeRenovacao', 'contratos'));
+        return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas', 'tiposDeRenovacao', 'contratos', 'planos'));
     }
 
     public function store(AdminAuthLicencaRequest $request)
     {
+
+        $grupo = GrupoDeNegocios::where('id', $request->grupo_de_negocio_id)->first();
+        $contagem_licencas_grupo = Licenca::where('grupo_de_negocio_id', $request->grupo_de_negocio_id)->count();
 
         try {
 
@@ -68,6 +73,7 @@ class LicencasController extends Controller
 
                 $licenca->fill($request->all());
                 $licenca->id = Str::uuid();
+                $licenca->descricao = $grupo->nome . '-' . $request->numero_contrato . '-' .  '00' . ($contagem_licencas_grupo + 1);
                 $licenca->status = 'ativo';
                 $licenca->tipo_de_renovacao_id = $request->tipo_de_renovacao;
                 $licenca->user_cadastro_id = auth()->id();

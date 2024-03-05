@@ -47,9 +47,6 @@
                                 <th class="border-bottom-0">
                                     <h6 class="mb-0 fw-semibold">Descrição</h6>
                                 </th>
-                                <th class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">Grupo</h6>
-                                </th>
 
                                 <th class="border-bottom-0">
                                     <h6 class="mb-0 fw-semibold">Início</h6>
@@ -78,10 +75,6 @@
                                         <!-- ou outra mensagem se o relacionamento não existir -->
                                         @endif
                                     </h6>
-                                </td>
-
-                                <td class="border-bottom-0">
-                                    <h6 class="mb-0 fw-semibold">{{ $licenca->grupoDeNegocios->nome }}</h6>
                                 </td>
                                 <td class="border-bottom-0">
                                     <h6 class="mb-0">
