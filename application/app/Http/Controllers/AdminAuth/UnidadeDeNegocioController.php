@@ -149,7 +149,7 @@ class UnidadeDeNegocioController extends Controller
     {
         try {
 
-            $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
+            $unidade_id = $id;
 
             DB::beginTransaction();
 
@@ -160,7 +160,15 @@ class UnidadeDeNegocioController extends Controller
             }
 
             $unidade->fill($request->only(['grupo_de_negocio_id', 'licenca_id']));
-            $unidade->user_ultima_atualizacao_id = $user_ultima_atualizacao;
+            $unidade->user_ultima_atualizacao_id = auth()->id();
+
+            if($request->senha_temporaria !==null){
+                $proprietario = Proprietario::where('unidade_de_negocio_id', $id)->firstOrFail();
+                $proprietario->password = $request->senha_temporaria;
+                $proprietario->password_temp = 'true';
+                $proprietario->save();
+
+            }
 
             $unidade->save();
 

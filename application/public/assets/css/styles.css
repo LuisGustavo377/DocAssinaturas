@@ -19877,7 +19877,8 @@ fieldset:disabled .btn {
 .sidebar-nav ul .sidebar-item.selected>.sidebar-link.active,
 .sidebar-nav ul .sidebar-item>.sidebar-link.active {
     background-color: #13DEB9;
-    color: #fff
+    color: #fff;
+    
 }
 
 .sidebar-nav .sidebar-list .sidebar-list-item {

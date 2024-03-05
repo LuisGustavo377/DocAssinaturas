@@ -2,7 +2,7 @@
     <!-- Sidebar scroll-->
     <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="admin/dashboard" class="text-nowrap logo-img">
+            <a href="{{ route('admin.dashboard') }}" class="text-nowrap logo-img">
                 <img src="{{ asset('assets/images/logos/dark-logo.svg') }}" width="180" alt="" />
             </a>
             <div class="cursor-pointer close-btn d-xl-none d-block sidebartoggler" id="sidebarCollapse">
@@ -19,7 +19,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('admin.dashboard') }}" aria-expanded="false">
                         <span>
-                            <i class="ti ti-layout-dashboard"></i>
+                            <i class="ti ti-home"></i>
                         </span>
                         <span class="hide-menu">Dashboard</span>
                     </a>
@@ -39,7 +39,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="/admin/unidade-de-negocios">
                         <span>
-                            <i class="ti ti-brand-unity"></i>
+                            <i class="ti ti-components"></i>
                         </span>
                         <span class="hide-menu">Unidades de Negócio</span>
                     </a>
@@ -48,7 +48,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
-                            <i class="ti ti-building-bank"></i>
+                            <i class="ti ti-users"></i>
                         </span>
                         <span class="hide-menu">Cadastro de Pessoas</span>
                     </a>
@@ -57,7 +57,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/pessoa-fisica">
                                 <span class="hide-menu">
-                                    > Pessoa Física
+                                    - Pessoa Física
                                 </span>
                             </a>
                         </li>
@@ -65,7 +65,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/pessoa-juridica">
                                 <span class="hide-menu">
-                                    > Pessoa Jurídica
+                                    - Pessoa Jurídica
                                 </span>
                             </a>
                         </li>
@@ -82,7 +82,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/contratos">
                                 <span class="hide-menu">
-                                    > Contratos
+                                    - Contratos
                                 </span>
                             </a>
                         </li>
@@ -91,7 +91,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/licencas">
                                 <span class="hide-menu">
-                                    > Licenças
+                                    - Licenças
                                 </span>
                             </a>
                         </li>
@@ -100,7 +100,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/planos">
                                 <span class="hide-menu">
-                                    > Planos
+                                    - Planos
                                 </span>
                             </a>
                         </li>
@@ -112,7 +112,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
-                            <i class="ti ti-settings"></i>
+                            <i class="ti ti-tool"></i>
                         </span>
                         <span class="hide-menu">Configurações</span>
                     </a>
@@ -121,21 +121,21 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/bancos">
                                 <span class="hide-menu">
-                                    > Bancos
+                                    - Bancos
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/cargos">
                                 <span class="hide-menu">
-                                    > Cargos
+                                    - Cargos
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/contas-bancarias">
                                 <span class="hide-menu">
-                                    > Contas Bancárias
+                                    - Contas Bancárias
                                 </span>
                             </a>
                         </li>
@@ -143,7 +143,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/tipos-de-cobranca">
                                 <span class="hide-menu">
-                                    > Tipos de Cobrança
+                                    - Tipos de Cobrança
                                 </span>
                             </a>
                         </li>
@@ -151,21 +151,21 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/tipos-de-logradouro">
                                 <span class="hide-menu">
-                                    > Tipos de Logradouro
+                                    - Tipos de Logradouro
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/tipos-de-relacionamentos">
                                 <span class="hide-menu">
-                                    > Tipos de Relacionamento
+                                    - Tipos de Relacionamento
                                 </span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" href="/admin/tipos-de-renovacao">
                                 <span class="hide-menu">
-                                    > Tipos de Renovação
+                                    - Tipos de Renovação
                                 </span>
                             </a>
                         </li>
