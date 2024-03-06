@@ -5,11 +5,13 @@ namespace App\Http\Controllers\AdminAuth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminAuth\LicencaRequest as AdminAuthLicencaRequest;
 use App\Http\Requests\LicencaRequest;
+use App\Http\Requests\AdminAuth\ContratoRequest;
 use App\Models\Contrato;
+use App\Models\ContratoArquivo;
+use App\Models\Plano;
 use App\Models\GrupoDeNegocios;
 use App\Models\UnidadeDeNegocio;
 use App\Models\Licenca;
-use App\Models\Plano;
 use App\Models\PessoaFisica;
 use App\Models\PessoaJuridica;
 use App\Models\TipoDeRenovacao;
@@ -50,15 +52,18 @@ class LicencasController extends Controller
         return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas', 'tiposDeRenovacao', 'contratos', 'planos'));
     }
 
-    public function store(AdminAuthLicencaRequest $request)
-    {
+    public function store(Request $request){
 
         $grupo = GrupoDeNegocios::where('id', $request->grupo_de_negocio_id)->first();
         $contagem_licencas_grupo = Licenca::where('grupo_de_negocio_id', $request->grupo_de_negocio_id)->count();
 
-        try {
+        try {          
 
+            
             if (auth()->check()) {
+
+                // primeiro ele criara um contrato, para depois criar uma licença
+
                 $user_id = auth()->id(); // Recupera o ID do usuário da sessão
 
                 DB::beginTransaction();
@@ -67,14 +72,56 @@ class LicencasController extends Controller
                     'descricao',
                 ];
 
+
+                // Início - Salvar Contrato no Banco
+                $contrato = new Contrato();
+                $contrato->fill($request->all());
+                $contrato->status = 'ativo';
+                $contrato->id = Str::uuid();
+                $contrato->user_cadastro_id = auth()->id();
+                $nameFile = null;
+
+                // Verificar se o arquivo está presente no formulário
+                if ($request->hasFile('arquivo')) {
+
+                    // Gerar um nome de arquivo único
+                    $nameFile = $this->generateUniqueFileName($request->name, $request->file('arquivo')->extension());
+
+                    // Salvar o arquivo no disk 'contratos'
+                    $path = $request->file('arquivo')->storeAs('contratos', $nameFile);
+
+                    // Salvar o nome do arquivo no objeto de contrato/ caso haja futura mudança...Não descomentar
+                    // $contrato->arquivo = $nameFile;
+
+                }
+                $contrato->save();
+                // Fim - Salvar Contrato no Banco
+
+                // -- Início -- Salvar arquivos na tabela ContratosArquivos --
+
+                $arquivo_contrato = new ContratoArquivo();
+                $arquivo_contrato->id = Str::uuid();
+                $arquivo_contrato->numero_contrato = $contrato->numero_contrato;
+                $arquivo_contrato->arquivo = $nameFile;
+                $arquivo_contrato->contrato_id = $contrato->id;
+                $arquivo_contrato->user_cadastro_id = Auth::id();
+                $arquivo_contrato->user_ultima_atualizacao_id = Auth::id();
+
+                $arquivo_contrato->save();
+
+                // -- Fim -- Salvar arquivos na tabela ContratosArquivos --
+
                 // Inicio - Salvar Grupo no Banco
 
                 $licenca = new Licenca();
-
-                $licenca->fill($request->all());
                 $licenca->id = Str::uuid();
+                $licenca->numero_contrato = $contrato->numero_contrato;
                 $licenca->descricao = $grupo->nome . '-' . $request->numero_contrato . '-' .  '00' . ($contagem_licencas_grupo + 1);
+                $licenca->inicio = $request->inicio;
+                $licenca->termino = $request->termino;
+                $licenca->grupo_de_negocio_id = $request->grupo_de_negocio_id;
                 $licenca->status = 'ativo';
+                $licenca->contrato_id = $contrato->id;
                 $licenca->tipo_de_renovacao_id = $request->tipo_de_renovacao;
                 $licenca->user_cadastro_id = auth()->id();
                 $licenca->salvarComAtributosMaiusculos($atributosParaMaiusculas);

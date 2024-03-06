@@ -55,8 +55,14 @@
                             </div>
 
 
+                        </div>
 
+                        <div class="alert alert-light">
+                            <i class="ti ti-file-description" style="color: #13deb9"></i>
+                            <label class="form-label" style="color: #13deb9">Dados do Contrato</label>
+                        </div>
 
+                        <div class="card-body">
                             <div class="row">
                                 <div class="mb-3 col-md-4">
                                     <label id="numero_contratoLabel" class="form-label">Número Contrato</label>
@@ -90,7 +96,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3 col-md-4">
+                                <div class="mb-3 col-md-4   ">
                                     <label id="tipoDeRenovacaoLabel" class="form-label">Tipo de Renovação</label>
                                     <select class="form-select @error('tipo_de_renovacao') is-invalid @enderror"
                                         id="tipoDeRenovacaoInput" name="tipo_de_renovacao">
@@ -151,6 +157,8 @@
                             </div>
                         </div>
 
+
+
                         <div class="mb-3 d-flex justify-content-end">
                             <div class="mb-3">
                                 <div class="my-4 text-center">
@@ -188,5 +196,27 @@ document.querySelectorAll('.form-control').forEach(function(element) {
     });
 });
 </script>
+
+<!-- {{-- Gerar Senha Temporaria --}} -->
+<script src="{{ asset('assets/js/gerarSenhaTemporaria.js') }}"></script>
+
+
+<!-- {{-- Buscar Licenças por grupo --}} -->
+<script src="{{ asset('assets/js/buscarLicencaPorGrupo.js') }}"></script>
+
+
+<!-- Validação Formulario Preenchimento de formulario -->
+<script src="{{ asset('assets/js/validacaoPreenchimentoFormularios.js') }}"></script>
+
+<!-- Script para Buscar Pessoa-->
+<script src="{{ asset('assets/js/buscarPessoaFisica.js') }}"></script>
+<script src="{{ asset('assets/js/buscarPessoaJuridica.js') }}"></script>
+<script src="{{ asset('assets/js/mostrarPessoas.js') }}"></script>
+
+<!--  Mascara CNPJ -->
+<script src="{{ asset('assets/js/mascaraCNPJ.js') }}"></script>
+<script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
+
+<script src="{{ asset('assets/js/inputPjPf.js') }}"></script>
 
 @endsection

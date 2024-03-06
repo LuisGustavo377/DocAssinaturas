@@ -27,7 +27,10 @@ class LicencaRequest extends FormRequest
             'tipo_de_renovacao' => 'required',
             'inicio' => 'required|date',
             'termino' => 'required|date',
-            'descricao' => 'required|string|max:255',        
+            'descricao' => 'required|string|max:255',  
+            'numero_contrato' => 'required|unique:contratos',
+            'arquivo' => 'nullable|file|mimes:pdf|max:20480',
+            'plano_id' => 'required',      
         ];
     }
 
@@ -43,6 +46,13 @@ class LicencaRequest extends FormRequest
 
             'descricao.max' => 'O campo descrição não pode ter mais de :max caracteres.',
             'descricao.required' => 'O campo descrição é obrigatório.',
+
+            'numero_contrato.required' => 'O campo número do contrato é obrigatório.',
+            'numero_contrato.unique' => 'O número do contrato já está em uso.',
+            'arquivo.file' => 'O arquivo deve ser um arquivo válido.',
+            'arquivo.mimes' => 'O arquivo deve ser do tipo PDF.',
+            'arquivo.max' => 'O tamanho máximo do arquivo é de 20MB.',
+            'plano_id' => 'Selecione um plano',
         
 
         ];

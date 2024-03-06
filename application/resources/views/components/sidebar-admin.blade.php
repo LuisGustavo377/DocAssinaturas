@@ -86,22 +86,7 @@
                                         - Contratos
                                     </span>
                                 </a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a class="sidebar-link" href="/admin/contratos/gerar-documento">
-                                            <span class="hide-menu">
-                                                -- Gerar Documento
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="sidebar-link" href="/admin/contratos/novo-contrato">
-                                            <span class="hide-menu">
-                                                -- Novo Contrato
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
+
                             </li>
                         </ul>
 
@@ -115,14 +100,7 @@
                             </a>
                         </li>
 
-                        <!-- Submenu for Planos -->
-                        <li class="sidebar-item">
-                            <a class="sidebar-link" href="/admin/planos">
-                                <span class="hide-menu">
-                                    - Planos
-                                </span>
-                            </a>
-                        </li>
+
 
 
                     </ul>
@@ -188,8 +166,16 @@
                                 </span>
                             </a>
                         </li>
-
                     </ul>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/admin/planos">
+                        <span>
+                            <i class="ti ti-files"></i>
+                        </span>
+                        <span class="hide-menu">Planos</span>
+                    </a>
                 </li>
             </ul>
         </nav>
