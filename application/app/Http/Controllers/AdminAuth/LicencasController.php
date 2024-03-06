@@ -65,7 +65,7 @@ class LicencasController extends Controller
             
             if (auth()->check()) {
 
-                // primeiro ele criara um contrato, para depois criar uma licença
+                // Ordem de criação no banco: Unidade, Contrato, Licença
 
                 DB::beginTransaction();
 
@@ -73,7 +73,7 @@ class LicencasController extends Controller
                     'descricao',
                 ];
 
-
+ 
                 // Início - Salvar Contrato no Banco
                 $contrato = new Contrato();
                 $contrato->fill($request->all());
@@ -195,6 +195,11 @@ class LicencasController extends Controller
                 }
 
                 // Fim - Salvar Unidade de Negocio no BD
+
+                // Inicio - Vincular numero da unidade a licença
+
+                $licenca->unidade_de_negocio_id = $unidade->id;
+                // Fim - Vincular numero da unidade a licença
 
                 DB::commit();
 

@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Requests\AdminAuth;
-
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LicencaRequest extends FormRequest
