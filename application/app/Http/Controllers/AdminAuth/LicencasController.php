@@ -25,6 +25,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Termwind\Components\Dd;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+
 
 class LicencasController extends Controller
 {
@@ -85,8 +88,11 @@ class LicencasController extends Controller
                 // Verificar se o arquivo está presente no formulário
                 if ($request->hasFile('arquivo')) {
 
-                    // Gerar um nome de arquivo único
-                    $nameFile = $this->generateUniqueFileName($request->name, $request->file('arquivo')->extension());
+                    $extensao = $request->file('arquivo')->getClientOriginalExtension();
+
+                    // Gerar um nome de arquivo único com base no ID do contrato e na extensão
+                    $nameFile = $contrato->id . '.' . $extensao; // O nome do arquivo do contrato, tera o mesmo nome do ID com contrato
+                    
 
                     // Salvar o arquivo no disk 'contratos'
                     $path = $request->file('arquivo')->storeAs('contratos', $nameFile);
@@ -193,12 +199,12 @@ class LicencasController extends Controller
                         $proprietario->save();
                     }
                 }
-
                 // Fim - Salvar Unidade de Negocio no BD
 
                 // Inicio - Vincular numero da unidade a licença
 
                 $licenca->unidade_de_negocio_id = $unidade->id;
+                $licenca->save();
                 // Fim - Vincular numero da unidade a licença
 
                 DB::commit();

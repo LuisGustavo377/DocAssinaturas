@@ -38,6 +38,14 @@ script.onload = function() {
             }
         });
 
+        $('#numero_contratoInput').on('input', function() {
+            var numero = $(this).val();
+            if (numero.trim() !== '') {
+                $(this).removeClass('is-invalid');
+                $(this).next('.invalid-feedback').remove();
+            }
+        });
+
         $('#planoInput').on('input', function() {
             var plano = $(this).val();
             if (plano.trim() !== '') {
@@ -45,6 +53,40 @@ script.onload = function() {
                 $(this).next('.invalid-feedback').remove();
             }
         });
+
+        $('#tipoDeRenovacaoInput').on('input', function() {
+            var tipoRenovacao = $(this).val();
+            if (tipoRenovacao.trim() !== '') {
+                $(this).removeClass('is-invalid');
+                $(this).next('.invalid-feedback').remove();
+            }
+        });
+
+        
+        $('#inicioInput').on('input', function() {
+            var inicio = $(this).val();
+            if (inicio.trim() !== '') {
+                $(this).removeClass('is-invalid');
+                $(this).next('.invalid-feedback').remove();
+            }
+        });
+
+        $('#terminoInput').on('input', function() {
+            var termino = $(this).val();
+            if (termino.trim() !== '') {
+                $(this).removeClass('is-invalid');
+                $(this).next('.invalid-feedback').remove();
+            }
+        });
+
+        $('#senhaTemporaria').on('input', function() {
+            var senha = $(this).val();
+            if (senha.trim() !== '') {
+                $(this).removeClass('is-invalid');
+                $(this).next('.invalid-feedback').remove();
+            }
+        });
+
 
         
     });

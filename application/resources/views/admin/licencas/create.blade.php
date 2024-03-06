@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form method="POST" action="{{ route('admin.licencas.store') }}">
+                    <form method="POST" action="{{ route('admin.licencas.store') }}" enctype="multipart/form-data">
                         @csrf {{-- Prevenção do Laravel contra ataques a formulários --}}
 
 

@@ -33,7 +33,7 @@ class LicencaRequest extends FormRequest
             'grupo_de_negocio_id' => 'required',   
             'tipo_de_renovacao' => 'required',
             'inicio' => 'required|date',
-            'termino' => 'required|date',
+            'termino' => 'required|date|after_or_equal:inicio',
 
             //Validação Unidade de Negocios
 
@@ -101,6 +101,7 @@ class LicencaRequest extends FormRequest
                         'tipo_de_renovacao.required' => 'Selecione o Tipo de Renovação.',
             'inicio.required' => 'O campo Início é obrigatório.',
             'termino.required' => 'O campo Término é obrigatório.',
+            'termino.after_or_equal' => 'O data de término não pode ser menor que a de início.',
 
 
             // Mensagens validação atributos Unidade de Negocio
