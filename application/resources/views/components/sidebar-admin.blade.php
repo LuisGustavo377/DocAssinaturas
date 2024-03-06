@@ -28,21 +28,34 @@
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">FUNÇÕES</span>
                 </li>
+
+                
+
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="/admin/grupo-de-negocios" aria-expanded="false">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
-                            <i class="ti ti-circles-relation"></i>
+                            <i class="ti ti-heart-handshake"></i>
                         </span>
-                        <span class="hide-menu">Grupos de Negócio</span>
+                        <span class="hide-menu">Parceiros de Negócios</span>
                     </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="/admin/unidade-de-negocios">
-                        <span>
-                            <i class="ti ti-components"></i>
-                        </span>
-                        <span class="hide-menu">Unidades de Negócio</span>
-                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <!-- Submenu for Pessoa Fisica -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/grupo-de-negocios">
+                                <span class="hide-menu">
+                                    - Grupos
+                                </span>
+                            </a>
+                        </li>
+                        <!-- Submenu for Pessoa Juridica -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/unidade-de-negocios">
+                                <span class="hide-menu">
+                                    - Unidades
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="sidebar-item">

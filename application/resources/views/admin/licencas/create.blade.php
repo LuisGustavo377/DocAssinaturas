@@ -54,6 +54,55 @@
                                 @enderror
                             </div>
 
+                            <div class="mb-3">
+                                    <label class="form-label">Tipo de Pessoa</label>
+                                    <select id="tipoPessoaSelect"
+                                        class="form-select @error('tipoPessoaInput') is-invalid @enderror">
+                                        <option value="" {{ old('tipoPessoaInput') == '' ? 'selected' : '' }} disabled>
+                                            -- Selecione o tipo de pessoa -- </option>
+                                        <option value="pf" {{ old('tipoPessoaInput') == 'pf' ? 'selected' : '' }}>
+                                            Pessoa Física</option>
+                                        <option value="pj" {{ old('tipoPessoaInput') == 'pj' ? 'selected' : '' }}>
+                                            Pessoa Jurídica</option>
+                                    </select>
+                                    <input type="hidden" id="tipoPessoaInput" name="tipoPessoaInput"
+                                        value="{{ old('tipoPessoaInput') }}">
+                                    @error('tipoPessoaInput')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3" id="cpfInputDiv" @if (old('tipoPessoaInput')=='pf' )
+                                    style="display: block;" @else style="display: none;" @endif>
+                                    <label class="form-label">Pesquisar por CPF</label>
+                                    <input type="text" class="form-control @error('cpfInput') is-invalid @enderror"
+                                        id="cpfInput" name="cpfInput" maxlength="11" value="{{ old('cpfInput') }}">
+                                    <div id="pessoaFisicaResult"></div>
+                                    <input type="hidden" id="cpfIdInput" name="cpfIdInput">
+                                    @error('cpfInput')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
+
+                                <div class="mb-3" id="cnpjInputDiv" @if (old('tipoPessoaInput')=='pj' )
+                                    style="display: block;" @else style="display: none;" @endif>
+                                    <label class="form-label">Pesquisar por CNPJ</label>
+                                    <input type="text" class="form-control @error('cnpjInput') is-invalid @enderror"
+                                        id="cnpjInput" name="cnpjInput" maxlength="14" value="{{ old('cnpjInput') }}">
+                                    <div id="pessoaJuridicaResult"></div>
+                                    <input type="hidden" id="razaoSocialIdInput" name="razaoSocialIdInput">
+                                    @error('cnpjInput')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
 
                         </div>
 
@@ -157,7 +206,31 @@
                             </div>
                         </div>
 
+                        <div class="alert alert-light">
+                            <i class="ti ti-file-description" style="color: #13deb9"></i>
+                            <label class="form-label" style="color: #13deb9">Login</label>
+                        </div>
 
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Senha Temporária</label>
+                                <div class="input-group">
+                                    <input type="text"
+                                        class="form-control @error('senha_temporaria') is-invalid @enderror"
+                                        id="senha_temporaria" name="senha_temporaria"
+                                        value="{{ old('senha_temporaria') }}"
+                                        placeholder="Clique no botão para gerar senha">
+
+                                    <button type="button" class="btn btn-outline-success"
+                                        onclick="generateTemporaryPassword()">Gerar Senha</button>
+                                    @error('senha_temporaria')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="mb-3 d-flex justify-content-end">
                             <div class="mb-3">
@@ -216,7 +289,6 @@ document.querySelectorAll('.form-control').forEach(function(element) {
 <!--  Mascara CNPJ -->
 <script src="{{ asset('assets/js/mascaraCNPJ.js') }}"></script>
 <script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
-
 <script src="{{ asset('assets/js/inputPjPf.js') }}"></script>
 
 @endsection

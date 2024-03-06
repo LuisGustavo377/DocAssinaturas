@@ -4,7 +4,6 @@ namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminAuth\LicencaRequest as AdminAuthLicencaRequest;
-use App\Http\Requests\LicencaRequest;
 use App\Http\Requests\AdminAuth\ContratoRequest;
 use App\Models\Contrato;
 use App\Models\ContratoArquivo;
@@ -15,6 +14,10 @@ use App\Models\Licenca;
 use App\Models\PessoaFisica;
 use App\Models\PessoaJuridica;
 use App\Models\TipoDeRenovacao;
+use App\Models\Proprietario;
+use App\Http\Requests\AdminAuth\UnidadeDeNegocioRequest;
+use App\Http\Requests\AdminAuth\UnidadeDeNegocioEditRequest;
+use App\Http\Requests\AdminAuth\LicencaRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
@@ -52,19 +55,17 @@ class LicencasController extends Controller
         return view('admin.licencas.create', compact('unidades', 'gruposDeNegocios', 'licencas', 'tiposDeRenovacao', 'contratos', 'planos'));
     }
 
-    public function store(Request $request){
+    public function store(LicencaRequest $request){
 
-        $grupo = GrupoDeNegocios::where('id', $request->grupo_de_negocio_id)->first();
-        $contagem_licencas_grupo = Licenca::where('grupo_de_negocio_id', $request->grupo_de_negocio_id)->count();
 
-        try {          
-
+        try {    
+            $grupo = GrupoDeNegocios::where('id', $request->grupo_de_negocio_id)->first();
+            $contagem_licencas_grupo = Licenca::where('grupo_de_negocio_id', $request->grupo_de_negocio_id)->count();
+          
             
             if (auth()->check()) {
 
                 // primeiro ele criara um contrato, para depois criar uma licença
-
-                $user_id = auth()->id(); // Recupera o ID do usuário da sessão
 
                 DB::beginTransaction();
 
@@ -97,6 +98,7 @@ class LicencasController extends Controller
                 $contrato->save();
                 // Fim - Salvar Contrato no Banco
 
+
                 // -- Início -- Salvar arquivos na tabela ContratosArquivos --
 
                 $arquivo_contrato = new ContratoArquivo();
@@ -111,7 +113,7 @@ class LicencasController extends Controller
 
                 // -- Fim -- Salvar arquivos na tabela ContratosArquivos --
 
-                // Inicio - Salvar Grupo no Banco
+                // Inicio - Salvar Licenca no Banco
 
                 $licenca = new Licenca();
                 $licenca->id = Str::uuid();
@@ -127,6 +129,72 @@ class LicencasController extends Controller
                 $licenca->salvarComAtributosMaiusculos($atributosParaMaiusculas);
 
                 $licenca->save();
+                //Fim - Salvar Licencca no BD
+
+                // Início - Salvar Unidade de Negócio no Banco
+                $unidade = new UnidadeDeNegocio();
+                $unidade->id = Str::uuid();
+                $unidade->grupo_de_negocio_id = $request->grupo_de_negocio_id;
+                $unidade->licenca_id = $licenca->id;
+                $unidade->user_cadastro_id = auth()->id();
+                $unidade->tipo_pessoa = $request->tipoPessoaInput;
+
+                if ($request->tipoPessoaInput === 'pf') {
+                    $unidade->pessoa_id = $request->cpfIdInput;
+                    $unidade->save();
+
+                    // Salvar o unidade_negocio_id na tabela PessoaFisica
+                    $pessoaFisica = PessoaFisica::find($request->cpfIdInput);
+                    if ($pessoaFisica) {
+                        $pessoaFisica->unidade_de_negocio_id = $unidade->id;
+                        $pessoaFisica->save();
+
+                        // Obter o e-mail da pessoa física
+                        $email = $pessoaFisica->email;
+
+                        // Criar um novo proprietário para pessoa física
+                        $proprietario = new Proprietario();
+                        $proprietario->id = Str::uuid();
+                        $proprietario->pessoa_id = $pessoaFisica->id;
+                        $proprietario->unidade_de_negocio_id = $unidade->id;
+                        $proprietario->name = $pessoaFisica->nome;
+                        $proprietario->email = $email;
+                        $proprietario->password = $request->senha_temporaria;
+                        $proprietario->password_temp = 'true';
+                        $proprietario->user_cadastro_id = Auth::id();
+                        $proprietario->user_ultima_atualizacao_id = Auth::id();
+                        
+                        $proprietario->save();
+                    }
+                } elseif ($request->tipoPessoaInput === 'pj') {
+                    $unidade->pessoa_id = $request->razaoSocialIdInput;
+                    $unidade->save();
+
+                    // Salvar o unidade_negocio_id na tabela PessoaJuridica
+                    $pessoaJuridica = PessoaJuridica::find($request->razaoSocialIdInput);
+                    if ($pessoaJuridica) {
+                        $pessoaJuridica->unidade_de_negocio_id = $unidade->id;
+                        $pessoaJuridica->save();
+
+                        // Obter o e-mail da pessoa jurídica
+                        $email = $pessoaJuridica->email;
+
+                        // Criar um novo proprietário para pessoa jurídica
+                        $proprietario = new Proprietario();
+                        $proprietario->id = Str::uuid();
+                        $proprietario->pessoa_id = $pessoaJuridica->id;
+                        $proprietario->unidade_de_negocio_id = $unidade->id;
+                        $proprietario->name = $pessoaJuridica->razao_social;
+                        $proprietario->email = $email;
+                        $proprietario->password = $request->senha_temporaria;
+                        $proprietario->password_temp = 'true';
+                        $proprietario->user_cadastro_id = Auth::id();
+                        $proprietario->user_ultima_atualizacao_id = Auth::id();
+                        $proprietario->save();
+                    }
+                }
+
+                // Fim - Salvar Unidade de Negocio no BD
 
                 DB::commit();
 

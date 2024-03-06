@@ -37,6 +37,15 @@ script.onload = function() {
                 $(this).next('.invalid-feedback').remove();
             }
         });
+
+        $('#planoInput').on('input', function() {
+            var plano = $(this).val();
+            if (plano.trim() !== '') {
+                $(this).removeClass('is-invalid');
+                $(this).next('.invalid-feedback').remove();
+            }
+        });
+
         
     });
 };
