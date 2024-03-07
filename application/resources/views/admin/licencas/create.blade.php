@@ -35,26 +35,31 @@
                         <div class="card-body">
 
 
-                            <div class="mb-3">
-                                <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
-                                <select class="form-select @error('grupo_de_negocio_id') is-invalid @enderror"
-                                    id="grupoInput" name="grupo_de_negocio_id">
-                                    <option value="" disabled selected>--Selecione um grupo de negócio--</option>
-                                    @foreach ($gruposDeNegocios as $grupo)
-                                    <option value="{{ $grupo->id }}"
-                                        {{ old('grupo_de_negocio_id') == $grupo->id ? 'selected' : '' }}>
-                                        {{ $grupo->nome }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('grupo_de_negocio_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
+                                    <select class="form-select @error('grupo_de_negocio_id') is-invalid @enderror"
+                                        id="grupoInput" name="grupo_de_negocio_id">
+                                        <option value="" disabled selected>--Selecione um grupo de negócio--</option>
+                                        @foreach ($gruposDeNegocios as $grupo)
+                                        <option value="{{ $grupo->id }}"
+                                            {{ old('grupo_de_negocio_id') == $grupo->id ? 'selected' : '' }}>
+                                            {{ $grupo->nome }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="mt-2" style="font-size: 0.675rem">
+                                        <a href="{{ route('admin.grupo-de-negocios.create') }}">Grupo não cadastrado?
+                                            Clique aqui.</a>
+                                    </div>
+                                    @error('grupo_de_negocio_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
-                            </div>
 
-                            <div class="mb-3">
+                                <div class="mb-3 col-md-6">
                                     <label class="form-label">Tipo de Pessoa</label>
                                     <select id="tipoPessoaSelect"
                                         class="form-select @error('tipoPessoaInput') is-invalid @enderror">
@@ -73,35 +78,36 @@
                                     </div>
                                     @enderror
                                 </div>
+                            </div>
 
-                                <div class="mb-3" id="cpfInputDiv" @if (old('tipoPessoaInput')=='pf' )
-                                    style="display: block;" @else style="display: none;" @endif>
-                                    <label class="form-label">Pesquisar por CPF</label>
-                                    <input type="text" class="form-control @error('cpfInput') is-invalid @enderror"
-                                        id="cpfInput" name="cpfInput" maxlength="11" value="{{ old('cpfInput') }}">
-                                    <div id="pessoaFisicaResult"></div>
-                                    <input type="hidden" id="cpfIdInput" name="cpfIdInput">
-                                    @error('cpfInput')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
+                            <div class="mb-3" id="cpfInputDiv" @if (old('tipoPessoaInput')=='pf' )
+                                style="display: block;" @else style="display: none;" @endif>
+                                <label class="form-label">Pesquisar por CPF</label>
+                                <input type="text" class="form-control @error('cpfInput') is-invalid @enderror"
+                                    id="cpfInput" name="cpfInput" maxlength="11" value="{{ old('cpfInput') }}">
+                                <div id="pessoaFisicaResult"></div>
+                                <input type="hidden" id="cpfIdInput" name="cpfIdInput">
+                                @error('cpfInput')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
                                 </div>
+                                @enderror
+                            </div>
 
 
-                                <div class="mb-3" id="cnpjInputDiv" @if (old('tipoPessoaInput')=='pj' )
-                                    style="display: block;" @else style="display: none;" @endif>
-                                    <label class="form-label">Pesquisar por CNPJ</label>
-                                    <input type="text" class="form-control @error('cnpjInput') is-invalid @enderror"
-                                        id="cnpjInput" name="cnpjInput" maxlength="14" value="{{ old('cnpjInput') }}">
-                                    <div id="pessoaJuridicaResult"></div>
-                                    <input type="hidden" id="razaoSocialIdInput" name="razaoSocialIdInput">
-                                    @error('cnpjInput')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
+                            <div class="mb-3" id="cnpjInputDiv" @if (old('tipoPessoaInput')=='pj' )
+                                style="display: block;" @else style="display: none;" @endif>
+                                <label class="form-label">Pesquisar por CNPJ</label>
+                                <input type="text" class="form-control @error('cnpjInput') is-invalid @enderror"
+                                    id="cnpjInput" name="cnpjInput" maxlength="14" value="{{ old('cnpjInput') }}">
+                                <div id="pessoaJuridicaResult"></div>
+                                <input type="hidden" id="razaoSocialIdInput" name="razaoSocialIdInput">
+                                @error('cnpjInput')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
                                 </div>
+                                @enderror
+                            </div>
 
 
                         </div>

@@ -230,6 +230,10 @@ class LicencasController extends Controller
         try {
             $tiposDeRenovacao = TipoDeRenovacao::all();
             $licenca = Licenca::findOrFail($id);
+            $unidade_de_negocio = UnidadeDeNegocio::where('id', $licenca->unidade_de_negocio_id)->first();
+
+            dd($unidade_de_negocio);
+            
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Grupo não encontrado
             abort(404, 'Licença não encontrada.');
