@@ -221,8 +221,22 @@ class LicencasController extends Controller
 
     public function show($id)
     {
-        $licenca = Licenca::findOrFail($id);
-        return view('admin.licencas.show', compact('licenca'));
+        try {
+            $tiposDeRenovacao = TipoDeRenovacao::all();
+            $licenca = Licenca::findOrFail($id);
+
+            $unidade_de_negocio = UnidadeDeNegocio::leftJoin('pessoa_fisica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_fisica.id')
+            ->leftJoin('pessoa_juridica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_juridica.id')
+            ->where('unidades_de_negocio.id', $licenca->unidade_de_negocio_id)
+            ->first();
+
+            
+        } catch (ModelNotFoundException $e) {
+            // Tratamento de exceção: Grupo não encontrado
+            abort(404, 'Licença não encontrada.');
+        }
+
+        return view('admin.licencas.show', compact('licenca', 'tiposDeRenovacao', 'unidade_de_negocio'));
     }
 
     public function edit($id)
