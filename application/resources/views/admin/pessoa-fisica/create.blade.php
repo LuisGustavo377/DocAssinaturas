@@ -258,7 +258,7 @@
 
                             <!--  Mascara CNPJ -->
                             <script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
-                        </div>
+
 
                             <!--  Carregar Select2 -->
                             <script src="{{ asset('assets/js/select2.js') }}"></script>
@@ -267,6 +267,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 @endsection
