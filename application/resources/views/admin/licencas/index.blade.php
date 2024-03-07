@@ -102,17 +102,17 @@
                                         <i class="ti ti-edit"></i>
                                     </a>
 
-                                    {{-- @if ($licenca->status === 'ativo')
-                                                <a href="{{ url('admin/licenca/inativar/' . $licenca->id) }}"
-                                    class="m-1 btn btn-danger" title="Inativar">
-                                    <i class="ti ti-lock"></i>
+                                    @if ($licenca->status === 'ativo')
+                                    <a href="{{ url('admin/licenca/inativar/' . $licenca->id) }}"
+                                        class="m-1 btn btn-danger" title="Inativar">
+                                        <i class="ti ti-lock"></i>
                                     </a>
                                     @elseif ($licenca->status === 'inativo')
                                     <a href="{{ url('admin/licenca/reativar/' . $licenca->id) }}"
                                         class="m-1 btn btn-warning" title="Reativar">
                                         <i class="ti ti-lock-off"></i>
                                     </a>
-                                    @endif --}}
+                                    @endif
                                 </td>
                             </tr>
                             @empty
