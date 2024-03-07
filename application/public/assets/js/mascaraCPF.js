@@ -11,9 +11,5 @@ document.head.appendChild(scriptJQueryMask);
 // Esperar até que ambos os scripts estejam carregados
 scriptJQuery.onload = scriptJQueryMask.onload = function() {
     // Executar o código que depende dos scripts carregados
-    $(document).ready(function() {
-        $('#cpfInput').mask('000.000.000-00', {
-            reverse: true
-        });
-    });
+
 };

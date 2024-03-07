@@ -250,14 +250,14 @@
                                 </div>
                             </form>
 
+                            <!--  Mascara CNPJ -->
+                            <script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
+
                             <!-- Script para Buscar Cidade dinamicamente de acordo com o Estado -->
                             <script src="{{ asset('assets/js/buscarCidade.js') }}"></script>
 
                             <!-- Validação Formulario Preenchimento de formulario -->
                             <script src="{{ asset('assets/js/validacaoPreenchimentoFormularioPessoaFisica.js') }}"></script>
-
-                            <!--  Mascara CNPJ -->
-                            <script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
 
 
                             <!--  Carregar Select2 -->
