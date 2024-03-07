@@ -32,11 +32,8 @@
                             <label class="form-label" style="color: #13deb9">Dados Cadastrais</label>
                         </div>
 
-                        <div class="card-body">
-
-
-                            <div class="row">
-                                <div class="mb-3 col-md-6">
+                        <div class="card-body">                            
+                                <div class="mb-3">
                                     <label id="grupoLabel" class="form-label">Grupo de Negócio</label>
                                     <select class="form-select @error('grupo_de_negocio_id') is-invalid @enderror"
                                         id="grupoInput" name="grupo_de_negocio_id">
@@ -59,8 +56,9 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3 col-md-6">
-                                    <label class="form-label">Tipo de Pessoa</label>
+                                <div class="mb-3">
+                                    
+                                    <label class="form-label">Unidade de Negócio</label>
                                     <select id="tipoPessoaSelect"
                                         class="form-select @error('tipoPessoaInput') is-invalid @enderror">
                                         <option value="" {{ old('tipoPessoaInput') == '' ? 'selected' : '' }} disabled>
@@ -78,7 +76,7 @@
                                     </div>
                                     @enderror
                                 </div>
-                            </div>
+                            
 
                             <div class="mb-3" id="cpfInputDiv" @if (old('tipoPessoaInput')=='pf' )
                                 style="display: block;" @else style="display: none;" @endif>

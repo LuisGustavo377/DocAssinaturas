@@ -35,6 +35,23 @@
                                     value="{{ $licenca->grupoDeNegocios->nome }}" disabled>
                             </div>
 
+                            @if($unidade_de_negocio->tipo_pessoa=='pf')
+                            <div class="mb-3">
+                                <label id="grupoLabel" class="form-label">Unidade de Negócio</label>
+                                <input type="text" class="form-control" id="nomeGrupoInput" name="grupo_de_negocio_id"
+                                    value="{{ $unidade_de_negocio->nome }}" disabled>
+                            </div>
+
+                            @else
+
+                            <div class="mb-3">
+                                <label id="grupoLabel" class="form-label">Unidade de Negócio</label>
+                                <input type="text" class="form-control" id="nomeGrupoInput" name="grupo_de_negocio_id"
+                                    value="{{ $unidade_de_negocio->razao_social }}" disabled>
+                            </div>
+
+                            @endif
+
                         </div>
 
                         
