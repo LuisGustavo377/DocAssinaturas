@@ -29,12 +29,12 @@
                                 <form method="POST" action="{{ route('proprietario.login') }}">
                                     @csrf
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">E-mail</label>
-                                        <input type="email" id="email"
-                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                            :value="old('email')" aria-describedby="emailHelp">
+                                        <label for="exampleInputcpf_cnpj" class="form-label">CPF/CNPJ</label>
+                                        <input type="text" id="cpf_cnpj"
+                                            class="form-control @error('cpf_cnpj') is-invalid @enderror" name="cpf_cnpj"
+                                            :value="old('cpf_cnpj')" maxLength="14" >
 
-                                        @error('email')
+                                        @error('cpf_cnpj')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
