@@ -60,8 +60,8 @@
                                     <div class="mb-3 col-md-4">
                                         <label id="cnpjLabel" class="form-label">CNPJ</label>
                                         <input type="text" class="form-control @error('cnpj') is-invalid @enderror"
-                                            id="cnpjInput" name="cnpj" placeholder="CNPJ"
-                                            value="{{ old('cnpj', $pessoa->cnpj) }}" maxlength="14">
+                                            id="cnpjInput" name="cnpj" placeholder="CNPJ" value="{{ old('cnpj', $pessoa->cnpj) }}" 
+                                            maxlength="18" oninput="mascaraCNPJ(this)">
                                         @error('cnpj')
                                             <div class="invalid-feedback">
                                                 {{ $message }}

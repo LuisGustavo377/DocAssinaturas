@@ -61,7 +61,7 @@
                                             <label id="cnpjLabel" class="form-label">CNPJ</label>
                                             <input type="text" class="form-control @error('cnpj') is-invalid @enderror"
                                                 id="cnpjInput" name="cnpj" placeholder="CNPJ" value="{{ old('cnpj') }}"
-                                                maxlength="14">
+                                                maxlength="18" oninput="mascaraCNPJ(this)">
                                             @error('cnpj')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}
@@ -292,9 +292,6 @@
                                     </div>
                             </form>
                         </div>
-
-                        <!--  Mascara CNPJ -->
-                        <script src="{{ asset('assets/js/mascaraCNPJ.js') }}"></script>
 
                         <!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
                         <script src="{{ asset('assets/js/buscarCidade.js') }}"></script>

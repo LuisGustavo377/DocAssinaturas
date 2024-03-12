@@ -50,6 +50,7 @@
         </script>   
         <script src="{{ asset('assets/js/funcoes.js') }}"></script>
         <script src="{{ asset('assets/js/cpf.js') }}"></script>
+        <script src="{{ asset('assets/js/cnpj.js') }}"></script>
         <script src="{{ asset('assets/js/alertas.js') }}"></script>
 
         <script src="{{ asset('assets/js/validacaoPreenchimentoFormularios.js') }}"></script>
