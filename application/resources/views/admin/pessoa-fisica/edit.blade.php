@@ -44,14 +44,14 @@
 
 
                                     <div class="mb-6 col-md-6">
-                                        <label for="cpfInput" class="form-label">CPF</label>
+                                        <label id="cpfLabel" class="form-label">CPF</label>
                                         <input type="text" class="form-control @error('cpf') is-invalid @enderror"
-                                            id="cpfInput" name="cpf" placeholder="CPF" value="{{ $pessoa->cpf }}"
-                                            maxLength='11'>
+                                            id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf', $pessoa->cpf) }}"
+                                            maxlength="14" oninput="mascaraCPF(this)">
                                         @error('cpf')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
                                         @enderror
                                     </div>
                                 </div>
