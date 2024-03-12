@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Tipos de Renovação')
 
@@ -47,7 +47,7 @@
                                 </th>
 
                                 <th class="border-bottom-0">
-                                    <h6 class="fw-semibold mb-0">Status</h6>
+                                    <h6 class="mb-0 fw-semibold">Status</h6>
                                 </th>
 
                                 <th class="border-bottom-0">
@@ -82,12 +82,12 @@
 
                                     @if($tipo->status==='ativo')
                                     <a href="{{ url('admin/tipo-de-renovacao/inativar/' . $tipo->id) }}"
-                                        class="btn btn-danger m-1" title="Inativar">
+                                        class="m-1 btn btn-danger" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </a>
                                     @elseif ($tipo->status==='inativo')
                                     <a href="{{ url('admin/tipo-de-renovacao/reativar/' . $tipo->id) }}"
-                                        class="btn btn-warning m-1" title="Reativar">
+                                        class="m-1 btn btn-warning" title="Reativar">
                                         <i class="ti ti-lock-off"></i>
                                     </a>
                                     @endif

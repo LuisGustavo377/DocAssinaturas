@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Resultados Pesquisa')
 
@@ -109,7 +109,7 @@
 
                 <div class="mb-3 d-flex justify-content-end">
                     <div class="mb-3">
-                        <div class="text-center my-4">
+                        <div class="my-4 text-center">
                             <a href="javascript:history.back()" class="btn btn-light me-2">
                                 <i class="ti ti-arrow-left me-1"></i>
                                 Voltar

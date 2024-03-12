@@ -1,4 +1,4 @@
-@extends ('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Detalhar Banco')
 
@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">@yield('title')</h5>
+                <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
                 <div class="card">
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.bancos.store') }}" enctype="multipart/form-data">
@@ -29,14 +29,14 @@
 
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 mb-6">
+                                    <div class="mb-6 col-md-6">
                                         <label id="nomeLabel" class="form-label">Nome do Banco</label>
                                         <input type="text" class="form-control @error('nome') is-invalid @enderror"
                                             id="nomeInput" name="nome" placeholder="Nome Completo"
                                             value="{{ $banco->nome }}" disabled>
                                     </div>
 
-                                    <div class="col-md-6 mb-6">
+                                    <div class="mb-6 col-md-6">
                                         <label id="codigoLabel" class="form-label">Código</label>
                                         <input type="text" class="form-control @error('codigo') is-invalid @enderror"
                                             id="codigoInput" name="codigo" placeholder="Código"
@@ -47,7 +47,7 @@
 
                             <div class="mb-3 d-flex justify-content-end">
                                 <div class="mb-3">
-                                    <div class="text-center my-4">
+                                    <div class="my-4 text-center">
                                         <a href="javascript:history.back()" class="btn btn-light me-2">
                                             <i class="ti ti-arrow-left me-1"></i>
                                             Voltar

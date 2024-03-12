@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Tipos de Logradouro')
 
@@ -29,7 +29,7 @@
                 <!-- Formulário da Barra de Pesquisa -->
                 <form action="{{ route('admin.tipos-de-logradouro.search') }}" method="post">
                     @csrf
-                    <div class="input-group mb-3">
+                    <div class="mb-3 input-group">
                         <input type="text" class="form-control" name="search"
                             placeholder="Buscar por descrição...">
                         <button class="btn btn-outline-success" type="submit">

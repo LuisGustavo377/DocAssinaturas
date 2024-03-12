@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Cargos')
 
@@ -29,7 +29,7 @@
                 <!-- Formulário da Barra de Pesquisa -->
                 <form action="{{ route('admin.cargos.search') }}" method="post">
                     @csrf
-                    <div class="input-group mb-3">
+                    <div class="mb-3 input-group">
                         <input type="text" class="form-control" name="search"
                             placeholder="Buscar por descricao...">
                         <button class="btn btn-outline-success" type="submit">
@@ -84,12 +84,12 @@
 
                                     @if($cargo->status==='ativo')
                                     <a href="{{ url('admin/cargo/inativar/' . $cargo->id) }}"
-                                        class="btn btn-danger m-1" title="Inativar">
+                                        class="m-1 btn btn-danger" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </a>
                                     @elseif ($cargo->status==='inativo')
                                     <a href="{{ url('admin/cargo/reativar/' . $cargo->id) }}"
-                                        class="btn btn-warning m-1" title="Reativar">
+                                        class="m-1 btn btn-warning" title="Reativar">
                                         <i class="ti ti-lock-off"></i>
                                     </a>
                                     @endif

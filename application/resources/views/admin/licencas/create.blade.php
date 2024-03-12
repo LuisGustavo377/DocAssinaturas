@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Nova Licença')
 
@@ -149,7 +149,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3 col-md-4   ">
+                                <div class="mb-3 col-md-4 ">
                                     <label id="tipoDeRenovacaoLabel" class="form-label">Tipo de Renovação</label>
                                     <select class="form-select @error('tipo_de_renovacao') is-invalid @enderror"
                                         id="tipoDeRenovacaoInput" name="tipo_de_renovacao">

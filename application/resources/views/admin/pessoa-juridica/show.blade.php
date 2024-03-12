@@ -1,4 +1,4 @@
-@extends ('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Detalhar Pessoa Jurídica')
 
@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">@yield('title')</h5>
+                <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
                 <div class="card">
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.pessoa-juridica.store') }}"
@@ -162,20 +162,20 @@
 
                             <div class="mb-3">
                                 <div class="card">
-                                    <div class="card-body text-left">
+                                    <div class="text-left card-body">
                                         @if ($pessoa->imagem === 'imagem_padrao')
                                         <img src="{{ asset('assets/images/profile/imagem_user.svg') }}" width="200"
-                                            height="200" class="img-fluid rounded" alt="Imagem Padrão">
+                                            height="200" class="rounded img-fluid" alt="Imagem Padrão">
                                         @else
                                         <img src="{{ asset('img/pessoaJuridica/' . $pessoa->imagem) }}"
-                                            class="img-fluid rounded" width="200" height="200">
+                                            class="rounded img-fluid" width="200" height="200">
                                         @endif
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3 d-flex justify-content-end">
                                 <div class="mb-3">
-                                    <div class="text-center my-4">
+                                    <div class="my-4 text-center">
                                         <a href="javascript:history.back()" class="btn btn-light me-2">
                                             <i class="ti ti-arrow-left me-1"></i>
                                             Voltar

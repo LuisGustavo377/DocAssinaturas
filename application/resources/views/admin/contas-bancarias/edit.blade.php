@@ -1,4 +1,4 @@
-@extends ('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Conta Bancária')
 
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="mb-3 col-md-6">
                                 <label id="tipoContaLabel" class="form-label">Tipo de Conta</label>
                                 <select class="form-select" id="tipoContaSelect" name="tipo_de_conta">
                                     <option value="" disabled @if($conta->tipo_de_conta == '') selected @endif> --
@@ -52,7 +52,7 @@
                                         selected @endif>Conta de Pagamento</option>
                                 </select>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="mb-3 col-md-6">
                                 <label id="bancoLabel" class="form-label">Banco</label>
                                 <select class="form-select" id="bancoSelect" name="banco_id">
                                     <option value="" disabled selected> -- Selecione o nome do Banco --</option>
@@ -64,12 +64,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mb-6">
+                            <div class="mb-6 col-md-6">
                                 <label class="form-label">Agência</label>
                                 <input type="text" class="form-control" name="agencia" id="agenciaInput"
                                     value="{{ $conta->agencia }}" maxLength="4">
                             </div>
-                            <div class="col-md-6 mb-6">
+                            <div class="mb-6 col-md-6">
                                 <label class="form-label">Conta</label>
                                 <input type="text" class="form-control" name="numero_conta" id="contaInput"
                                     value="{{ $conta->numero_conta }}">
@@ -77,7 +77,7 @@
 
                         </div>
                         <div class="row">
-                        <div class="col-md-12 mb-6">
+                        <div class="mb-6 col-md-12">
                                 <label id="statusLabel" class="form-label">Status</label>
                                 <select class="form-select" id="statusSelect" name="status">
                                     <option value="ativo" @if($conta->status == 'ativo') selected @endif>Ativo
@@ -91,7 +91,7 @@
 
                     <div class="mb-3 d-flex justify-content-end">
                         <div class="mb-3">
-                            <div class="text-center my-4">
+                            <div class="my-4 text-center">
                                 <a href="javascript:history.back()" class="btn btn-light me-2">
                                     <i class="ti ti-arrow-left me-1"></i>
                                     Voltar

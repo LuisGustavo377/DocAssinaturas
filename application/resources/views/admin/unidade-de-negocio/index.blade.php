@@ -1,5 +1,4 @@
-@extends('layouts.dashboard')
-
+@extends ('layouts.main')
 @section('title', 'Unidade de Negócios')
 
 @section('sidebar')

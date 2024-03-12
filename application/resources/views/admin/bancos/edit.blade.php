@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Alterar Banco')
 
@@ -15,7 +15,7 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">@yield('title')</h5>
+            <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
             <div class="card">
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.bancos.update', $banco->id) }}"
@@ -59,7 +59,7 @@
  
                         <div class="mb-3 d-flex justify-content-end">
                             <div class="mb-3">
-                                <div class="text-center my-4">
+                                <div class="my-4 text-center">
                                     <a href="javascript:history.back()" class="btn btn-light me-2">
                                         <i class="ti ti-arrow-left me-1"></i>
                                         Voltar

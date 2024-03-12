@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Contas Bancárias')
 
@@ -29,7 +29,7 @@
                 <!-- Formulário da Barra de Pesquisa -->
                 <form action="{{ route('admin.contas-bancarias.search') }}" method="post">
                     @csrf
-                    <div class="input-group mb-3">
+                    <div class="mb-3 input-group">
                         <input type="text" class="form-control" name="search" placeholder="Digite o nome ou razão social da unidade de negócio...">
                         <button class="btn btn-outline-success" type="submit">
                             <i class="ti ti-search"></i>
@@ -100,12 +100,12 @@
 
                                     @if($conta->status==='ativo')
                                     <a href="{{ url('admin/conta-bancaria/inativar/' . $conta->id) }}"
-                                        class="btn btn-danger m-1" title="Inativar">
+                                        class="m-1 btn btn-danger" title="Inativar">
                                         <i class="ti ti-lock"></i>
                                     </a>
                                     @elseif ($conta->status==='inativo')
                                     <a href="{{ url('admin/conta-bancaria/reativar/' . $conta->id) }}"
-                                        class="btn btn-warning m-1" title="Reativar">
+                                        class="m-1 btn btn-warning" title="Reativar">
                                         <i class="ti ti-lock-off"></i>
                                     </a>
                                     @endif

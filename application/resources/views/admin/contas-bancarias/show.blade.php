@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends ('layouts.main')
 
 @section('title', 'Detalhar Conta Bancária')
 
@@ -39,14 +39,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 mb-6">
+                                <div class="mb-6 col-md-6">
                                     <label class="form-label">Tipo de Conta</label>
                                     <input type="text" class="form-control" value="@if($conta->tipo_de_conta == 'conta-corrente')Conta Corrente @elseif($conta->tipo_de_conta == 'conta-pagamento')Conta de Pagamento@elseif($conta->tipo_de_conta == 'conta-poupanca')
                                             Conta Poupança
                                         @endif
                                     " disabled>
                                 </div>
-                                <div class="col-md-6 mb-6">
+                                <div class="mb-6 col-md-6">
                                     <label class="form-label">Banco</label>
                                     @if($conta->banco)
                                     <input type="text" class="form-control" value="{{ $conta->banco->nome }}" disabled>
@@ -58,11 +58,11 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-md-6 mb-6">
+                                <div class="mb-6 col-md-6">
                                     <label class="form-label">Agência</label>
                                     <input type="text" class="form-control" value="{{ $conta->agencia }}" disabled>
                                 </div>
-                                <div class="col-md-6 mb-6">
+                                <div class="mb-6 col-md-6">
                                     <label class="form-label">Status</label><br>
                                     <span
                                         class="badge bg-{{ $conta->status === 'ativo' ? 'success' : ($conta->status === 'inativo' ? 'danger' : 'warning') }} rounded-3 fw-semibold">

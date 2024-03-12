@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.main')
 
 @section('title', 'Alterar Pessoa Física')
 
@@ -46,12 +46,13 @@
                                     <div class="mb-6 col-md-6">
                                         <label id="cpfLabel" class="form-label">CPF</label>
                                         <input type="text" class="form-control @error('cpf') is-invalid @enderror"
-                                            id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf', $pessoa->cpf) }}"
+                                            id="cpfInput" name="cpf" placeholder="CPF"
+                                            value="{{ old('cpf', sprintf('%s.%s.%s-%s', substr($pessoa->cpf, 0, 3), substr($pessoa->cpf, 3, 3), substr($pessoa->cpf, 6, 3), substr($pessoa->cpf, 9, 2))) }}"
                                             maxlength="14" oninput="mascaraCPF(this)">
                                         @error('cpf')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>s
                                         @enderror
                                     </div>
                                 </div>
@@ -250,9 +251,6 @@
                                 </div>
                             </div>
                         </form>
-
-                        <!--  Mascara CNPJ -->
-                        <script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
 
                         <!--  Script para Buscar Cidade dinamicamente de acordo com o Estado -->
                         <script src="{{ asset('assets/js/buscarCidade.js') }}"></script>
