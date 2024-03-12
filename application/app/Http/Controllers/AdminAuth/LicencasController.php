@@ -157,6 +157,7 @@ class LicencasController extends Controller
 
                         // Obter o e-mail da pessoa física
                         $email = $pessoaFisica->email;
+                        $cpf_cnpj = $pessoaFisica->cpf;
 
                         // Criar um novo proprietário para pessoa física
                         $proprietario = new Proprietario();
@@ -164,6 +165,7 @@ class LicencasController extends Controller
                         $proprietario->pessoa_id = $pessoaFisica->id;
                         $proprietario->unidade_de_negocio_id = $unidade->id;
                         $proprietario->name = $pessoaFisica->nome;
+                        $proprietario->cpf_cnpj = $cpf_cnpj;
                         $proprietario->email = $email;
                         $proprietario->password = $request->senha_temporaria;
                         $proprietario->password_temp = 'true';
@@ -184,6 +186,8 @@ class LicencasController extends Controller
 
                         // Obter o e-mail da pessoa jurídica
                         $email = $pessoaJuridica->email;
+                        $cpf_cnpj = $pessoaJuridica->cnpj;
+
 
                         // Criar um novo proprietário para pessoa jurídica
                         $proprietario = new Proprietario();
@@ -192,6 +196,7 @@ class LicencasController extends Controller
                         $proprietario->unidade_de_negocio_id = $unidade->id;
                         $proprietario->name = $pessoaJuridica->razao_social;
                         $proprietario->email = $email;
+                        $proprietario->cpf_cnpj = $cpf_cnpj;
                         $proprietario->password = $request->senha_temporaria;
                         $proprietario->password_temp = 'true';
                         $proprietario->user_cadastro_id = Auth::id();

@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'cpf_cnpj' => ['required', 'string', 'regex:/^[0-9]{11,14}$/'], // Regex para validar CPF (11 dígitos) ou CNPJ (14 dígitos)
             'password' => ['required', 'string'],
         ];
     }
@@ -35,12 +35,12 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'O campo de e-mail é obrigatório.',
-            'email.email' => 'Por favor, insira um endereço de e-mail válido.',
+            'cpf_cnpj.required' => 'O campo CPF/CNPJ é obrigatório.',
+            'cpf_cnpj.regex' => 'Por favor, insira um CPF ou CNPJ válido.',
             'password.required' => 'O campo de senha é obrigatório.',
             'password.string' => 'O campo de senha deve ser uma string.',
             'failed'=> 'As credenciais informadas não correspondem aos nossos registros.',
-        ];
+         ];
     }
 
     /**
@@ -52,11 +52,16 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::guard('proprietario')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $credentials = [
+            'cpf_cnpj' => $this->input('cpf_cnpj'),
+            'password' => $this->input('password'),
+        ];
+
+        if (! Auth::guard('proprietario')->attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('As credenciais informadas não correspondem aos nossos registros.'),
+                'cpf_cnpj' => trans('As credenciais informadas não correspondem aos nossos registros.'),
             ]);
         }
 
@@ -80,7 +85,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
+            'cpf_cnpj' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -92,6 +97,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('cpf_cnpj')).'|'.$this->ip());
     }
 }

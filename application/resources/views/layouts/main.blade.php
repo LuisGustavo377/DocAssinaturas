@@ -45,15 +45,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/sidebarmenu.js') }}"></script>
-    <script src="{{ asset('assets/js/app.min.js') }}"></script>
-    < <script src="{{ asset('assets/js/dashboard.js') }}">
-        </script>
-        <script src="{{ asset('assets/js/funcoes.js') }}"></script>
-        <script src="{{ asset('assets/js/alertas.js') }}"></script>
-
-        <script src="{{ asset('assets/js/validacaoPreenchimentoFormularios.js') }}"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="{{ asset('assets/js/app.min.js') }}"></script> 
+    <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    <script src="{{ asset('assets/js/funcoes.js') }}"></script>
+    <script src="{{ asset('assets/js/alertas.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     {{-- Arquivos Select 2 --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />

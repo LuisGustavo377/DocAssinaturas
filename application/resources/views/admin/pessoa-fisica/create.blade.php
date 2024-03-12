@@ -232,27 +232,31 @@
                             </div>
 
 
-                            <div class="mb-3 d-flex justify-content-end">
-                                <div class="mb-3">
-                                    <div class="my-4 text-center">
-                                        <a href="javascript:history.back()" class="btn btn-light me-2">
-                                            <i class="ti ti-arrow-left me-1"></i>
-                                            Voltar
-                                        </a>
-                                        <button type="submit" class="btn btn-success ms-2">
-                                            <i class="ti ti-plus me-1"></i>
-                                            Cadastrar
-                                        </button>
+                                <div class="mb-3 d-flex justify-content-end">
+                                    <div class="mb-3">
+                                        <div class="my-4 text-center">
+                                            <a href="javascript:history.back()" class="btn btn-light me-2">
+                                                <i class="ti ti-arrow-left me-1"></i>
+                                                Voltar
+                                            </a>
+                                            <button type="submit" class="btn btn-success ms-2">
+                                                <i class="ti ti-plus me-1"></i>
+                                                Cadastrar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
 
                         <!-- Script para Buscar Cidade dinamicamente de acordo com o Estado -->
                         <script src="{{ asset('assets/js/buscarCidade.js') }}"></script>
 
-                        <!-- Validação Formulario Preenchimento de formulario -->
-                        <script src="{{ asset('assets/js/validacaoPreenchimentoFormularioPessoaFisica.js') }}"></script>
+                            <!-- Validação Formulario Preenchimento de formulario -->
+                            <script src="{{ asset('assets/js/validacaoPreenchimentoFormularioPessoaFisica.js') }}"></script>
+
+                            <!--  Mascara CNPJ -->
+                            <script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
+
 
                         <!--  Carregar Select2 -->
                         <script src="{{ asset('assets/js/select2.js') }}"></script>

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('proprietarios', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
+            $table->string('cpf_cnpj');
             $table->uuid('pessoa_id')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->enum('tipo_de_usuario', ['proprietario'])->default('proprietario');
