@@ -62,12 +62,16 @@ Route::middleware('auth:proprietario')->prefix('proprietario')->group(function (
 
 
 // ROTAS ACESSO PROPRIETARIOS
-Route::get('/proprietario/dashboard', function () {
-    return view('proprietario.dashboard');
-})->middleware(['auth:proprietario', 'verified'])->name('proprietario.dashboard');
 
-//ROTAS ESTABELECIMENTO
+Route::middleware('auth:proprietario')->prefix('proprietario')->group(function () {
+    Route::get('dashboard', function () {
+        return view('proprietario.dashboard');
+    })->middleware([ 'verified'])->name('proprietario.dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::resource('/estabelecimentos', EstabelecimentoController::class);
+
+    
+
+
+
+
 });
