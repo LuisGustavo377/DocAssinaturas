@@ -59,9 +59,13 @@ class UnidadeDeNegocioController extends Controller
                     $unidade->save();
 
                     // Salvar o unidade_negocio_id na tabela PessoaFisica
-                    $pessoaFisica = PessoaFisica::find($request->cpfIdInput);
+                    $cpfInput = preg_replace('/[^0-9]/', '', $request->cpfInput);
+                    $pessoaFisica = PessoaFisica::find($cpfInput);
+
                     if ($pessoaFisica) {
                         $pessoaFisica->unidade_de_negocio_id = $unidade->id;
+
+                        dd($pessoaFisica);
                         $pessoaFisica->save();
 
                         // Obter o e-mail da pessoa física
@@ -83,10 +87,13 @@ class UnidadeDeNegocioController extends Controller
                     }
                 } elseif ($request->tipoPessoaInput === 'pj') {
                     $unidade->pessoa_id = $request->razaoSocialIdInput;
+                    
                     $unidade->save();
 
                     // Salvar o unidade_negocio_id na tabela PessoaJuridica
-                    $pessoaJuridica = PessoaJuridica::find($request->razaoSocialIdInput);
+                    $razaoSocialIdInput = preg_replace('/[^0-9]/', '', $request->razaoSocialIdInput);
+                    $pessoaJuridica = PessoaJuridica::find($razaoSocialIdInput);
+
                     if ($pessoaJuridica) {
                         $pessoaJuridica->unidade_de_negocio_id = $unidade->id;
                         $pessoaJuridica->save();

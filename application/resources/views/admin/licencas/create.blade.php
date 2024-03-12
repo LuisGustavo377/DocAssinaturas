@@ -82,7 +82,7 @@
                                 style="display: block;" @else style="display: none;" @endif>
                                 <label class="form-label">Pesquisar por CPF</label>
                                 <input type="text" class="form-control @error('cpfInput') is-invalid @enderror"
-                                    id="cpfInput" name="cpfInput" maxlength="11" value="{{ old('cpfInput') }}">
+                                    id="cpfInput" name="cpfInput" maxlength="14" oninput="mascaraCPF(this)" value="{{ old('cpfInput') }}">
                                 <div id="pessoaFisicaResult"></div>
                                 <input type="hidden" id="cpfIdInput" name="cpfIdInput">
                                 @error('cpfInput')
@@ -97,7 +97,7 @@
                                 style="display: block;" @else style="display: none;" @endif>
                                 <label class="form-label">Pesquisar por CNPJ</label>
                                 <input type="text" class="form-control @error('cnpjInput') is-invalid @enderror"
-                                    id="cnpjInput" name="cnpjInput" maxlength="14" value="{{ old('cnpjInput') }}">
+                                    id="cnpjInput" name="cnpjInput" maxlength="18" oninput="mascaraCNPJ(this)" value="{{ old('cnpjInput') }}">
                                 <div id="pessoaJuridicaResult"></div>
                                 <input type="hidden" id="razaoSocialIdInput" name="razaoSocialIdInput">
                                 @error('cnpjInput')
@@ -291,8 +291,6 @@ document.querySelectorAll('.form-control').forEach(function(element) {
 <script src="{{ asset('assets/js/mostrarPessoas.js') }}"></script>
 
 <!--  Mascara CNPJ -->
-<script src="{{ asset('assets/js/mascaraCNPJ.js') }}"></script>
-<script src="{{ asset('assets/js/mascaraCPF.js') }}"></script>
 <script src="{{ asset('assets/js/inputPjPf.js') }}"></script>
 
 @endsection

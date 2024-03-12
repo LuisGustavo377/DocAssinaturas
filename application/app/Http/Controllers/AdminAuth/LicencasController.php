@@ -254,7 +254,6 @@ class LicencasController extends Controller
             ->leftJoin('pessoa_juridica', 'unidades_de_negocio.pessoa_id', '=', 'pessoa_juridica.id')
             ->where('unidades_de_negocio.id', $licenca->unidade_de_negocio_id)
             ->first();
-
             
         } catch (ModelNotFoundException $e) {
             // Tratamento de exceção: Grupo não encontrado

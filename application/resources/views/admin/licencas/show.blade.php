@@ -34,18 +34,39 @@
                             </div>
 
                             @if($unidade_de_negocio->tipo_pessoa=='pf')
-                            <div class="mb-3">
-                                <label id="grupoLabel" class="form-label">Unidade de Negócio</label>
-                                <input type="text" class="form-control" id="nomeGrupoInput" name="grupo_de_negocio_id"
-                                    value="{{ $unidade_de_negocio->nome }}" disabled>
+
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label id="grupoLabel" class="form-label">Unidade de Negócio</label>
+                                    <input type="text" class="form-control" id="nomeGrupoInput"
+                                        name="unidade_de_negocio_id" value="{{ $unidade_de_negocio->nome }}" disabled>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label id="grupoLabel" class="form-label">CPF</label>
+                                    <input type="text" class="form-control" id="nomeGrupoInput"
+                                        name="unidade_de_negocio_cpf"
+                                        value="{{ sprintf("%s.%s.%s-%s", substr($unidade_de_negocio->cpf, 0, 3), substr($unidade_de_negocio->cpf, 3, 3), substr($unidade_de_negocio->cpf, 6, 3), substr($unidade_de_negocio->cpf, 9, 2)) }}"
+                                        disabled>
+                                </div>
                             </div>
 
                             @else
 
-                            <div class="mb-3">
-                                <label id="grupoLabel" class="form-label">Unidade de Negócio</label>
-                                <input type="text" class="form-control" id="nomeGrupoInput" name="grupo_de_negocio_id"
-                                    value="{{ $unidade_de_negocio->razao_social }}" disabled>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label id="grupoLabel" class="form-label">Unidade de Negócio</label>
+                                    <input type="text" class="form-control" id="nomeGrupoInput"
+                                        name="grupo_de_negocio_id" value="{{ $unidade_de_negocio->razao_social }}"
+                                        disabled>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label id="grupoLabel" class="form-label">CNPJ</label>
+                                    <input type="text" class="form-control" id="nomeGrupoInput"
+                                        name="unidade_de_negocio_cnpj"
+                                        value="{{ sprintf("%s.%s.%s/%s-%s", substr($unidade_de_negocio->cnpj, 0, 2), substr($unidade_de_negocio->cnpj, 2, 3), substr($unidade_de_negocio->cnpj, 5, 3), substr($unidade_de_negocio->cnpj, 8, 4), substr($unidade_de_negocio->cnpj, 12, 2)) }}"
+                                        disabled>
+
+                                </div>
                             </div>
 
                             @endif
