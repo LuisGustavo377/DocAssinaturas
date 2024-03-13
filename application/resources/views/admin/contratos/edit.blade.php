@@ -3,120 +3,135 @@
 @section('title', 'Alterar Contrato')
 
 @section('sidebar')
-    <x-sidebar-admin></x-sidebar-admin>
+<x-sidebar-admin></x-sidebar-admin>
 @endsection
 
 @section('navbar')
-    <x-navbar-admin></x-navbar-admin>
+<x-navbar-admin></x-navbar-admin>
 @endsection
 
 @section('content')
 
+<div class="container-fluid">
+
     <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('admin.contratos.update', $contrato->id) }}"
+                            enctype="multipart/form-data">
 
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="mb-4 card-title fw-semibold">@yield('title')</h5>
-                    <div class="card">
-                        <div class="card-body">
-                            <form method="POST" action="{{ route('admin.contratos.update', $contrato->id) }}"
-                                enctype="multipart/form-data">
+                            @csrf {{-- Prevenção do laravel de ataques a formularios --}}
+                            @method('PUT')
 
-                                @csrf {{-- Prevenção do laravel de ataques a formularios --}}
-                                @method('PUT')
+                            <div class="alert alert-light">
+                                <i class="ti ti-file-description" style="color: #13deb9"></i>
+                                <label class="form-label" style="color: #13deb9">Dados Cadastrais</label>
+                            </div>
 
-                                <div class="alert alert-light">
-                                    <i class="ti ti-file-description" style="color: #13deb9"></i>
-                                    <label class="form-label" style="color: #13deb9">Dados Cadastrais</label>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label id="numero_contratoLabel" class="form-label">Número Contrato</label>
+                                        <input type="text"
+                                            class="form-control @error('numero_contrato') is-invalid @enderror"
+                                            id="numero_contratoInput" name="numero_contrato"
+                                            value="{{ $contrato->numero_contrato }}">
+                                        @error('numero_contrato')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label id="planoLabel" class="form-label">Planos</label>
+                                        <select class="form-select @error('plano_id') is-invalid @enderror"
+                                            id="planoSelect" name="plano_id">
+                                            <option value="" selected disabled> -- Selecione o plano -- </option>
+                                            @foreach ($planos as $plano)
+                                            <option value="{{ $plano->id }}"
+                                                {{ old('plano_id', $contrato->plano_id) == $plano->id ? 'selected' : '' }}>
+                                                {{ $plano->nome }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('plano_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
                                 </div>
 
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="mb-3 col-md-6">
-                                            <label id="numero_contratoLabel" class="form-label">Número Contrato</label>
-                                            <input type="text"
-                                                class="form-control @error('numero_contrato') is-invalid @enderror"
-                                                id="numero_contratoInput" name="numero_contrato"
-                                                value="{{ $contrato->numero_contrato }}">
-                                            @error('numero_contrato')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-3 col-md-6">
-                                            <label id="planoLabel" class="form-label">Planos</label>
-                                            <select class="form-select @error('plano_id') is-invalid @enderror"
-                                                id="planoSelect" name="plano_id">
-                                                <option value="" selected disabled> -- Selecione o plano -- </option>
-                                                @foreach ($planos as $plano)
-                                                    <option value="{{ $plano->id }}"
-                                                        {{ old('plano_id', $contrato->plano_id) == $plano->id ? 'selected' : '' }}>
-                                                        {{ $plano->nome }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('plano_id')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label id="statusLabel" class="form-label">Status</label>
+                                        <select class="form-select @error('status') is-invalid @enderror"
+                                            id="statusInput" name="status">
+                                            <option value="" disabled>-- Altere o Status --</option>
+                                            @foreach (['ativo', 'inativo'] as $opcao)
+                                            <option value="{{ $opcao }}"
+                                                {{ old('status', $contrato->status) == $opcao ? 'selected' : '' }}>
+                                                {{ ucfirst($opcao) }}
+                                            </option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="mb-3 col-md-6">
-                                            <label id="statusLabel" class="form-label">Status</label>
-                                            <select class="form-select @error('status') is-invalid @enderror"
-                                                id="statusInput" name="status">
-                                                <option value="" disabled>-- Altere o Status --</option>
-                                                @foreach (['ativo', 'inativo'] as $opcao)
-                                                    <option value="{{ $opcao }}"
-                                                        {{ old('status', $contrato->status) == $opcao ? 'selected' : '' }}>
-                                                        {{ ucfirst($opcao) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="mb-3 col-md-6">
-                                            <label id="arquivoLabel" class="form-label">Contrato</label>
+                                    <div class="mb-3 col-md-6 position-relative">
+                                        <label id="arquivoLabel" class="form-label">Contrato</label>
+                                        <div class="input-group">
                                             <input type="file"
                                                 class="form-control @error('arquivo') is-invalid @enderror"
                                                 id="arquivoInput" name="arquivo">
-                                            @error('arquivo')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+
+                                            @if ($contrato->contratoArquivo()->latest()->first() &&
+                                            $contrato->contratoArquivo()->latest()->first()->arquivo)
+                                            <span class="input-group-text">
+                                                <a href="#" title="Abrir Contrato">
+                                                    <i class="ti ti-file-text" style="font-size:20px;"></i>
+                                                </a>
+                                            </span>
+                                            @endif
                                         </div>
+
+                                        @error('arquivo')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
+
+
 
                                 </div>
 
+                            </div>
 
 
-                                <div class="mb-3 d-flex justify-content-end">
-                                    <div class="mb-3">
-                                        <div class="my-4 text-center">
-                                            <a href="javascript:history.back()" class="btn btn-light me-2">
-                                                <i class="ti ti-arrow-left me-1"></i>
-                                                Voltar
-                                            </a>
-                                            <button type="submit" class="btn btn-success ms-2">
-                                                <i class="ti ti-check me-1"></i>
-                                                Alterar
-                                            </button>
-                                        </div>
+
+                            <div class="mb-3 d-flex justify-content-end">
+                                <div class="mb-3">
+                                    <div class="my-4 text-center">
+                                        <a href="javascript:history.back()" class="btn btn-light me-2">
+                                            <i class="ti ti-arrow-left me-1"></i>
+                                            Voltar
+                                        </a>
+                                        <button type="submit" class="btn btn-success ms-2">
+                                            <i class="ti ti-check me-1"></i>
+                                            Alterar
+                                        </button>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 @endsection

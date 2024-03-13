@@ -63,7 +63,8 @@
                                         value="{{ optional($contrato->contratoArquivo()->latest()->first())->arquivo ?? 'Não possui anexo' }}"
                                         disabled>
 
-                                        @if ($contrato->contratoArquivo()->latest()->exists())
+                                    @if ($contrato->contratoArquivo()->latest()->first() && $contrato->contratoArquivo()->latest()->first()->arquivo)
+
                                     <span>
                                         <a href="#" title="Abrir Contrato">
                                             <i class="ti ti-file-text"
