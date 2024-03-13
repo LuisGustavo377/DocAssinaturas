@@ -64,11 +64,25 @@
                                         <input type="text" class="form-control" id="nome-razaoSocial"
                                             name="nome-razaoSocial" value="{{ $unidade->nomeOuRazaoSocial }}" disabled>
                                     </div>
+                                    @if (strlen($unidade->cpfOuCnpj) === 11)
                                     <div class="mb-3 col-md-4">
-                                        <label class="form-label">CPF/CNPJ</label>
+                                        <label class="form-label">CPF</label>
                                         <input type="text" class="form-control" id="cpf-cnpj" name="cpf-cnpj"
-                                            value="{{ $unidade->cpfOuCnpj }}" disabled>
+                                            value="{{ sprintf('%s.%s.%s-%s', substr($unidade->cpfOuCnpj, 0, 3), substr($unidade->cpfOuCnpj, 3, 3), substr($unidade->cpfOuCnpj, 6, 3), substr($unidade->cpfOuCnpj, 9, 2)) }}"
+                                            disabled>
                                     </div>
+
+
+                                    @else
+
+                                    <div class="mb-3 col-md-4">
+                                        <label class="form-label">CNPJ</label>
+                                        <input type="text" class="form-control" id="cpf-cnpj" name="cpf-cnpj"
+                                            value="{{ sprintf('%s.%s.%s/%s-%s', substr($unidade->cpfOuCnpj, 0, 2), substr($unidade->cpfOuCnpj, 2, 3), substr($unidade->cpfOuCnpj, 5, 3), substr($unidade->cpfOuCnpj, 8, 4), substr($unidade->cpfOuCnpj, 12, 2)) }}"
+                                            disabled>
+                                    </div>
+
+                                    @endif
 
 
                                 </div>

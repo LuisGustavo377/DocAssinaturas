@@ -236,6 +236,20 @@
                                 </div>
                             </div>
 
+                            <div class="mb-3">
+                                <div class="card">
+                                    <div class="text-left card-body">
+                                        @if ($pessoa->imagem === 'imagem_padrao')
+                                        <img src="{{ asset('assets/images/profile/imagem_user.svg') }}" width="200"
+                                            height="200" class="rounded img-fluid" alt="Imagem Padrão">
+                                        @else
+                                        <img src="{{ asset('img/pessoaJuridica/' . $pessoa->imagem) }}"
+                                            class="rounded img-fluid" width="200" height="200">
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="mb-3 d-flex justify-content-end">
                                 <div class="mb-3">
                                     <div class="my-4 text-center">

@@ -184,6 +184,7 @@ class LicencasController extends Controller
 
                     // Salvar o unidade_negocio_id na tabela PessoaJuridica
                     $pessoaJuridica = PessoaJuridica::find($request->razaoSocialIdInput);
+
                     if ($pessoaJuridica) {
                         $pessoaJuridica->unidade_de_negocio_id = $unidade->id;
                         $pessoaJuridica->save();
@@ -191,7 +192,6 @@ class LicencasController extends Controller
                         // Obter o e-mail da pessoa jurídica
                         $email = $pessoaJuridica->email;
                         $cpf_cnpj = $pessoaJuridica->cnpj;
-
 
                         // Criar um novo proprietário para pessoa jurídica
                         $proprietario = new Proprietario();
