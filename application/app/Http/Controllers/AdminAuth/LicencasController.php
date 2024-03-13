@@ -60,7 +60,6 @@ class LicencasController extends Controller
 
     public function store(LicencaRequest $request){
 
-
         try {    
             $grupo = GrupoDeNegocios::where('id', $request->grupo_de_negocio_id)->first();
             $contagem_licencas_grupo = Licenca::where('grupo_de_negocio_id', $request->grupo_de_negocio_id)->count();
@@ -117,6 +116,7 @@ class LicencasController extends Controller
 
                 $arquivo_contrato->save();
 
+               
                 // -- Fim -- Salvar arquivos na tabela ContratosArquivos --
 
                 // Inicio - Salvar Licenca no Banco
@@ -146,11 +146,13 @@ class LicencasController extends Controller
                 $unidade->tipo_pessoa = $request->tipoPessoaInput;
 
                 if ($request->tipoPessoaInput === 'pf') {
-                    $unidade->pessoa_id = $request->cpfIdInput;
+                                        // Salvar o unidade_negocio_id na tabela PessoaFisica
+                    $pessoaFisicaCpfInput = preg_replace('/[^0-9]/', '', $request->cpfInput);
+                    $pessoaFisica = PessoaFisica::where('cpf', $pessoaFisicaCpfInput)->first();
+                    $unidade->pessoa_id = $pessoaFisica->id;
                     $unidade->save();
 
-                    // Salvar o unidade_negocio_id na tabela PessoaFisica
-                    $pessoaFisica = PessoaFisica::find($request->cpfIdInput);
+
                     if ($pessoaFisica) {
                         $pessoaFisica->unidade_de_negocio_id = $unidade->id;
                         $pessoaFisica->save();
@@ -175,7 +177,9 @@ class LicencasController extends Controller
                         $proprietario->save();
                     }
                 } elseif ($request->tipoPessoaInput === 'pj') {
-                    $unidade->pessoa_id = $request->razaoSocialIdInput;
+                    $pessoaJuridicaCnpjInput = preg_replace('/[^0-9]/', '', $request->cnpjInput);
+                    $pessoaJuridica = PessoaJuridica::where('cnpj', $pessoaJuridicaCnpjInput)->first();
+                    $unidade->pessoa_id = $pessoaJuridica->id;
                     $unidade->save();
 
                     // Salvar o unidade_negocio_id na tabela PessoaJuridica

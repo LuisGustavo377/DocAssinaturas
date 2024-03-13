@@ -53,68 +53,67 @@ class UnidadeDeNegocioController extends Controller
                 $unidade->id = Str::uuid();
                 $unidade->user_cadastro_id = $user_id;
                 $unidade->tipo_pessoa = $request->tipoPessoaInput;
-
                 if ($request->tipoPessoaInput === 'pf') {
-                    $unidade->pessoa_id = $request->cpfIdInput;
-                    $unidade->save();
-
                     // Salvar o unidade_negocio_id na tabela PessoaFisica
-                    $cpfInput = preg_replace('/[^0-9]/', '', $request->cpfInput);
-                    $pessoaFisica = PessoaFisica::find($cpfInput);
+            $pessoaFisicaCpfInput = preg_replace('/[^0-9]/', '', $request->cpfInput);
+            $pessoaFisica = PessoaFisica::where('cpf', $pessoaFisicaCpfInput)->first();
+            $unidade->pessoa_id = $pessoaFisica->id;
+            $unidade->save();
 
-                    if ($pessoaFisica) {
-                        $pessoaFisica->unidade_de_negocio_id = $unidade->id;
 
-                        dd($pessoaFisica);
-                        $pessoaFisica->save();
+            if ($pessoaFisica) {
+                $pessoaFisica->unidade_de_negocio_id = $unidade->id;
+                $pessoaFisica->save();
 
-                        // Obter o e-mail da pessoa física
-                        $email = $pessoaFisica->email;
+                // Obter o e-mail da pessoa física
+                $email = $pessoaFisica->email;
+                $cpf_cnpj = $pessoaFisica->cpf;
 
-                        // Criar um novo proprietário para pessoa física
-                        $proprietario = new Proprietario();
-                        $proprietario->id = Str::uuid();
-                        $proprietario->pessoa_id = $pessoaFisica->id;
-                        $proprietario->unidade_de_negocio_id = $unidade->id;
-                        $proprietario->name = $pessoaFisica->nome;
-                        $proprietario->email = $email;
-                        $proprietario->password = $request->senha_temporaria;
-                        $proprietario->password_temp = 'true';
-                        $proprietario->user_cadastro_id = Auth::id();
-                        $proprietario->user_ultima_atualizacao_id = Auth::id();
-                       
-                        $proprietario->save();
-                    }
-                } elseif ($request->tipoPessoaInput === 'pj') {
-                    $unidade->pessoa_id = $request->razaoSocialIdInput;
-                    
-                    $unidade->save();
+                // Criar um novo proprietário para pessoa física
+                $proprietario = new Proprietario();
+                $proprietario->id = Str::uuid();
+                $proprietario->pessoa_id = $pessoaFisica->id;
+                $proprietario->unidade_de_negocio_id = $unidade->id;
+                $proprietario->name = $pessoaFisica->nome;
+                $proprietario->cpf_cnpj = $cpf_cnpj;
+                $proprietario->email = $email;
+                $proprietario->password = $request->senha_temporaria;
+                $proprietario->password_temp = 'true';
+                $proprietario->user_cadastro_id = Auth::id();
+                $proprietario->user_ultima_atualizacao_id = Auth::id();
+                
+                $proprietario->save();
+            }
+            } elseif ($request->tipoPessoaInput === 'pj') {
+            $unidade->pessoa_id = $request->razaoSocialIdInput;
+            $unidade->save();
 
-                    // Salvar o unidade_negocio_id na tabela PessoaJuridica
-                    $razaoSocialIdInput = preg_replace('/[^0-9]/', '', $request->razaoSocialIdInput);
-                    $pessoaJuridica = PessoaJuridica::find($razaoSocialIdInput);
+// Salvar o unidade_negocio_id na tabela PessoaJuridica
+$pessoaJuridica = PessoaJuridica::find($request->razaoSocialIdInput);
+if ($pessoaJuridica) {
+    $pessoaJuridica->unidade_de_negocio_id = $unidade->id;
+    $pessoaJuridica->save();
 
-                    if ($pessoaJuridica) {
-                        $pessoaJuridica->unidade_de_negocio_id = $unidade->id;
-                        $pessoaJuridica->save();
+    // Obter o e-mail da pessoa jurídica
+    $email = $pessoaJuridica->email;
+    $cpf_cnpj = $pessoaJuridica->cnpj;
 
-                        // Obter o e-mail da pessoa jurídica
-                        $email = $pessoaJuridica->email;
 
-                        // Criar um novo proprietário para pessoa jurídica
-                        $proprietario = new Proprietario();
-                        $proprietario->id = Str::uuid();
-                        $proprietario->pessoa_id = $pessoaJuridica->id;
-                        $proprietario->unidade_de_negocio_id = $unidade->id;
-                        $proprietario->name = $pessoaJuridica->razao_social;
-                        $proprietario->email = $email;
-                        $proprietario->password = $request->senha_temporaria;
-                        $proprietario->password_temp = 'true';
-                        $proprietario->user_cadastro_id = Auth::id();
-                        $proprietario->user_ultima_atualizacao_id = Auth::id();
-                        $proprietario->save();
-                    }
-                }
+    // Criar um novo proprietário para pessoa jurídica
+    $proprietario = new Proprietario();
+    $proprietario->id = Str::uuid();
+    $proprietario->pessoa_id = $pessoaJuridica->id;
+    $proprietario->unidade_de_negocio_id = $unidade->id;
+    $proprietario->name = $pessoaJuridica->razao_social;
+    $proprietario->email = $email;
+    $proprietario->cpf_cnpj = $cpf_cnpj;
+    $proprietario->password = $request->senha_temporaria;
+    $proprietario->password_temp = 'true';
+    $proprietario->user_cadastro_id = Auth::id();
+    $proprietario->user_ultima_atualizacao_id = Auth::id();
+    $proprietario->save();
+}
+}
 
                 DB::commit();
 
