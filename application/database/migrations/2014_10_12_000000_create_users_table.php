@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('cpf')->unique();
             $table->enum('tipo_de_usuario', ['user-master','user-padrao'])->default('padrao');
             $table->string('password');
             $table->boolean('password_temp')->default(true);
