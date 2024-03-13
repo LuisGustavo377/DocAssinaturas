@@ -290,7 +290,7 @@ document.querySelectorAll('.form-control').forEach(function(element) {
 <script src="{{ asset('assets/js/buscarPessoaJuridica.js') }}"></script>
 <script src="{{ asset('assets/js/mostrarPessoas.js') }}"></script>
 
-<!--  Mascara CNPJ -->
+<!--  Input campos PJ E PF -->
 <script src="{{ asset('assets/js/inputPjPf.js') }}"></script>
 
 @endsection

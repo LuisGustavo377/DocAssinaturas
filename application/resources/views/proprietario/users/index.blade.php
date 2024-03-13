@@ -21,14 +21,14 @@
                         <h5 class="card-title fw-semibold">Gerenciar Usuários</h5>
 
                         <!-- Button to Create Establishment -->
-                        <a href="{{ route('proprietario.users.create') }}" class="btn btn-success float-end">
+                        <a href="{{ route('proprietario.user.create') }}" class="btn btn-success float-end">
                             <i class="ti ti-plus"></i>
                             Novo
                         </a>
                     </div>
 
                     <!-- Formulário da Barra de Pesquisa -->
-                    <form action="{{ route('proprietario.users.search') }}" method="post">
+                    <form action="{{ route('proprietario.user.search') }}" method="post">
                         @csrf
                         <div class="mb-3 input-group">
                             <input type="text" class="form-control" name="search"
@@ -49,6 +49,10 @@
                                         <h6 class="mb-0 fw-semibold">Nome</h6>
                                     </th>
 
+                                    <th class="border-bottom-0">
+                                        <h6 class="mb-0 fw-semibold">CPF</h6>
+                                    </th>
+                                    
                                     <th class="border-bottom-0">
                                         <h6 class="mb-0 fw-semibold">Email</h6>
                                     </th>
@@ -73,7 +77,14 @@
                                                 <h6 class="mb-0">{{ $user->name }}</h6>
                                             </td>
                                             <td class="border-bottom-0">
+                                                <h6 class="mb-0">{{ $user->cpf }}</h6>
+                                            </td>
+
+                                            <td class="border-bottom-0">
                                                 <h6 class="mb-0">{{ $user->email }}</h6>
+                                            </td>
+                                            <td class="border-bottom-0">
+                                                <h6 class="mb-0">{{ $user->tipo_de_usuario }}</h6>
                                             </td>
 
                                             <td class="border-bottom-0">
@@ -83,23 +94,23 @@
                                                 </span>
                                             </td>
                                             <td class="border-bottom-0">
-                                                <a href="{{ url('proprietario/users/' . $user->id) }}"
+                                                <a href="{{ url('proprietario/user/' . $user->id) }}"
                                                     class="m-1 btn btn-primary" title="Detalhar">
                                                     <i class="ti ti-search"></i>
                                                 </a>
 
-                                                <a href="{{ url('proprietario/users/' . $user->id . '/edit') }}"
+                                                <a href="{{ url('proprietario/user/' . $user->id . '/edit') }}"
                                                     class="m-1 btn btn-success" title="Editar">
                                                     <i class="ti ti-edit"></i>
                                                 </a>
 
-                                                @if ($banco->status === 'ativo')
-                                                    <a href="{{ url('proprietario/users/inativar/' . $user->id) }}"
+                                                @if ($user->status === 'ativo')
+                                                    <a href="{{ url('proprietario/user/inativar/' . $user->id) }}"
                                                         class="m-1 btn btn-danger" title="Inativar">
                                                         <i class="ti ti-lock"></i>
                                                     </a>
                                                 @elseif ($user->status === 'inativo')
-                                                    <a href="{{ url('proprietario/users/reativar/' . $user->id) }}"
+                                                    <a href="{{ url('proprietario/user/reativar/' . $user->id) }}"
                                                         class="m-1 btn btn-warning" title="Reativar">
                                                         <i class="ti ti-lock-off"></i>
                                                     </a>

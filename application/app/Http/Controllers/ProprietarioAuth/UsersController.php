@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminAuth\GruposDeNegocioRequest;
+use App\Http\Requests\ProprietarioAuth\UserEditRequest;
+use App\Http\Requests\ProprietarioAuth\UserRequest;
 use App\Models\GrupoDeNegocios;
 use App\Models\UnidadeDeNegocio;
 use Illuminate\Support\Facades\Auth;
@@ -31,14 +33,13 @@ class UsersController extends Controller
         return view('proprietario.users.create');
     }
 
-    public function store($request)
+    public function store(UserRequest $request)
     {
 
         try {
 
             if (auth()->check()) {
-                $user_id = auth()->id(); // Recupera o ID do usuário da sessão
-
+                
                 DB::beginTransaction();
 
                 // Inicio - Salvar Grupo no Banco
@@ -47,13 +48,15 @@ class UsersController extends Controller
 
                 $user->fill($request->all());
                 $user->id = Str::uuid();
-                $user->user_cadastro_id = $user_id;
+                $user->user_cadastro_id = auth()->id(); // Recupera o ID do usuário da sessão
+                $user->password = $request->senha_temporaria;
+                $user->password_temp = 'true';
                 $user->save();
 
 
                 DB::commit();
 
-                return redirect()->route('proprietario.users..index')->with('msg', 'Usuário pessocriado com sucesso!');
+                return redirect()->route('proprietario.users.index')->with('msg', 'Usuário criado com sucesso!');
             }
         } catch (\Exception $e) {
             // Em caso de erro, reverta a transação e lance a exceção novamente.
@@ -65,22 +68,21 @@ class UsersController extends Controller
 
     public function show($id)
     {
-        $grupo = GrupoDeNegocios::findOrFail($id);
-        $unidades = UnidadeDeNegocio::where('grupo_de_negocio_id', $id)->get(); // Obtém todas as unidades de negócio vinculadas a este grupo
-        
-        return view('admin.grupo-de-negocios.show', compact('grupo', 'unidades' ));
+        $user = User::findOrFail($id);
+
+        return view('proprietario.users.show', compact('user'));
     }
 
     public function edit($id)
     {
         try {
-            $grupo = GrupoDeNegocios::findOrFail($id);
+            $user = User::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            // Tratamento de exceção: Grupo não encontrado
-            abort(404, 'Grupo não encontrado.');
+            // Tratamento de exceção: User não encontrado
+            abort(404, 'Usuário não encontrado.');
         }
 
-        return view('admin.grupo-de-negocios.edit', compact('grupo'));
+        return view('proprietario.users.edit', compact('user'));
     }
 
     public function update(Request $request, $id)
@@ -88,25 +90,27 @@ class UsersController extends Controller
         try {
             $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
             DB::beginTransaction();
-
-            $grupo = GrupoDeNegocios::findOrFail($id);
-
-            if (!$grupo) {
-                throw new \Exception('Grupo não encontrado');
+    
+            $user = User::findOrFail($id);
+    
+            if (!$user) {
+                throw new \Exception('Usuário não encontrado');
             }
-
-            $grupo->fill($request->all());
-            $grupo->user_ultima_atualizacao_id = $user_ultima_atualizacao;
-            $grupo->save();
-
+            
+            $user->fill($request->all());
+            $user->user_ultima_atualizacao_id = $user_ultima_atualizacao;
+            
+            $user->save();
+    
             DB::commit();
-
-            return redirect()->route('admin.grupo-de-negocios.index', ['id' => $grupo->id])->with('msg', 'Grupo alterado com sucesso!');
+    
+            return redirect()->route('proprietario.users.index', ['id' => $user->id])->with('msg', 'Usuário alterado com sucesso!');
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
     }
+    
 
     public function search(Request $request)
     {
@@ -114,44 +118,44 @@ class UsersController extends Controller
 
         if (Auth::check()) {
 
-            $resultados = GrupoDeNegocios::whereRaw("unaccent(nome) ILIKE unaccent('%$termoPesquisa%')")
-                ->orWhereRaw("unaccent(nome) ILIKE unaccent('%$termoPesquisa%')")
+            $resultados = User::whereRaw("unaccent(name) ILIKE unaccent('%$termoPesquisa%')")
+                ->orWhereRaw("unaccent(name) ILIKE unaccent('%$termoPesquisa%')")
                 ->get();
         } else {
             $resultados = [];
         }
 
 
-        return view('admin.grupo-de-negocios.search', compact('resultados', 'termoPesquisa'));
+        return view('proprietario.users.search', compact('resultados', 'termoPesquisa'));
     }
 
     public function inativar($id)
     {
 
-        $grupo = GrupoDeNegocios::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        if ($grupo) {
-            $grupo->status = 'inativo';
-            $grupo->save();
+        if ($user) {
+            $user->status = 'inativo';
+            $user->save();
 
-            return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo inativado com sucesso.');
+            return redirect()->route('proprietario.users.index')->with('msg', 'Usuário inativado com sucesso.');
         }
 
-        return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo não encontrado.');
+        return redirect()->route('proprietario.users.index')->with('msg', 'Usuário não encontrado.');
     }
 
     public function reativar($id)
     {
 
-        $grupo = GrupoDeNegocios::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        if ($grupo) {
-            $grupo->status = 'ativo';
-            $grupo->save();
+        if ($user) {
+            $user->status = 'ativo';
+            $user->save();
 
-            return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo reativado com sucesso.');
+            return redirect()->route('proprietario.users.index')->with('msg', 'Usuário reativado com sucesso.');
         }
 
-        return redirect()->route('admin.grupo-de-negocios.index')->with('msg', 'Grupo não encontrado.');
+        return redirect()->route('proprietario.users.index')->with('msg', 'Usuário não encontrado.');
     }
 }

@@ -6,7 +6,7 @@
                 <img src="{{ asset('assets/images/logos/dark-logo.svg') }}" width="180" alt="" />
 
             </a>
-            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <div class="cursor-pointer close-btn d-xl-none d-block sidebartoggler" id="sidebarCollapse">
                 <i class="ti ti-x fs-8"></i>
             </div>
         </div>
@@ -81,7 +81,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="#" aria-expanded="false">
+                    <a class="sidebar-link" href="{{route('proprietario.users.index')}}" aria-expanded="false">
                         <span>
                             <i class="ti ti-user"></i>
                         </span>

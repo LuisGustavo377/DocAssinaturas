@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('cpf')->unique();
-            $table->enum('tipo_de_usuario', ['user-master','user-padrao'])->default('padrao');
+            $table->string('telefone');
+            $table->enum('tipo_de_usuario', ['user-master','user-padrao'])->default('user-padrao');
             $table->string('password');
             $table->boolean('password_temp')->default(true);
             $table->timestamp('email_verified_at')->nullable();

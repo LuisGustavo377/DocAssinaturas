@@ -72,12 +72,12 @@ Route::middleware('auth:proprietario')->prefix('proprietario')->group(function (
 
     //USERS
     Route::get('/users', [UsersController::class, 'index'])->name('proprietario.users.index');
-    Route::get('/users/create', [UsersController::class, 'create'])->name('proprietario.users.create');
-    Route::post('/users', [UsersController::class, 'store'])->name('proprietario.users.store');
-    Route::get('/users/{id}', [UsersController::class, 'show'])->name('proprietario.users.show');
-    Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('proprietario.users.edit');
-    Route::put('/users/{id}', [UsersController::class, 'update'])->name('proprietario.users.update');
-    Route::post('/users/search', [UsersController::class, 'search'])->name('proprietario.users.search');
-    Route::get('/users/inativar/{id}', [UsersController::class, 'inativar'])->name('proprietario.users.inativar');
-    Route::get('/users/reativar/{id}', [UsersController::class, 'reativar'])->name('proprietario.users.reativar');
+    Route::get('/user/create', [UsersController::class, 'create'])->name('proprietario.user.create');
+    Route::post('/user', [UsersController::class, 'store'])->name('proprietario.user.store');
+    Route::get('/user/{id}', [UsersController::class, 'show'])->name('proprietario.user.show');
+    Route::get('/user/{id}/edit', [UsersController::class, 'edit'])->name('proprietario.user.edit');
+    Route::put('/user/{id}', [UsersController::class, 'update'])->name('proprietario.user.update');
+    Route::post('/user/search', [UsersController::class, 'search'])->name('proprietario.user.search');
+    Route::get('/user/inativar/{id}', [UsersController::class, 'inativar'])->name('proprietario.user.inativar');
+    Route::get('/user/reativar/{id}', [UsersController::class, 'reativar'])->name('proprietario.user.reativar');
 });
