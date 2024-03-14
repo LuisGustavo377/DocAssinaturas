@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log; 
 
 class UsersController extends Controller
 {
@@ -101,10 +102,11 @@ class UsersController extends Controller
             $user->user_ultima_atualizacao_id = $user_ultima_atualizacao;
             
             $user->save();
-    
+            
             DB::commit();
-    
-            return redirect()->route('proprietario.users.index', ['id' => $user->id])->with('msg', 'Usuário alterado com sucesso!');
+            
+            return redirect()->route('proprietario.users.index')->with('msg', 'Usuário alterado com sucesso!');
+
         } catch (\Exception $e) {
             DB::rollback();
             throw $e;
