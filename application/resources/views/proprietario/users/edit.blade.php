@@ -45,17 +45,18 @@
                                             @enderror
                                         </div>
 
-                                        <div class="mb-3 col-md-6">
-                                            <label id="cpfLabel" class="form-label">CPF</label>
-                                            <input type="text" class="form-control @error('cpf') is-invalid @enderror"
-                                                id="cpfInput" name="cpf" placeholder="CPF" value="{{ $user->cpf }}"
-                                                maxlength="14" oninput="mascaraCPF(this)">
-                                            @error('cpf')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
+                                        <div class="mb-6 col-md-6">
+                                        <label id="cpfLabel" class="form-label">CPF</label>
+                                        <input type="text" class="form-control @error('cpf') is-invalid @enderror"
+                                            id="cpfInput" name="cpf" placeholder="CPF"
+                                            value="{{ old('cpf', sprintf('%s.%s.%s-%s', substr($user->cpf, 0, 3), substr($user->cpf, 3, 3), substr($user->cpf, 6, 3), substr($user->cpf, 9, 2))) }}"
+                                            maxlength="14" oninput="mascaraCPF(this)">
+                                        @error('cpf')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
 
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Telefone</label>
@@ -74,7 +75,7 @@
                                             <label id="emailLabel" class="form-label">Email</label>
                                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                                 id="emailInput" name="email" placeholder="Email"
-                                                value="{{ $user->email }}">
+                                                value="{{ old('email') ?? $user->email }}">
                                             @error('email')
                                                 <div class="invalid-feedback">
                                                     {{ $message }}

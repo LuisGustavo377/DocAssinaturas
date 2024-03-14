@@ -44,16 +44,16 @@
                                         </div>
 
                                         <div class="mb-3 col-md-6">
-                                            <label id="cpfLabel" class="form-label">CPF</label>
-                                            <input type="text" class="form-control @error('cpf') is-invalid @enderror"
-                                                id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}"
-                                                maxlength="14" oninput="mascaraCPF(this)">
-                                            @error('cpf')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                        <label id="cpfLabel" class="form-label">CPF</label>
+                                        <input type="text" class="form-control @error('cpf') is-invalid @enderror"
+                                            id="cpfInput" name="cpf" placeholder="CPF" value="{{ old('cpf') }}"
+                                            maxlength="14" oninput="mascaraCPF(this)">
+                                        @error('cpf')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
                                         </div>
+                                        @enderror
+                                    </div>
 
                                         <div class="mb-3 col-md-6">
                                             <label class="form-label">Telefone</label>

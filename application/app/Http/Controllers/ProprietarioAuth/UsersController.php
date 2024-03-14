@@ -49,6 +49,7 @@ class UsersController extends Controller
 
                 $user->fill($request->all());
                 $user->id = Str::uuid();
+                $user->cpf = str_replace(['.', '/', '-'], '', $request->cpf);
                 $user->user_cadastro_id = auth()->id(); // Recupera o ID do usuário da sessão
                 $user->password = $request->senha_temporaria;
                 $user->password_temp = 'true';
@@ -86,10 +87,11 @@ class UsersController extends Controller
         return view('proprietario.users.edit', compact('user'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UserEditRequest $request, $id)
     {
+       
         try {
-            $user_ultima_atualizacao = auth()->id(); // Recupera o ID do usuário da sessão
+            
             DB::beginTransaction();
     
             $user = User::findOrFail($id);
@@ -99,7 +101,8 @@ class UsersController extends Controller
             }
             
             $user->fill($request->all());
-            $user->user_ultima_atualizacao_id = $user_ultima_atualizacao;
+            $user->cpf = str_replace(['.', '/', '-'], '', $request->cpf);
+            $user->user_ultima_atualizacao_id = Auth::id();
             
             $user->save();
             
