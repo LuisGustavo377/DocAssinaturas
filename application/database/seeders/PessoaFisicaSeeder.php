@@ -24,6 +24,7 @@ class PessoaFisicaSeeder extends Seeder
             'status' => 'ativo', 
             'imagem' => 'imagem_padrao', 
             'user_cadastro_id' => '15f4d44e-3707-46ae-abec-b4a982d509d0',
+            
             'user_ultima_atualizacao_id' => '15f4d44e-3707-46ae-abec-b4a982d509d0',
             'created_at' => now(), 
             'updated_at' => now()],

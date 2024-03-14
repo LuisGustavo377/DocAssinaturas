@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             UnidadeDeNegocioSeeder::class,
             LicencaSeeder::class,
             ProprietarioSeeder::class,
+            AdicionarIdUnidadeNegocioEmPessoaFisicaSeeder::class,
             
         ]);
     }
