@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('plano_id');
             $table->enum('status', ['ativo', 'inativo']);
             $table->uuid('user_cadastro_id')->nullable();
+            $table->uuid('user_ultima_atualizacao_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

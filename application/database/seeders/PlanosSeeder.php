@@ -17,9 +17,9 @@ class PlanosSeeder extends Seeder
     public function run()
     {
         $plano = [
-            ['id' => Str::uuid(), 'nome' => 'Plano Inicial', 'valor' => 'valor','status' => 'ativo','created_at' => now(), 'updated_at' => now()],
-            ['id' => Str::uuid(), 'nome' => 'Plano Avançado', 'valor' => 'valor','status' => 'ativo','created_at' => now(), 'updated_at' => now()],
-            ['id' => Str::uuid(), 'nome' => 'Plano Personalizado', 'valor' => 'valor','status' => 'ativo','created_at' => now(), 'updated_at' => now()],
+            ['id' => 'fa9e9bad-7d30-40f9-bb69-a1d7952a5968', 'nome' => 'Plano Inicial', 'valor' => 'valor','status' => 'ativo','created_at' => now(), 'updated_at' => now()],
+            ['id' =>   'fa9e9bad-7d30-40f9-bb69-a1d7952a5967', 'nome' => 'Plano Avançado', 'valor' => 'valor','status' => 'ativo','created_at' => now(), 'updated_at' => now()],
+            ['id' => 'fa9e9bad-7d30-40f9-bb69-a1d7952a5966', 'nome' => 'Plano Personalizado', 'valor' => 'valor','status' => 'ativo','created_at' => now(), 'updated_at' => now()],
         ];
 
         DB::table('planos')->insert($plano);

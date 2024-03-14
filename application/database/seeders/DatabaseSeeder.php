@@ -20,10 +20,18 @@ class DatabaseSeeder extends Seeder
             TiposCobrancaSeeder::class,
             TiposDeLogradouroSeeder::class,
             TiposDeRenovacaoSeeder::class,
+            PlanosSeeder::class,
             GrupoNegocioSeeder::class,
             CargosSeeder::class,
             AdminSeeder::class,
-            PlanosSeeder::class
+            PessoaFisicaSeeder::class,
+            PessoaJuridicaSeeder::class,
+            ContratoSeeder::class,
+            ArquivoContratoSeeder::class,
+            UnidadeDeNegocioSeeder::class,
+            LicencaSeeder::class,
+            ProprietarioSeeder::class,
+            
         ]);
     }
 }
