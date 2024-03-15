@@ -31,7 +31,7 @@
             <li class="sidebar-item">
               <a class="sidebar-link" href="#" aria-expanded="false">
                 <span>
-                  <i class="ti ti-wallet"></i>
+                  <i class="ti ti-coin"></i>
                 </span>
                 <span class="hide-menu">Carteira</span>
               </a>
@@ -52,14 +52,7 @@
                 <span class="hide-menu">Cobranças</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a class="sidebar-link" href="#" aria-expanded="false">
-                <span>
-                  <i class="ti ti-building-bank"></i>
-                </span>
-                <span class="hide-menu">Estabelecimento</span>
-              </a>
-            </li>
+
             <li class="sidebar-item">
               <a class="sidebar-link" href="#" aria-expanded="false">
                 <span>
@@ -68,6 +61,35 @@
                 <span class="hide-menu">Usuários</span>
               </a>
             </li>
+
+            <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-tool"></i>
+                        </span>
+                        <span class="hide-menu">Configurações</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+
+                    <li class="sidebar-item">
+                            <a class="sidebar-link" href="/proprietario/dados-cadastrais">
+                                <span class="hide-menu">
+                                    - Dados Cadastrais
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/proprietario/contas-bancarias">
+                                <span class="hide-menu">
+                                    - Contas Bancárias
+                                </span>
+                            </a>
+                        </li>                     
+
+
+                    </ul>
+                </li>
 
             <li class="sidebar-item">
               <a class="sidebar-link" href="#" aria-expanded="false">

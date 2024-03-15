@@ -29,18 +29,11 @@
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">FUNÇÕES</span>
                 </li>
+
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
-                            <i class="ti ti-id-badge"></i>
-                        </span>
-                        <span class="hide-menu">Dados Cadastrais</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-settings"></i>
+                            <i class="ti ti-coin"></i>
                         </span>
                         <span class="hide-menu">Carteira</span>
                     </a>
@@ -49,51 +42,63 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
-                            <i class="ti ti-settings"></i>
+                            <i class="ti ti-tool"></i>
+                        </span>
+                        <span class="hide-menu">Configurações</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+
+                    <li class="sidebar-item">
+                            <a class="sidebar-link" href="/proprietario/dados-cadastrais">
+                                <span class="hide-menu">
+                                    - Dados Cadastrais
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/proprietario/contas-bancarias">
+                                <span class="hide-menu">
+                                    - Contas Bancárias
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/tipos-de-cobranca">
+                                <span class="hide-menu">
+                                    - Tipos de Cobrança
+                                </span>
+                            </a>
+                        </li>
+
+                        
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="/admin/tipos-de-cobranca">
+                                <span class="hide-menu">
+                                    - Planos
+                                </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
+                        <span>
+                            <i class="ti ti-users"></i>
                         </span>
                         <span class="hide-menu">Clientes</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="#" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-settings"></i>
-                        </span>
-                        <span class="hide-menu">Contas Bancárias</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-settings"></i>
-                        </span>
-                        <span class="hide-menu">Contas Bancárias</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-article"></i>
-                        </span>
-                        <span class="hide-menu">Tipos de Cobrança</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
                     <a class="sidebar-link" href="{{route('proprietario.users.index')}}" aria-expanded="false">
                         <span>
                             <i class="ti ti-user"></i>
                         </span>
                         <span class="hide-menu">Usuários</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="#" aria-expanded="false">
-                        <span>
-                            <i class="ti ti-check"></i>
-                        </span>
-                        <span class="hide-menu">Planos</span>
                     </a>
                 </li>
 
