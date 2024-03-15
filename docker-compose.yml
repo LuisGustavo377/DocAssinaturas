@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: docker/php/DockerFile
-    container_name: ambiente-app
+    container_name: ambiente2-app
     restart: always
     working_dir: /var/www/
     volumes:
@@ -15,14 +15,14 @@ services:
       - COMPOSER_HOME=/composer
       - COMPOSER_ALLOW_SUPERUSER=1
       - APP_ENV=local
-      - APP_KEY=
+      - APP_KEY=base64:Nogm1TJc8tW90j6D5BmIuVQeibrtHj4g8R8G3/pQvPk=
     depends_on:
       - db
       - redis
 
   nginx:
     image: nginx:1.25.1-alpine-slim
-    container_name: ambiente-nginx
+    container_name: ambiente2-nginx
     restart: always
     ports:
       - "8000:80"
@@ -35,7 +35,7 @@ services:
     build:
       context: ./
       dockerfile: docker/redis/DockerFile
-    container_name: ambiente-redis
+    container_name: ambiente2-redis
     restart: always
     ports:
       - "6379:6379"
@@ -45,7 +45,7 @@ services:
     build:
       context: ./
       dockerfile: docker/db/DockerFile
-    container_name: ambiente-db
+    container_name: ambiente2-db
     restart: always
     environment:
       - POSTGRES_DB=DocAssinaturas
